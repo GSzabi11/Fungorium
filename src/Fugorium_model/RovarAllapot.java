@@ -1,5 +1,5 @@
 package Fugorium_model;
 
-enum RovarAllapot {
+public enum RovarAllapot {
     VAGASTGATLO, LASSITO, GYORSITO, BENITO
 }

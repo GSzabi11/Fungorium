@@ -21,7 +21,7 @@ public class Main {
 
             System.out.print("\nKérem, adja meg a teszteset számát: ");
             int choice = scanner.nextInt();
-            tests.InitTest(2, 5);
+            tests.InitTest(2, 5, 4);
 
             switch (choice) {
                 case 1 -> tests.RovarVagasGatloSporatFogyaszt();
@@ -29,8 +29,8 @@ public class Main {
                 case 3 -> tests.RovarBenitoSporatFogyaszt();
                 case 4 -> tests.RovarLassitoSporatFogyaszt();
                 case 5 -> tests.GombatestNovesztes();
-                case 6 -> tests.RovarMozgasa(0);
-                case 7 -> tests.RovarAtvagjaAGombafonalat();
+                case 6 -> tests.RovarMozgasa(0 , 0);
+                case 7 -> tests.RovarAtvagjaAGombafonalat(0);
                 case 8 -> tests.sporaszoras(3, 5);
                 case 0 -> {
                     System.out.println("Kilépés...");
