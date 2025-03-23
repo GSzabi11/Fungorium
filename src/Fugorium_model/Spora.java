@@ -3,13 +3,12 @@ package Fugorium_model;
 public abstract class  Spora {
     private int tapanyagtartalom;
 
-    public void accept()
-    {
-        System.out.println("Spora.accept()");
+    Spora() {
+        System.out.println("Spora constructor called");
     }
 
-    public void alkalmazHatast()
-    {
-        System.out.println("Spora.alkalmazHatast()");
-    }
+
+    public abstract void accept(SporaVisitor visitor);
+
+    public abstract void alkalmazHatast(Rovar rovar, RovarAllapot allapot, int duration);
 }
