@@ -1,5 +1,8 @@
 package Fugorium_model;
 
-enum Rovarfaj {
+/**
+ * A Rovarfaj enum a játékban előforduló rovarfajokat tartalmazza.
+ */
+public enum Rovarfaj {
     NARANCS, BARNA, CIAN, LILA;
 }
