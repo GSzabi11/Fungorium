@@ -1,6 +1,11 @@
 import Fugorium_model.*;
 
 public class Tests {
+    /**
+     * Az program inicializációjának teszt függvénye.
+     * @param k törések száma
+     * @param s spórázáshoz szükséges spóraszám
+     */
     public void InitTest(int k, int s){
         Gomba gomba = new Gomba();
         Tekton tekton = new Tekton(1, "Standard", gomba);
@@ -15,6 +20,10 @@ public class Tests {
         }
         if(gomba.getSporaszam() > 3) gomba.sporaz(); System.out.println("A teszt sikeres");
     }
+
+    /**
+     * A rovar gombafonal vágásának teszt függvénye
+     */
     public void RovarAtvagjaAGombafonalat() {
         Rovar rovar = new Rovar();
         Gombafonal gombafonal = new Gombafonal();
@@ -30,6 +39,11 @@ public class Tests {
 
     }
 
+    /**
+     * A spóra szórás teszt függvénye
+     * @param x A spóraszóráshoz szükséges sporák száma
+     * @param sporaszam
+     */
     public void sporaszoras(int x, int sporaszam){
         Gomba gomba = new Gomba();
         Tekton tekton = new Tekton(1, "Standard", gomba);
@@ -46,6 +60,9 @@ public class Tests {
         }
     }
 
+    /**
+     *  Teszt függvény a Rovar bénító spóra fogyasztásához
+     */
     public void RovarBenitoSporatFogyaszt(){
         Rovar rovar = new Rovar();
         BenitoSporaElement spora = new BenitoSporaElement();
@@ -59,6 +76,9 @@ public class Tests {
         if(rovar.getAllapot() == "benito") System.out.println("Benito");
     }
 
+    /**
+     *  Teszt függvény a Rovar gyorsító spóra fogyasztásához
+     */
     public void RovarGyorsitoSporatFogyaszt(){
         Rovar rovar = new Rovar();
         GyorsitoSporaElement spora = new GyorsitoSporaElement();
@@ -71,6 +91,10 @@ public class Tests {
         visitor.alkalmazHatast(rovar, allapot, duration);
         if(rovar.getAllapot() == "Gyorsito") System.out.println("Gyorsito");
     }
+
+    /**
+     *  Teszt függvény a Rovar lassító spóra fogyasztásához
+     */
     public void RovarLassitoSporatFogyaszt(){
         Rovar rovar = new Rovar();
         LassitoSporaElement spora = new LassitoSporaElement();
@@ -83,7 +107,11 @@ public class Tests {
         visitor.alkalmazHatast(rovar, allapot, duration);
         if(rovar.getAllapot() == "lassito") System.out.println("lassito");
     }
-    public void RovarLassitoSporatFogyaszt(){
+
+    /**
+     *  Teszt függvény a Rovar vágásgátló spóra fogyasztásához
+     */
+    public void RovarVagasGatloSporatFogyaszt(){
         Rovar rovar = new Rovar();
         VagastGatloSporaElement spora = new VagastGatloSporaElement();
         rovar.fogyaszt(spora);
@@ -95,6 +123,10 @@ public class Tests {
         visitor.alkalmazHatast(rovar, allapot, duration);
         if(rovar.getAllapot() == "vagasgatlo") System.out.println("vagasgatlo");
     }
+
+    /**
+     *  A gombatest növesztéséhez tesz függvény
+     */
     public void GombatestNovesztes(){
         Gomba gomba = new Gomba();
         Gombafonal gombafonal = new Gombafonal();
@@ -103,6 +135,10 @@ public class Tests {
         gombafonal.probalGombatNoveszteni(tekton1);
     }
 
+    /**
+     * A rovar mozgásához tartozó teszt függvény
+     * @param i  A lisában az i edik tekton kiválasztása
+     */
     public void RovarMozgasa(int i){
         Rovar rovar = new Rovar();
         Tekton tekton = new Tekton(1, "Standard", null);
