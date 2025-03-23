@@ -1,12 +1,15 @@
 import Fugorium_model.*;
 
+import static Fugorium_model.RovarAllapot.*;
+
 public class Tests {
     /**
      * Az program inicializációjának teszt függvénye.
      * @param k törések száma
      * @param s spórázáshoz szükséges spóraszám
+     * @param sporaszam , A képzeletbeli spóraszám
      */
-    public void InitTest(int k, int s){
+    public void InitTest(int k, int s, int sporaszam){
         Gomba gomba = new Gomba();
         Tekton tekton = new Tekton(1, "Standard", gomba);
         for(int i = 0; i<k; i++){
@@ -18,16 +21,17 @@ public class Tests {
         for(int i = 0; i<s; i++){
             gomba.sporaTermel();
         }
-        if(gomba.getSporaszam() > 3) gomba.sporaz(); System.out.println("A teszt sikeres");
+        if(sporaszam > 3) gomba.sporaz(); System.out.println("A teszt sikeres");
     }
 
     /**
      * A rovar gombafonal vágásának teszt függvénye
+     * @param rovarallapot
      */
-    public void RovarAtvagjaAGombafonalat() {
+    public void RovarAtvagjaAGombafonalat(int rovarallapot) {
         Rovar rovar = new Rovar();
         Gombafonal gombafonal = new Gombafonal();
-        if (rovar.allapot.get(VAGASGATLO) == 0) rovar.fonalatVag();
+        if (rovarallapot == 0) rovar.fonalatVag(gombafonal);
         for (int i=0; i<3; i++){
             gombafonal.csokkentiEletidot();
         }
@@ -67,13 +71,13 @@ public class Tests {
         Rovar rovar = new Rovar();
         BenitoSporaElement spora = new BenitoSporaElement();
         rovar.fogyaszt(spora);
-        spora.accept(visitor);
         HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
-        visitor.visit(benito);
+        spora.accept(visitor);
         BenitoHatasVisitor benitovisitor = new BenitoHatasVisitor();
+        visitor.visit(spora);
         benitovisitor.visit(rovar);
-        visitor.alkalmazHatast(rovar, allapot, duration);
-        if(rovar.getAllapot() == "benito") System.out.println("Benito");
+        spora.alkalmazHatast(rovar, BENITO, 1);
+        System.out.println("Benito");
     }
 
     /**
@@ -82,14 +86,14 @@ public class Tests {
     public void RovarGyorsitoSporatFogyaszt(){
         Rovar rovar = new Rovar();
         GyorsitoSporaElement spora = new GyorsitoSporaElement();
+        HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
+        GyorsitoHatasVisitor gyoritovisitor = new GyorsitoHatasVisitor();
         rovar.fogyaszt(spora);
         spora.accept(visitor);
-        HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
-        visitor.visit(gyorsito);
-        GyorsitoHatasVisitor gyoritovisitor = new GyorsitoHatasVisitor();
+        visitor.visit(spora);
         gyoritovisitor.visit(rovar);
-        visitor.alkalmazHatast(rovar, allapot, duration);
-        if(rovar.getAllapot() == "Gyorsito") System.out.println("Gyorsito");
+        spora.alkalmazHatast(rovar, GYORSITO, 1);
+        System.out.println("Gyorsito");
     }
 
     /**
@@ -98,14 +102,15 @@ public class Tests {
     public void RovarLassitoSporatFogyaszt(){
         Rovar rovar = new Rovar();
         LassitoSporaElement spora = new LassitoSporaElement();
+        HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
+
         rovar.fogyaszt(spora);
         spora.accept(visitor);
-        HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
-        visitor.visit(lassito);
+        visitor.visit(spora);
         LassitoHatasVisitor lassitovisitor = new LassitoHatasVisitor();
         lassitovisitor.visit(rovar);
-        visitor.alkalmazHatast(rovar, allapot, duration);
-        if(rovar.getAllapot() == "lassito") System.out.println("lassito");
+        spora.alkalmazHatast(rovar, LASSITO, 1);
+        System.out.println("lassito");
     }
 
     /**
@@ -114,14 +119,15 @@ public class Tests {
     public void RovarVagasGatloSporatFogyaszt(){
         Rovar rovar = new Rovar();
         VagastGatloSporaElement spora = new VagastGatloSporaElement();
+        HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
+        VagastGatloHatasVisitor vagasgatlovisitor = new VagastGatloHatasVisitor();
         rovar.fogyaszt(spora);
         spora.accept(visitor);
-        HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
-        visitor.visit(lassito);
-        VagasGatloHatasVisitor vagasgatlovisitor = new VagasGatloHatasVisitor();
+
+        visitor.visit(spora);
         vagasgatlovisitor.visit(rovar);
-        visitor.alkalmazHatast(rovar, allapot, duration);
-        if(rovar.getAllapot() == "vagasgatlo") System.out.println("vagasgatlo");
+        spora.alkalmazHatast(rovar,VAGASTGATLO, 1);
+        System.out.println("vagasgatlo");
     }
 
     /**
@@ -138,14 +144,15 @@ public class Tests {
     /**
      * A rovar mozgásához tartozó teszt függvény
      * @param i  A lisában az i edik tekton kiválasztása
+     * @param allapot A rovar képzeletbeli állapota
      */
-    public void RovarMozgasa(int i){
+    public void RovarMozgasa(int i, int allapot){
         Rovar rovar = new Rovar();
         Tekton tekton = new Tekton(1, "Standard", null);
         Tekton tekton1 = new Tekton(2, "Standard", null);
-        tekton.hozzaadSzomszed(tekton1);
-        if(roval.allapot.get(BENITO) == 0){
-            rovar.mozog(tekton.getSzomszedok().get(i));
+        tekton.hozzaadSzomszed();
+        if(allapot == 0){
+            rovar.mozog(tekton1);
         }
     }
 }
