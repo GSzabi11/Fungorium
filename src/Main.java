@@ -6,6 +6,7 @@ public class Main {
         Tests tests = new Tests();
 
         while (true) {
+
             System.out.println("=== Fungorium Szkeleton Tesztprogram ===");
             System.out.println("Válasszon egy tesztesetet a futtatáshoz:\n");
             System.out.println("1. Spóraevés (vágást gátló hatás)\n");
