@@ -2,7 +2,7 @@ package Fugorium_model;
 import java.util.*;
 
 
-class Tekton {
+public class Tekton {
     private int id;
     private String tipus;
     private Gomba gomba;

@@ -2,12 +2,12 @@ package Fugorium_model;
 
 import java.util.*;
 
-class Gomba {
+public class Gomba {
     private Tekton tekton;
     private Gombafaj fajta;
     private int sporaSzamlalo;
     private int eletido;
-    private int szint;
+    public int szint;
     private List<Spora> termeltSporak;
 
     public Gomba() {

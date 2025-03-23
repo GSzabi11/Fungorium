@@ -1,10 +1,10 @@
 package Fugorium_model;
 import java.util.*;
 
-class Gombafonal {
+public class Gombafonal {
     private Gomba kiindulasiGomba;
     private List<Tekton> kapcsolodasiPontok;
-    private int eletido;
+    public int eletido = 0;
     private int max_eletido;
     private boolean haldoklik;
     private int spora_kuszob_gomba_novekedeshez;
@@ -29,7 +29,7 @@ class Gombafonal {
         System.out.println("Gombafonal.gyorsitNovekedest()");
     }
 
-    public void probalGombatNoveszteni() {
+    public void probalGombatNoveszteni(Tekton tekton) {
         System.out.println("Gombafonal.probalGombatNoveszteni()");
     }
 
