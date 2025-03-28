@@ -1,0 +1,8 @@
+BenitoSporaElement constructor called, nutrition value: 8
+Rovar elfogyasztotta a sporat! +8 tapanyag. Osszesen: 8
+Rovar.fogyaszt()
+HatastAlkalmazVisitor constructor called
+Allapot beállítva: BENITO (3 korre)
+BenitoSporaElement alkalmazHatast method called
+BenitoSporaElement visit method called
+BenitoSporaElement accept method called

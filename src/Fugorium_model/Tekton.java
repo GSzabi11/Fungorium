@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Tekton {
     private int id; // A tekton egyedi azonosítója
-    private String tipus; // A tekton típusa
+    //private String tipus; // A tekton típusa
     private Gomba gomba; // A tektonhoz tartozó gomba objektum
     private List<Tekton> szomszedok; // A tekton szomszédos tektonjai
     private List<Spora> sporak; // A tektonon található spórák listája
@@ -25,8 +25,31 @@ public class Tekton {
      * @param tipus A tekton típusa
      * @param gomba A tektonhoz tartozó gomba objektum
      */
-    public Tekton(int id, String tipus, Gomba gomba) {
-        System.out.println("Tekton constructor called");
+    public Tekton(int id) {
+        this.id = id;
+
+        this.szomszedok = new ArrayList<>();
+        this.sporak = new ArrayList<>();
+        this.gombafonalak = new ArrayList<>();
+
+        this.fonalfelszivodas = false;
+        this.keresztezodhet = false;
+        this.nohetGomba = false;
+
+        this.gomba = null;
+        //System.out.println("Tekton constructor called");
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    /*
+    *setter, hogy a gomba tekton attributuma es a tekton gomba attributuma szinkronban legyen
+    * @param Gomba A tektonon levo gomba referenciaja
+    */    
+    public void setGomba(Gomba gomba) {
+        this.gomba = gomba;
     }
 
     /**

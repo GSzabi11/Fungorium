@@ -10,10 +10,27 @@ public abstract class  Spora {
     private int tapanyagtartalom;
 
     /*
-     * Spora konstruktora
+     * Spora parameter nelkuli konstruktora
      */
     Spora() {
+        this.tapanyagtartalom = 0;
         System.out.println("Spora constructor called");
+    }
+
+    /*
+     * Spora parameteres konstruktora
+     * @param tapanyagtartalom
+     */
+    public Spora(int tapanyagtartalom) {
+        this.tapanyagtartalom = tapanyagtartalom;
+    }
+
+    public int getTapanyagtartalom() {
+        return tapanyagtartalom;
+    }
+    
+    public void setTapanyagtartalom(int tapanyagtartalom) {
+        this.tapanyagtartalom = tapanyagtartalom;
     }
 
     /*

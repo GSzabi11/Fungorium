@@ -16,8 +16,17 @@ public class Gomba {
     /**
      * Létrehoz egy új Gomba példányt.
      */
-    public Gomba() {
-        System.out.println("Gomba konstructor");
+    public Gomba(Gombafaj fajta, Tekton tekton) {
+        this.fajta = fajta;
+        this.tekton = tekton;
+
+        this.eletido = 5;           // alapból 5 kor
+        this.sporaSzamlalo = 0;     // meg nem termelt egy sporat sem
+        this.szint = 1;             // alap szint
+
+        this.termeltSporak = new ArrayList<>();
+
+        //System.out.println("Gomba constructor called");
     }
 
     /**

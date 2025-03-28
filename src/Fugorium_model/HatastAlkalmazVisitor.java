@@ -14,6 +14,7 @@ public class HatastAlkalmazVisitor implements SporaVisitor {
      * @param Rovar peldany
      */
     public HatastAlkalmazVisitor(Rovar rovar) {
+        this.rovar = rovar;
         System.out.println("HatastAlkalmazVisitor constructor called");
     }
     
@@ -23,6 +24,7 @@ public class HatastAlkalmazVisitor implements SporaVisitor {
      */
     @Override
     public void visit(BenitoSporaElement benito) {
+        benito.alkalmazHatast(rovar, RovarAllapot.BENITO, 3); //egyelore hard kodoltam, hogy hany korig tart a hatas
         System.out.println("BenitoSporaElement visit method called");
     }
 
@@ -33,6 +35,7 @@ public class HatastAlkalmazVisitor implements SporaVisitor {
      */
     @Override
     public void visit(GyorsitoSporaElement gyorsito) {
+        gyorsito.alkalmazHatast(rovar, RovarAllapot.GYORSITO, 2); //egyelore hard kodoltam, hogy hany korig tart a hatas
         System.out.println("GyorsitoSporaElement visit method called");
     }
     
@@ -42,6 +45,7 @@ public class HatastAlkalmazVisitor implements SporaVisitor {
      */
     @Override
     public void visit(LassitoSporaElement lassito) {
+        lassito.alkalmazHatast(rovar, RovarAllapot.LASSITO, 2); //egyelore hard kodoltam, hogy hany korig tart a hatas
         System.out.println("LassitoSporaElement visit method called");
     }
     
@@ -51,6 +55,13 @@ public class HatastAlkalmazVisitor implements SporaVisitor {
      */
     @Override
     public void visit(VagastGatloSporaElement vagastgatlo) {
+        vagastgatlo.alkalmazHatast(rovar, RovarAllapot.VAGASTGATLO, 5); //egyelore hard kodoltam, hogy hany korig tart a hatas
         System.out.println("VagastGatloSporaElement visit method called");
+    }
+
+    @Override
+    public void visit(RovarOsztodoSporaElement rovarosztodo) {
+        rovarosztodo.alkalmazHatast(rovar, null, 0); //csak klonoz
+        System.out.println("RovarOsztodoSporaElement visit method called");
     }
 }

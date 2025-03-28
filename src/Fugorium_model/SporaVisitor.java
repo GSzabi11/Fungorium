@@ -21,4 +21,6 @@ public interface SporaVisitor {
      */
     public void visit(VagastGatloSporaElement vagastgatlo);
 
+    public void visit(RovarOsztodoSporaElement  rovarosztodo);
+
 }

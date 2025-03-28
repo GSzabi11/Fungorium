@@ -10,14 +10,14 @@ public class Tests {
      * @param sporaszam , A képzeletbeli spóraszám
      */
     public void InitTest(int k, int s, int sporaszam){
-        Gomba gomba = new Gomba();
-        Tekton tekton = new Tekton(1, "Standard", gomba);
+        Tekton tekton = new Tekton(1);
+        Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
         for(int i = 0; i<k; i++){
             tekton.kettetor();
         }
         Gombafonal gombafonal = new Gombafonal();
         SporaFactory sporaFactory = new SporaFactory();
-        Rovar rovar = new Rovar();
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         for(int i = 0; i<s; i++){
             gomba.sporaTermel();
         }
@@ -29,7 +29,8 @@ public class Tests {
      * @param rovarallapot
      */
     public void RovarAtvagjaAGombafonalat(int rovarallapot) {
-        Rovar rovar = new Rovar();
+        Tekton tekton = new Tekton(1);
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         Gombafonal gombafonal = new Gombafonal();
         if (rovarallapot == 0) rovar.fonalatVag(gombafonal);
         for (int i=0; i<3; i++){
@@ -49,9 +50,9 @@ public class Tests {
      * @param sporaszam
      */
     public void sporaszoras(int x, int sporaszam){
-        Gomba gomba = new Gomba();
-        Tekton tekton = new Tekton(1, "Standard", gomba);
-        Tekton tekton1 = new Tekton(2, "Standard", gomba);
+        Tekton tekton = new Tekton(1);
+        Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
+        Tekton tekton1 = new Tekton(2);
         tekton.hozzaadSzomszed();
         if(sporaszam >= x){
             if(gomba.szint == 1){
@@ -68,7 +69,8 @@ public class Tests {
      *  Teszt függvény a Rovar bénító spóra fogyasztásához
      */
     public void RovarBenitoSporatFogyaszt(){
-        Rovar rovar = new Rovar();
+        Tekton tekton = new Tekton(1);
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         BenitoSporaElement spora = new BenitoSporaElement();
         rovar.fogyaszt(spora);
         HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
@@ -84,7 +86,8 @@ public class Tests {
      *  Teszt függvény a Rovar gyorsító spóra fogyasztásához
      */
     public void RovarGyorsitoSporatFogyaszt(){
-        Rovar rovar = new Rovar();
+        Tekton tekton = new Tekton(1);
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         GyorsitoSporaElement spora = new GyorsitoSporaElement();
         HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
         GyorsitoHatasVisitor gyoritovisitor = new GyorsitoHatasVisitor();
@@ -100,7 +103,8 @@ public class Tests {
      *  Teszt függvény a Rovar lassító spóra fogyasztásához
      */
     public void RovarLassitoSporatFogyaszt(){
-        Rovar rovar = new Rovar();
+        Tekton tekton = new Tekton(1);
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         LassitoSporaElement spora = new LassitoSporaElement();
         HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
 
@@ -117,7 +121,8 @@ public class Tests {
      *  Teszt függvény a Rovar vágásgátló spóra fogyasztásához
      */
     public void RovarVagasGatloSporatFogyaszt(){
-        Rovar rovar = new Rovar();
+        Tekton tekton = new Tekton(1);
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         VagastGatloSporaElement spora = new VagastGatloSporaElement();
         HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(rovar);
         VagastGatloHatasVisitor vagasgatlovisitor = new VagastGatloHatasVisitor();
@@ -134,10 +139,11 @@ public class Tests {
      *  A gombatest növesztéséhez tesz függvény
      */
     public void GombatestNovesztes(){
-        Gomba gomba = new Gomba();
+        Tekton tekton = new Tekton(1);
+        Tekton tekton1 = new Tekton(2);
+        Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
         Gombafonal gombafonal = new Gombafonal();
-        Tekton tekton = new Tekton(1, "Standard", gomba);
-        Tekton tekton1 = new Tekton(2, "Standard", null);
+        
         gombafonal.probalGombatNoveszteni(tekton1);
     }
 
@@ -147,9 +153,9 @@ public class Tests {
      * @param allapot A rovar képzeletbeli állapota
      */
     public void RovarMozgasa(int i, int allapot){
-        Rovar rovar = new Rovar();
-        Tekton tekton = new Tekton(1, "Standard", null);
-        Tekton tekton1 = new Tekton(2, "Standard", null);
+        Tekton tekton = new Tekton(1);
+        Tekton tekton1 = new Tekton(2);
+        Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         tekton.hozzaadSzomszed();
         if(allapot == 0){
             rovar.mozog(tekton1);
