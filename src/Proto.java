@@ -121,7 +121,7 @@ public class Proto {
                     }
                     break;                
                 
-                    case "rovar":
+                case "rovar":
                     if (parts.length == 2 && parts[1].equals("eszik")) {
                         logger.warning("Na de mit eszik a rovar?? Hianyzik a spora ID!");
                         break;
@@ -155,6 +155,46 @@ public class Proto {
                                 logger.info("  " + entry.getKey() + ": " + entry.getValue());
                             }
                         }
+                    } else if (parts[2].equals("mozog")) {
+                        if (parts.length < 4) {
+                            logger.warning("Hibas 'rovar mozog' parancs: hianyzik a celtekton.");
+                            break;
+                        }
+
+                        String celTektonId = parts[3];
+                        Tekton cel = tektonok.get(celTektonId);
+                    
+                        if (cel == null) {
+                            logger.warning("Nem letezo tekton: " + celTektonId);
+                            break;
+                        }
+                    
+                        Tekton regiHely = rovar.getHelyzet();
+                        rovar.mozog(cel);
+
+                        if (rovar.getHelyzet() == cel) {
+                            logger.info("Rovar " + rovarId + " mozog T" + regiHely.getId() + " -> T" + celTektonId);
+                        } else {
+                            logger.info("Rovar " + rovarId + " nem mozdult meg.");
+                        }
+                    } else if (parts[2].equals("vag")) {
+                        if (parts.length < 4) {
+                            logger.warning("Hibas 'rovar vag' parancs: hianyzik a gombafonal ID.");
+                            break;
+                        }
+                    
+                        String fonalId = parts[3];
+                        if (!fonalak.containsKey(fonalId)) {
+                            logger.warning("Nem letezo gombafonal: " + fonalId);
+                            break;
+                        }
+                    
+                        Gombafonal vagandoFonal = fonalak.get(fonalId);
+                        Tekton regiHely = rovar.getHelyzet();
+                        
+                        rovar.fonalatVag(vagandoFonal);
+                    
+                        logger.info("Rovar " + rovarId + " megprobalta elvagni a fonalat (" + fonalId + ") a helyen: T" + regiHely.getId());
                     }
                     break;
 

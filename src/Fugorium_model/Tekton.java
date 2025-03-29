@@ -71,6 +71,21 @@ public class Tekton {
         }
     }
 
+    public void hozzaadFonal(Gombafonal fonal) {
+        if (!gombafonalak.contains(fonal)) {
+            gombafonalak.add(fonal);
+        }
+    }
+
+    public void removeFonal(Gombafonal fonal) {
+        gombafonalak.remove(fonal);
+        System.out.println("Tekton T" + id + " eltavolitotta a fonalat.");
+    }
+    
+    public List<Gombafonal> getGombafonalak() {
+        return gombafonalak;
+    }
+
     /**
      * Kiírja a tektonon található spórák számát.
      */

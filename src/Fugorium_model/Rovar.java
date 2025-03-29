@@ -1,6 +1,7 @@
 package Fugorium_model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Rovar {
@@ -59,6 +60,25 @@ public class Rovar {
             System.out.println("A rovar benult, nem tud mozogni.");
             return;
         }
+
+        boolean vanFonal = false;
+
+            for (Gombafonal fonal : helyzet.getGombafonalak()) {
+                List<Tekton> pontok = fonal.getKapcsolodasiPontok();
+                for (int i = 0; i < pontok.size() - 1; i++) {
+                    if ((pontok.get(i) == helyzet && pontok.get(i + 1) == celtekton) ||
+                        (pontok.get(i) == celtekton && pontok.get(i + 1) == helyzet)) {
+                        vanFonal = true;
+                        break;
+                    }
+                }
+                if (vanFonal) break;
+            }
+
+            if (!vanFonal) {
+                System.out.println("A rovar nem tud ide mozogni, nincs fonal.");
+                return;
+            }
     
         if (allapot.get(RovarAllapot.GYORSITO) > 0) {
             this.sebesseg = 2.0;
@@ -95,15 +115,29 @@ public class Rovar {
      * @param gombafonal vágnivaló gombafonal
      */
     public void fonalatVag(Gombafonal gombafonal){
+        System.out.println("Rovar.fonalatVag() method called");
         if (allapot.get(RovarAllapot.VAGASTGATLO) > 0) {
             System.out.println("A rovar nem tud vagni (vagasgatlo hatas alatt van).");
             return;
         }
+
+        Tekton jelenlegi = this.getHelyzet();
+        List<Tekton> pontok = gombafonal.getKapcsolodasiPontok();
+        for (int i = 0; i < pontok.size() - 1; i++) {
+            Tekton egyik = pontok.get(i);
+            Tekton masik = pontok.get(i + 1);
     
-        // különben...
-        System.out.println("Rovar elvagta a fonalat.");
-        gombafonal.megszakad();
-        System.out.println("Rovar.fonalatVag()");
+            // Ha a rovar az egyik ponton van, akkor az o egyik szomszedjat vagjuk
+            if (jelenlegi == egyik || jelenlegi == masik) {
+                egyik.removeFonal(gombafonal);
+                masik.removeFonal(gombafonal);
+                System.out.println("Rovar elvagta a fonalat a kovetkezo pontok kozott: T" + egyik.getId() + " <-> T" + masik.getId());
+                gombafonal.megszakad();
+                return;
+            }
+        }
+    
+        System.out.println("A rovar nem tud vagni, nincs fonal a jelenlegi helyzetenel.");
     }
 
     /** Visszaadja a paraméterként kapott rovarállapotot, hogy hatása alatt van-e

@@ -29,16 +29,38 @@ public class Gombafonal {
         // Majd a cél tekton
         this.kapcsolodasiPontok.add(celTekton);
 
+        gomba.getTekton().hozzaadFonal(this);
+        celTekton.hozzaadFonal(this);
+
         System.out.println("Gombafonal letrehozva: kiindulasi gomba = " + gomba.getFajta()
             + ", utvonal: T" + gomba.getTekton().getId() + " -> T" + celTekton.getId());
 
+    }
+
+    public List<Tekton> getKapcsolodasiPontok() {
+        return kapcsolodasiPontok;
     }
 
     /**
      * Megszakítja a fonalat.
      */
     public void megszakad() {
-        System.out.println("Gombafonal.megszakad()");
+        System.out.println("Gombafonal.megszakad() method called");
+
+        for (int i = 0; i < kapcsolodasiPontok.size() - 1; i++) {
+            Tekton egyik = kapcsolodasiPontok.get(i);
+            Tekton masik = kapcsolodasiPontok.get(i + 1);
+            
+            // Ha mar egyik sem tartalmazza ezt a fonalat (el lett vagva)
+            if (!egyik.getGombafonalak().contains(this) && !masik.getGombafonalak().contains(this)) {
+                // Vagas pontjanal megszakitjuk a fonalat: csak az addigi resze marad meg
+                kapcsolodasiPontok = kapcsolodasiPontok.subList(0, i + 1); // A vagas elotti resz megmarad
+                System.out.println("Fonal megszakadt a pontnal: T" + egyik.getId() + " <-> T" + masik.getId());
+                return;
+            }
+        }
+    
+        System.out.println("Nem talaltunk vagasi pontot, kapcsolodasiPontok valtozatlan."); //nem kellene elofordulnia
     }
 
     /**
@@ -60,6 +82,7 @@ public class Gombafonal {
         }
     
             kapcsolodasiPontok.add(celTekton);
+            celTekton.hozzaadFonal(this);
             System.out.println("Gombafonal tovabb nott T" + celTekton.getId() + "-re.");
     }
 

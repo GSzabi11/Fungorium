@@ -3,10 +3,10 @@ Tekton constructor called
 Tekton T1 szomszedaihoz hozzaadjuk: T2
 Tekton T2 szomszedaihoz hozzaadjuk: T1
 Tekton.kettetor called
-Tekton constructor called
+Rovar konstructor
 Gomba constructor called
 Gombafonal constructor called
-Gombafonal letrehozva: kiindulasi gomba = SARGA, utvonal: T1 -> T2
+Gombafonal letrehozva: kiindulasi gomba = KEK, utvonal: T1 -> T2
 Gomba uj gombafonalat noveszt T2-re.
-Gombafonal.novekszik()
-HIBA: T3 nem szomszedja a fonal utolso pontjanak (T2)
+Rovar mozog: uj hely: T2, sebesseg: 1.0
+Rovar.mozog()

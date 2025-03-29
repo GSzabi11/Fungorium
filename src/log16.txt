@@ -1,0 +1,22 @@
+Tekton constructor called
+Tekton constructor called
+Tekton T1 szomszedaihoz hozzaadjuk: T2
+Tekton T2 szomszedaihoz hozzaadjuk: T1
+Tekton.kettetor called
+Gomba constructor called
+Gombafonal constructor called
+Gombafonal letrehozva: kiindulasi gomba = KEK, utvonal: T1 -> T2
+Gomba uj gombafonalat noveszt T2-re.
+Rovar konstructor
+LassitoSporaElement constructor called, nutrition value: 9
+A rovar tapanyagtartalma: 0
+Rovar elfogyasztotta a sporat! +9 tapanyag. Osszesen: 9
+Rovar.fogyaszt()
+HatastAlkalmazVisitor constructor called
+Allapot beallitva: LASSITO (2 korre)
+LassitoSporaElement alkalmazHatast method called
+LassitoSporaElement visit method called
+LassitoSporaElement accept method called
+A rovar tapanyagtartalma: 9
+Rovar mozog: uj hely: T2, sebesseg: 0.5
+Rovar.mozog()

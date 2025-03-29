@@ -1,0 +1,4 @@
+init tekton T1
+tekton T1 torik
+init rovar R1 LILA T1
+rovar R1 mozog T2
