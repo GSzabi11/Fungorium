@@ -26,7 +26,7 @@ public class Gomba {
 
         this.termeltSporak = new ArrayList<>();
 
-        //System.out.println("Gomba constructor called");
+        System.out.println("Gomba constructor called");
     }
 
     /**

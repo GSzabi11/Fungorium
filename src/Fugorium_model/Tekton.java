@@ -37,7 +37,7 @@ public class Tekton {
         this.nohetGomba = false;
 
         this.gomba = null;
-        //System.out.println("Tekton constructor called");
+        System.out.println("Tekton constructor called");
     }
 
     public int getId() {
@@ -55,8 +55,20 @@ public class Tekton {
     /**
      * A tekton kettétörését végrehajtó metódus.
      */
-    public void kettetor() {
-        System.out.println("Tekton.kettetor() called");
+    public void kettetor(Tekton ujTekton) {
+        hozzaadSzomszed(ujTekton);
+        ujTekton.hozzaadSzomszed(this);
+        System.out.println("Tekton.kettetor called");
+    }
+
+    /**
+     * Hozzáad egy új szomszédos tektont a listához.
+     */
+    public void hozzaadSzomszed(Tekton szomszed) {
+        if (!szomszedok.contains(szomszed)) {
+            szomszedok.add(szomszed);
+            System.out.println("Tekton T" + id + " szomszedaihoz hozzaadjuk: T" + szomszed.getId());
+        }
     }
 
     /**
@@ -74,16 +86,9 @@ public class Tekton {
     }
 
     /**
-     * Hozzáad egy új szomszédos tektont a listához.
-     */
-    public void hozzaadSzomszed() {
-        System.out.println("Tektonhoz szomszédot adtunk hozza");
-    }
-
-    /**
      * Kiírja a tekton szomszédos tektonjait.
      */
-    public void getSzomszedok() {
-        System.out.println("Tekton.getSzomszedok() called");
+    public List<Tekton> getSzomszedok() {
+        return szomszedok;
     }
 }

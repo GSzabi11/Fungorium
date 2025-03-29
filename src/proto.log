@@ -1,10 +1,8 @@
-márc. 28, 2025 8:43:05 DU. Proto main
+márc. 29, 2025 12:59:50 DE. Proto main
 INFO: Tekton letrehozva: T1
-márc. 28, 2025 8:43:05 DU. Proto main
-INFO: Rovar létrehozva: R1, fajtaja: LILA, tekton: T1
-márc. 28, 2025 8:43:05 DU. Proto main
-INFO: Spora letrehozva: S1, tipus: BENITO, tapanyag: 8
-márc. 28, 2025 8:43:05 DU. Proto main
-INFO: Rovar R1 jelenlegi tapanyaga: 0
-márc. 28, 2025 8:43:05 DU. Proto main
-INFO: Rovar R1 elfogyasztotta a spórát: S1 jelenlegi tapanyaga: 8
+márc. 29, 2025 12:59:50 DE. Proto main
+INFO: Tekton T1 kettetort -> uj tekton: T2
+márc. 29, 2025 12:59:50 DE. Proto main
+INFO: Tekton T1 szomszédai:
+márc. 29, 2025 12:59:50 DE. Proto main
+INFO:   T2

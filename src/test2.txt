@@ -1,0 +1,5 @@
+init tekton T1
+init rovar R1 LILA T1
+init spora S1 lassito tapanyag 10
+rovar R1 eszik S1
+rovar R1 allapot

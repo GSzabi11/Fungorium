@@ -1,0 +1,11 @@
+Tekton constructor called
+Rovar konstructor
+RovarOsztodoSporaElement letrehozva, tapanyag: 5
+A rovar tapanyagtartalma: 0
+Rovar elfogyasztotta a sporat! +5 tapanyag. Osszesen: 5
+Rovar.fogyaszt()
+HatastAlkalmazVisitor constructor called
+Rovar konstructor
+Uj rovar klonozva! (BARNA) Tekton: T1
+RovarOsztodoSporaElement visit method called
+A rovar tapanyagtartalma: 5

@@ -1,6 +1,7 @@
 package Fugorium_model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Rovar {
     
@@ -9,7 +10,6 @@ public class Rovar {
     private int tapanyag;
     private double sebesseg;
     private HashMap<RovarAllapot, Integer> allapot;
-
 
     /**
      * Konstruktor
@@ -24,7 +24,7 @@ public class Rovar {
         for (RovarAllapot a : RovarAllapot.values()) {
             allapot.put(a, 0);
         }
-        //System.out.println("Rovar konstructor");
+        System.out.println("Rovar konstructor");
     }
 
     public Tekton getHelyzet() {
@@ -37,7 +37,11 @@ public class Rovar {
 
     public void setAllapot(RovarAllapot allapot, int duration) {
         this.allapot.put(allapot, duration);
-        System.out.println("Allapot beállítva: " + allapot + " (" + duration + " korre)");
+        System.out.println("Allapot beallitva: " + allapot + " (" + duration + " korre)");
+    }
+
+    public HashMap<RovarAllapot, Integer> getAllapotMap() {
+        return this.allapot;
     }
 
     /** Fogadja a HatasVisitorok visit függvényét
@@ -83,6 +87,7 @@ public class Rovar {
     }
 
     public int getTapanyag() {
+        System.out.println("A rovar tapanyagtartalma: " + tapanyag);
         return tapanyag;
     }
 

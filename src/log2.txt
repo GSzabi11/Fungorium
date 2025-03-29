@@ -1,0 +1,12 @@
+Tekton constructor called
+Rovar konstructor
+BenitoSporaElement constructor called, nutrition value: 10
+A rovar tapanyagtartalma: 0
+Rovar elfogyasztotta a sporat! +10 tapanyag. Osszesen: 10
+Rovar.fogyaszt()
+HatastAlkalmazVisitor constructor called
+Allapot beallitva: LASSITO (2 korre)
+LassitoSporaElement alkalmazHatast method called
+LassitoSporaElement visit method called
+LassitoSporaElement accept method called
+A rovar tapanyagtartalma: 10

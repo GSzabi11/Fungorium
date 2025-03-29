@@ -13,7 +13,7 @@ public class Tests {
         Tekton tekton = new Tekton(1);
         Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
         for(int i = 0; i<k; i++){
-            tekton.kettetor();
+            tekton.kettetor(new Tekton(2));
         }
         Gombafonal gombafonal = new Gombafonal();
         SporaFactory sporaFactory = new SporaFactory();
@@ -53,7 +53,8 @@ public class Tests {
         Tekton tekton = new Tekton(1);
         Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
         Tekton tekton1 = new Tekton(2);
-        tekton.hozzaadSzomszed();
+        tekton.hozzaadSzomszed(tekton1);
+        tekton1.hozzaadSzomszed(tekton);
         if(sporaszam >= x){
             if(gomba.szint == 1){
                 gomba.sporaz();
@@ -156,7 +157,8 @@ public class Tests {
         Tekton tekton = new Tekton(1);
         Tekton tekton1 = new Tekton(2);
         Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
-        tekton.hozzaadSzomszed();
+        tekton.hozzaadSzomszed(tekton1);
+        tekton1.hozzaadSzomszed(tekton);
         if(allapot == 0){
             rovar.mozog(tekton1);
         }

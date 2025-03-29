@@ -17,6 +17,7 @@ public class Proto {
     static Map<String, Spora> sporak = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
+
         // Log fajlba iranyitasa
         FileHandler fh = new FileHandler("proto.log", false);
         logger.addHandler(fh);
@@ -31,19 +32,18 @@ public class Proto {
 
             String[] parts = line.split(" ");
             switch (parts[0]) {
-                case "init" -> {
+                case "init":
                     if (parts[1].equals("tekton")) {
-                        String rawId = parts[2];            // "T1"
-                        int id = getIntId(rawId);           // → 1
+                        String rawId = parts[2];
+                        int id = getIntId(rawId);
                         Tekton t = new Tekton(id);
                         tektonok.put(rawId, t);
                         logger.info("Tekton letrehozva: " + rawId);
-
                     } else if (parts[1].equals("rovar")) {
-                        String rawId = parts[2];             // R1
-                        String fajtaStr = parts[3].toUpperCase(); // "lila" → "LILA"
-                        String tektonId = parts[4];          // T1
-
+                        String rawId = parts[2];
+                        String fajtaStr = parts[3].toUpperCase();
+                        String tektonId = parts[4];
+            
                         Rovarfaj fajta;
                         try {
                             fajta = Rovarfaj.valueOf(fajtaStr);
@@ -51,22 +51,21 @@ public class Proto {
                             logger.warning("Ismeretlen rovarfajta: " + fajtaStr);
                             break;
                         }
-
+            
                         Tekton helyzet = tektonok.get(tektonId);
                         if (helyzet == null) {
                             logger.warning("Nem letezo tekton: " + tektonId);
                             break;
                         }
-
+            
                         Rovar r = new Rovar(fajta, helyzet);
                         rovarok.put(rawId, r);
-                        logger.info("Rovar létrehozva: " + rawId + ", fajtaja: " + fajta + ", tekton: " + tektonId);
-
+                        logger.info("Rovar letrehozva: " + rawId + ", fajtaja: " + fajta + ", tekton: " + tektonId);
                     } else if (parts[1].equals("gomba")) {
-                        String rawId = parts[2];                 // pl. G1
-                        String fajtaStr = parts[3].toUpperCase(); // pl. "piros"
-                        String tektonId = parts[4];             // pl. T1
-
+                        String rawId = parts[2];
+                        String fajtaStr = parts[3].toUpperCase();
+                        String tektonId = parts[4];
+            
                         Gombafaj fajta;
                         try {
                             fajta = Gombafaj.valueOf(fajtaStr);
@@ -74,25 +73,22 @@ public class Proto {
                             logger.warning("Ismeretlen gombafajta: " + fajtaStr);
                             break;
                         }
-
+            
                         Tekton tekton = tektonok.get(tektonId);
                         if (tekton == null) {
-                            logger.warning("Nem létező tekton: " + tektonId);
+                            logger.warning("Nem letezo tekton: " + tektonId);
                             break;
                         }
-
+            
                         Gomba gomba = new Gomba(fajta, tekton);
-                        gombak.put(rawId, gomba); 
-                        tekton.setGomba(gomba);   // ketiranyu kapcsolat gomba es tekton kozott
+                        gombak.put(rawId, gomba);
+                        tekton.setGomba(gomba);
                         logger.info("Gomba letrehozva: " + rawId + ", fajta: " + fajta + ", tekton: " + tektonId);
-
-
                     } else if (parts[1].equals("spora")) {
-                        String rawId = parts[2];             // pl. S1
-                        String tipus = parts[3].toLowerCase();  // pl. benito
+                        String rawId = parts[2];
+                        String tipus = parts[3].toLowerCase();
                         int tapanyag = 0;
-
-                        // Keresd meg a "tapanyag" kulcsszót és olvasd utána az értéket
+            
                         for (int i = 4; i < parts.length - 1; i++) {
                             if (parts[i].equalsIgnoreCase("tapanyag")) {
                                 try {
@@ -103,49 +99,98 @@ public class Proto {
                                 break;
                             }
                         }
-
-                        Spora spora = switch (tipus) {
-                            case "benito" -> new BenitoSporaElement(tapanyag);
-                            case "lassito" -> new LassitoSporaElement(tapanyag);
-                            case "gyorsito" -> new GyorsitoSporaElement(tapanyag);
-                            case "vagastgatlo" -> new VagastGatloSporaElement(tapanyag);
-                            default -> null;
-                        };
-
-                        if (spora == null) {
-                            logger.warning("Ismeretlen sporatipus: " + tipus);
-                            break;
+            
+                        Spora spora = null;
+                        switch (tipus) {
+                            case "benito" -> spora = new BenitoSporaElement(tapanyag);
+                            case "lassito" -> spora = new LassitoSporaElement(tapanyag);
+                            case "gyorsito" -> spora = new GyorsitoSporaElement(tapanyag);
+                            case "vagastgatlo" -> spora = new VagastGatloSporaElement(tapanyag);
+                            case "osztodo" -> spora = new RovarOsztodoSporaElement(tapanyag);
+                            default -> {
+                                logger.warning("Ismeretlen sporatipus: " + tipus);
+                                break;
+                            }
                         }
-
-                        sporak.put(rawId, spora);
-                        logger.info("Spora letrehozva: " + rawId + ", tipus: " + tipus.toUpperCase() + ", tapanyag: " + tapanyag);
+            
+                        if (spora != null) {
+                            sporak.put(rawId, spora);
+                            logger.info("Spora letrehozva: " + rawId + ", tipus: " + tipus.toUpperCase() + ", tapanyag: " + tapanyag);
+                        }
                     }
-                }
-                case "rovar" -> {
+                    break;
+            
+                case "rovar":
+                    if (parts.length == 2 && parts[1].equals("eszik")) {
+                        
+                        break;
+                    }
+            
                     String rovarId = parts[1];
-                
                     if (!rovarok.containsKey(rovarId)) {
                         logger.warning("Nem letezo rovar: " + rovarId);
                         break;
                     }
-                
+            
                     Rovar rovar = rovarok.get(rovarId);
-                
+            
                     if (parts[2].equals("eszik")) {
                         String sporaId = parts[3];
-                
                         if (!sporak.containsKey(sporaId)) {
-                            logger.warning("Nem letező spóra: " + sporaId);
+                            logger.warning("Nem letezo spora: " + sporaId);
                             break;
                         }
-                
+            
                         Spora spora = sporak.get(sporaId);
                         logger.info("Rovar " + rovarId + " jelenlegi tapanyaga: " + rovar.getTapanyag());
                         rovar.fogyaszt(spora);
-                        logger.info("Rovar " + rovarId + " elfogyasztotta a spórát: " + sporaId + " jelenlegi tapanyaga: " + rovar.getTapanyag());
+                        logger.info("Rovar " + rovarId + " elfogyasztotta a sporat: " + sporaId + " jelenlegi tapanyaga: " + rovar.getTapanyag());
+            
+                    } else if (parts[2].equals("allapot")) {
+                        HashMap<RovarAllapot, Integer> allapotok = rovar.getAllapotMap();
+                        logger.info("Rovar " + rovarId + " allapotai:");
+                        for (Map.Entry<RovarAllapot, Integer> entry : allapotok.entrySet()) {
+                            if (entry.getValue() > 0) {
+                                logger.info("  " + entry.getKey() + ": " + entry.getValue());
+                            }
+                        }
+                    }
+                    break;
+                case "tekton":
+                String tektonId = parts[1];
+
+                Tekton eredeti = tektonok.get(tektonId);
+                if (eredeti == null) {
+                    logger.warning("Nincs ilyen tekton: " + tektonId);
+                    break;
+                }
+            
+                if (parts[2].equals("torik")) {
+                    // Új ID meghatarozasa
+                    int maxId = tektonok.values().stream()
+                        .mapToInt(Tekton::getId)
+                        .max()
+                        .orElse(1);
+            
+                    int ujId = maxId + 1;
+                    Tekton uj = new Tekton(ujId);
+            
+                    eredeti.kettetor(uj);
+            
+                    String ujNev = "T" + ujId;
+                    tektonok.put(ujNev, uj);
+                    logger.info("Tekton " + tektonId + " kettetort -> uj tekton: " + ujNev);
+                }
+            
+                else if (parts[2].equals("szomszedok")) {
+                    logger.info("Tekton " + tektonId + " szomszédai:");
+                    for (Tekton sz : eredeti.getSzomszedok()) {
+                        logger.info("  T" + sz.getId());
                     }
                 }
-                
+            
+                break;
+
             }
 
         }

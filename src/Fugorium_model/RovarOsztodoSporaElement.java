@@ -4,7 +4,7 @@ public class RovarOsztodoSporaElement extends Spora {
 
     public RovarOsztodoSporaElement(int tapanyagtartalom) {
         super(tapanyagtartalom);
-        System.out.println("RovarOsztodoSporaElement létrehozva, tápanyag: " + tapanyagtartalom);
+        System.out.println("RovarOsztodoSporaElement letrehozva, tapanyag: " + tapanyagtartalom);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class RovarOsztodoSporaElement extends Spora {
 
         // Most hova tegyük az új rovart?
         // Ideiglenesen csak logoljuk:
-        System.out.println("Új rovar klónozva! (" + fajta + ") Tekton: T" + helyzet.getId());
+        System.out.println("Uj rovar klonozva! (" + fajta + ") Tekton: T" + helyzet.getId());
 
     }
 
