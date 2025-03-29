@@ -1,6 +1,6 @@
 Tekton constructor called
 Rovar konstructor
-BenitoSporaElement constructor called, nutrition value: 15
+GyorsitoSporaElement constructor called, nutrition value: 15
 A rovar tapanyagtartalma: 0
 Rovar elfogyasztotta a sporat! +15 tapanyag. Osszesen: 15
 Rovar.fogyaszt()

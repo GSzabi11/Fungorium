@@ -7,12 +7,12 @@ public class GyorsitoSporaElement extends Spora {
 
     public GyorsitoSporaElement() {
         super();  // hivja a szulo parameter nelkuli konstruktorat
-        System.out.println("BenitoSporaElement constructor called, nutrition value: 0");
+        System.out.println("GyorsitoSporaElement constructor called, nutrition value: 0");
     }
 
     public GyorsitoSporaElement(int tapanyagtartalom) {
         super(tapanyagtartalom);  // hivja a szulo parameteres konstruktorat
-        System.out.println("BenitoSporaElement constructor called, nutrition value: " + tapanyagtartalom);
+        System.out.println("GyorsitoSporaElement constructor called, nutrition value: " + tapanyagtartalom);
     }
     
     /*

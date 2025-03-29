@@ -1,0 +1,3 @@
+init tekton T1
+init gomba G1 KEK T1
+gomba G1 sporat termel

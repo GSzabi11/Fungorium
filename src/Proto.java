@@ -183,12 +183,58 @@ public class Proto {
                 }
             
                 else if (parts[2].equals("szomszedok")) {
-                    logger.info("Tekton " + tektonId + " szomszédai:");
+                    logger.info("Tekton " + tektonId + " szomszedai:");
                     for (Tekton sz : eredeti.getSzomszedok()) {
                         logger.info("  T" + sz.getId());
                     }
                 }
             
+                break;
+
+                case "gomba":
+                String gombaId = parts[1];
+
+                if (!gombak.containsKey(gombaId)) {
+                    logger.warning("Nincs ilyen gomba: " + gombaId);
+                    break;
+                }
+
+                Gomba g = gombak.get(gombaId);
+
+                switch (parts[2]) {
+                    case "sporat":
+                        if (parts.length >= 4 && parts[3].equals("termel")) {
+                            g.sporaTermel();
+                            logger.info("Gomba " + gombaId + " sporat termelt.");
+                        } else {
+                            logger.warning("Hibas parancs: hianyzik a 'termel' kulcsszo.");
+                        }
+                        break;
+
+                    case "sporaz":
+                        g.sporaz();
+                        logger.info("Gomba " + gombaId + " sporaz.");
+                        break;
+
+                    case "fonalat":
+                        if (parts.length >= 6 && parts[3].equals("noveszt") && parts[4].equals("tekton")) {
+                            String celTektonId = parts[5];
+                            Tekton cel = tektonok.get(celTektonId);
+                            if (cel != null) {
+                                g.novesztFonal();
+                                logger.info("Gomba " + gombaId + " fonalat novesztett a tektonra: " + celTektonId);
+                            } else {
+                                logger.warning("Celtekton nem letezik: " + celTektonId);
+                            }
+                        } else {
+                            logger.warning("Hibas 'fonalat noveszt' parancs.");
+                        }
+                        break;
+
+                    default:
+                        logger.warning("Ismeretlen gomba parancs: " + parts[2]);
+                        break;
+                }
                 break;
 
             }

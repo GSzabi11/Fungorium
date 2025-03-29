@@ -47,7 +47,12 @@ public class Gomba {
      * A gomba új spórákat termel.
      */
     public void sporaTermel() {
-        System.out.println("Gomba.sporaTermel()");
+        System.out.println("Sporak szama spora termeles elott: " + sporaSzamlalo);
+        SporaFactory factory = new SporaFactory();
+        Spora ujSpora = factory.createRandomSpora();
+        termeltSporak.add(ujSpora);
+        sporaSzamlalo++;
+        System.out.println("Gomba.sporaTermel() - sporak szama: " + sporaSzamlalo);
     }
 
     /**
