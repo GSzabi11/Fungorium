@@ -29,6 +29,14 @@ public class Gomba {
         System.out.println("Gomba constructor called");
     }
 
+    public Tekton getTekton() {
+        return tekton;
+    }
+
+    public Gombafaj getFajta() {
+        return fajta;
+    }
+
     /**
      * A gomba spórákat szór szét a környezetébe.
      */
@@ -37,10 +45,25 @@ public class Gomba {
     }
 
     /**
-     * A gomba egy új gombafonalat növeszt.
+     * A gomba egy uj gombafonalat noveszt.
      */
-    public void novesztFonal() {
-        System.out.println("Gomba.novesztFonal()");
+    public Gombafonal novesztUjFonal(Tekton celTekton) {
+        if (!tekton.getSzomszedok().contains(celTekton)) {
+            System.out.println("HIBA: T" + celTekton.getId() + " nem szomszedja a gomba tektonjanak (T" + tekton.getId() + ")");
+            return null;
+        }
+
+        Gombafonal fonal = new Gombafonal(this, celTekton);
+        System.out.println("Gomba uj gombafonalat noveszt T" + celTekton.getId() + "-re.");
+        return fonal;
+    }
+
+        /**
+     * A gomba egy mar meglevo gombafonalat noveszt tovabb.
+     */
+    public void novesztMeglevoFonalt(Gombafonal fonal, Tekton celTekton) {
+        fonal.novekszik(celTekton);
+        System.out.println("Gomba meglevo fonalat noveszt T" + celTekton.getId() + "-re.");
     }
 
     /**

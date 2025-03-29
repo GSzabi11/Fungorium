@@ -3,5 +3,5 @@ Gomba constructor called
 Sporak szama spora termeles elott: 0
 SporaFactory createRandomSpora method called
 SporaFactory created RovarOsztodoSporaElement
-RovarOsztodoSporaElement letrehozva, tapanyag: 3
+RovarOsztodoSporaElement letrehozva, tapanyag: 4
 Gomba.sporaTermel() - sporak szama: 1

@@ -1,0 +1,4 @@
+init tekton T1
+init tekton T2
+init gomba G1 KEK T1
+gomba G1 gombafonalat noveszt tekton T2

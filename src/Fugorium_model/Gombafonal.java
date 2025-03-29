@@ -14,8 +14,24 @@ public class Gombafonal {
     /**
      * Létrehoz egy új Gombafonal példányt.
      */
-    public Gombafonal() {
-        System.out.println("Gombafonal konstructor");
+    public Gombafonal(Gomba gomba, Tekton celTekton) {
+        System.out.println("Gombafonal constructor called");
+        this.kiindulasiGomba = gomba;
+        this.kapcsolodasiPontok = new ArrayList<>();
+        this.eletido = 0;
+        this.max_eletido = 10;
+        this.haldoklik = false;
+        this.spora_kuszob_gomba_novekedeshez = 3;
+
+        // Kiinduló pont: a gomba helye
+        this.kapcsolodasiPontok.add(gomba.getTekton());
+
+        // Majd a cél tekton
+        this.kapcsolodasiPontok.add(celTekton);
+
+        System.out.println("Gombafonal letrehozva: kiindulasi gomba = " + gomba.getFajta()
+            + ", utvonal: T" + gomba.getTekton().getId() + " -> T" + celTekton.getId());
+
     }
 
     /**
@@ -30,8 +46,15 @@ public class Gombafonal {
      *
      * @param tekton A céltekton, amelybe a fonal nő
      */
-    public void novekszik(Tekton tekton) {
+    public void novekszik(Tekton celTekton) {
         System.out.println("Gombafonal.novekszik()");
+        if (kapcsolodasiPontok.contains(celTekton)) {
+            System.out.println("Fonal mar tartalmazza T" + celTekton.getId() + "-t, nem novekszik tovabb.");
+            return;
+        }
+    
+            kapcsolodasiPontok.add(celTekton);
+            System.out.println("Gombafonal tovabb nott T" + celTekton.getId() + "-re.");
     }
 
     /**

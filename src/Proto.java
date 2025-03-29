@@ -122,7 +122,7 @@ public class Proto {
             
                 case "rovar":
                     if (parts.length == 2 && parts[1].equals("eszik")) {
-                        
+                        logger.warning("Na de mit eszik a rovar?? Hianyzik a spora ID!");
                         break;
                     }
             
@@ -216,18 +216,23 @@ public class Proto {
                         logger.info("Gomba " + gombaId + " sporaz.");
                         break;
 
-                    case "fonalat":
+                        case "gombafonalat":
                         if (parts.length >= 6 && parts[3].equals("noveszt") && parts[4].equals("tekton")) {
                             String celTektonId = parts[5];
                             Tekton cel = tektonok.get(celTektonId);
                             if (cel != null) {
-                                g.novesztFonal();
-                                logger.info("Gomba " + gombaId + " fonalat novesztett a tektonra: " + celTektonId);
+                                Gombafonal ujFonal = g.novesztUjFonal(cel);
+                                if (ujFonal != null) {
+                                    logger.info("Gomba " + gombaId + " uj fonalat novesztett: " +
+                                                "T" + g.getTekton().getId() + " -> T" + celTektonId);
+                                } else {
+                                    logger.warning("Gomba " + gombaId + " nem tudott fonalat noveszteni T" + celTektonId + "-re: nem szomszédos!");
+                                }
                             } else {
                                 logger.warning("Celtekton nem letezik: " + celTektonId);
                             }
                         } else {
-                            logger.warning("Hibas 'fonalat noveszt' parancs.");
+                            logger.warning("Hibas 'gombafonalat noveszt' parancs.");
                         }
                         break;
 

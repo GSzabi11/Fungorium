@@ -12,10 +12,12 @@ public class Tests {
     public void InitTest(int k, int s, int sporaszam){
         Tekton tekton = new Tekton(1);
         Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
-        for(int i = 0; i<k; i++){
-            tekton.kettetor(new Tekton(2));
+        Tekton ujTekton = null;
+        for (int i = 0; i < k; i++) {
+            ujTekton = new Tekton(2 + i);
+            tekton.kettetor(ujTekton);
         }
-        Gombafonal gombafonal = new Gombafonal();
+        Gombafonal gombafonal = new Gombafonal(gomba, ujTekton);
         SporaFactory sporaFactory = new SporaFactory();
         Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
         for(int i = 0; i<s; i++){
@@ -30,8 +32,10 @@ public class Tests {
      */
     public void RovarAtvagjaAGombafonalat(int rovarallapot) {
         Tekton tekton = new Tekton(1);
+        Tekton cel = new Tekton(2);
         Rovar rovar = new Rovar(Rovarfaj.CIAN, tekton);
-        Gombafonal gombafonal = new Gombafonal();
+        Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
+        Gombafonal gombafonal = new Gombafonal(gomba, cel);
         if (rovarallapot == 0) rovar.fonalatVag(gombafonal);
         for (int i=0; i<3; i++){
             gombafonal.csokkentiEletidot();
@@ -143,7 +147,7 @@ public class Tests {
         Tekton tekton = new Tekton(1);
         Tekton tekton1 = new Tekton(2);
         Gomba gomba = new Gomba(Gombafaj.KEK, tekton);
-        Gombafonal gombafonal = new Gombafonal();
+        Gombafonal gombafonal = new Gombafonal(gomba, tekton1);
         
         gombafonal.probalGombatNoveszteni(tekton1);
     }

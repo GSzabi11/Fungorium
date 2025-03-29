@@ -1,6 +1,8 @@
-márc. 29, 2025 9:12:29 DE. Proto main
+márc. 29, 2025 10:22:26 DE. Proto main
 INFO: Tekton letrehozva: T1
-márc. 29, 2025 9:12:29 DE. Proto main
+márc. 29, 2025 10:22:26 DE. Proto main
+INFO: Tekton letrehozva: T2
+márc. 29, 2025 10:22:26 DE. Proto main
 INFO: Gomba letrehozva: G1, fajta: KEK, tekton: T1
-márc. 29, 2025 9:12:29 DE. Proto main
-INFO: Gomba G1 sporat termelt.
+márc. 29, 2025 10:22:26 DE. Proto main
+WARNING: Gomba G1 nem tudott fonalat noveszteni TT2-re: nem szomszédos!
