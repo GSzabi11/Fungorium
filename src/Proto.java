@@ -15,6 +15,7 @@ public class Proto {
     static Map<String, Rovar> rovarok = new HashMap<>();
     static Map<String, Gomba> gombak = new HashMap<>();
     static Map<String, Spora> sporak = new HashMap<>();
+    static Map<String, Gombafonal> fonalak = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -118,9 +119,9 @@ public class Proto {
                             logger.info("Spora letrehozva: " + rawId + ", tipus: " + tipus.toUpperCase() + ", tapanyag: " + tapanyag);
                         }
                     }
-                    break;
-            
-                case "rovar":
+                    break;                
+                
+                    case "rovar":
                     if (parts.length == 2 && parts[1].equals("eszik")) {
                         logger.warning("Na de mit eszik a rovar?? Hianyzik a spora ID!");
                         break;
@@ -156,85 +157,112 @@ public class Proto {
                         }
                     }
                     break;
-                case "tekton":
-                String tektonId = parts[1];
 
-                Tekton eredeti = tektonok.get(tektonId);
-                if (eredeti == null) {
-                    logger.warning("Nincs ilyen tekton: " + tektonId);
-                    break;
-                }
-            
-                if (parts[2].equals("torik")) {
-                    // Új ID meghatarozasa
-                    int maxId = tektonok.values().stream()
-                        .mapToInt(Tekton::getId)
-                        .max()
-                        .orElse(1);
-            
-                    int ujId = maxId + 1;
-                    Tekton uj = new Tekton(ujId);
-            
-                    eredeti.kettetor(uj);
-            
-                    String ujNev = "T" + ujId;
-                    tektonok.put(ujNev, uj);
-                    logger.info("Tekton " + tektonId + " kettetort -> uj tekton: " + ujNev);
-                }
-            
-                else if (parts[2].equals("szomszedok")) {
-                    logger.info("Tekton " + tektonId + " szomszedai:");
-                    for (Tekton sz : eredeti.getSzomszedok()) {
-                        logger.info("  T" + sz.getId());
+                
+                case "gombafonal":
+                    String fonalId = parts[1];
+                
+                    if (!fonalak.containsKey(fonalId)) {
+                        logger.warning("Nincs ilyen gombafonal: " + fonalId);
+                        break;
                     }
-                }
-            
-                break;
+                
+                    Gombafonal fonal = fonalak.get(fonalId);
+                
+                    if (parts.length >= 4 && parts[2].equals("tovabbno") && parts[3].equals("tekton")) {
+                        String celTektonId = parts[4];
+                        Tekton cel = tektonok.get(celTektonId);
+                        if (cel != null) {
+                            fonal.novekszik(cel);
+                            logger.info("Gombafonal " + fonalId + " tovabb nott " + celTektonId + "-re.");
+                        } else {
+                            logger.warning("Celtekton nem letezik: " + celTektonId);
+                        }
+                    } else {
+                        logger.warning("Hibas 'gombafonal tovabbno' parancs.");
+                    }
+                    break;
+
+                case "tekton":
+                    String tektonId = parts[1];
+
+                    Tekton eredeti = tektonok.get(tektonId);
+                    if (eredeti == null) {
+                        logger.warning("Nincs ilyen tekton: " + tektonId);
+                        break;
+                    }
+                
+                    if (parts[2].equals("torik")) {
+                        // Új ID meghatarozasa
+                        int maxId = tektonok.values().stream()
+                            .mapToInt(Tekton::getId)
+                            .max()
+                            .orElse(1);
+                
+                        int ujId = maxId + 1;
+                        Tekton uj = new Tekton(ujId);
+                
+                        eredeti.kettetor(uj);
+                
+                        String ujNev = "T" + ujId;
+                        tektonok.put(ujNev, uj);
+                        logger.info("Tekton " + tektonId + " kettetort -> uj tekton: " + ujNev);
+                    }
+                
+                    else if (parts[2].equals("szomszedok")) {
+                        logger.info("Tekton " + tektonId + " szomszedai:");
+                        for (Tekton sz : eredeti.getSzomszedok()) {
+                            logger.info("  T" + sz.getId());
+                        }
+                    }
+                
+                    break;
 
                 case "gomba":
-                String gombaId = parts[1];
+                    String gombaId = parts[1];
 
-                if (!gombak.containsKey(gombaId)) {
-                    logger.warning("Nincs ilyen gomba: " + gombaId);
-                    break;
-                }
-
-                Gomba g = gombak.get(gombaId);
-
-                switch (parts[2]) {
-                    case "sporat":
-                        if (parts.length >= 4 && parts[3].equals("termel")) {
-                            g.sporaTermel();
-                            logger.info("Gomba " + gombaId + " sporat termelt.");
-                        } else {
-                            logger.warning("Hibas parancs: hianyzik a 'termel' kulcsszo.");
-                        }
+                    if (!gombak.containsKey(gombaId)) {
+                        logger.warning("Nincs ilyen gomba: " + gombaId);
                         break;
+                    }
 
-                    case "sporaz":
-                        g.sporaz();
-                        logger.info("Gomba " + gombaId + " sporaz.");
-                        break;
+                    Gomba g = gombak.get(gombaId);
+
+                    switch (parts[2]) {
+                        case "sporat":
+                            if (parts.length >= 4 && parts[3].equals("termel")) {
+                                g.sporaTermel();
+                                logger.info("Gomba " + gombaId + " sporat termelt.");
+                            } else {
+                                logger.warning("Hibas parancs: hianyzik a 'termel' kulcsszo.");
+                            }
+                            break;
+
+                        case "sporaz":
+                            g.sporaz();
+                            logger.info("Gomba " + gombaId + " sporaz.");
+                            break;
 
                         case "gombafonalat":
-                        if (parts.length >= 6 && parts[3].equals("noveszt") && parts[4].equals("tekton")) {
-                            String celTektonId = parts[5];
+                        if (parts.length >= 7 && parts[4].equals("noveszt") && parts[5].equals("tekton")) {
+                            String fonalID = parts[3];
+                            String celTektonId = parts[6];
                             Tekton cel = tektonok.get(celTektonId);
                             if (cel != null) {
                                 Gombafonal ujFonal = g.novesztUjFonal(cel);
                                 if (ujFonal != null) {
-                                    logger.info("Gomba " + gombaId + " uj fonalat novesztett: " +
-                                                "T" + g.getTekton().getId() + " -> T" + celTektonId);
+                                    fonalak.put(fonalID, ujFonal);
+                                    logger.info("Gomba " + gombaId + " uj fonalat novesztett (azonosito: " + fonalID + "): " + "T" + g.getTekton().getId() + " -> T" + celTektonId);
                                 } else {
                                     logger.warning("Gomba " + gombaId + " nem tudott fonalat noveszteni T" + celTektonId + "-re: nem szomszédos!");
                                 }
                             } else {
                                 logger.warning("Celtekton nem letezik: " + celTektonId);
                             }
-                        } else {
-                            logger.warning("Hibas 'gombafonalat noveszt' parancs.");
-                        }
-                        break;
+                            } else {
+                                logger.warning("Hibas 'gombafonalat noveszt' parancs.");
+                            }
+                            break;
 
                     default:
                         logger.warning("Ismeretlen gomba parancs: " + parts[2]);

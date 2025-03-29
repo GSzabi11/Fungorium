@@ -48,6 +48,12 @@ public class Gombafonal {
      */
     public void novekszik(Tekton celTekton) {
         System.out.println("Gombafonal.novekszik()");
+        Tekton utolso = kapcsolodasiPontok.get(kapcsolodasiPontok.size() - 1);
+        if (!utolso.getSzomszedok().contains(celTekton)) {
+            System.out.println("HIBA: T" + celTekton.getId() + " nem szomszedja a fonal utolso pontjanak (T" + utolso.getId() + ")");
+            return;
+        }
+
         if (kapcsolodasiPontok.contains(celTekton)) {
             System.out.println("Fonal mar tartalmazza T" + celTekton.getId() + "-t, nem novekszik tovabb.");
             return;
