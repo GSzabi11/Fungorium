@@ -279,8 +279,9 @@ public class Proto {
                             break;
 
                         case "sporaz":
+                            int sporaszam = g.getTermeltSporakSzama();
                             g.sporaz();
-                            logger.info("Gomba " + gombaId + " sporaz.");
+                            logger.info("Gomba " + gombaId + " sporazott, " + sporaszam + " sporat szort szet.");
                             break;
 
                         case "gombafonalat":

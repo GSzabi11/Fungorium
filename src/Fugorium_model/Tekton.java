@@ -44,6 +44,10 @@ public class Tekton {
         return id;
     }
 
+    public List<Spora> getSporak() {
+        return sporak;
+    }
+
     /*
     *setter, hogy a gomba tekton attributuma es a tekton gomba attributuma szinkronban legyen
     * @param Gomba A tektonon levo gomba referenciaja

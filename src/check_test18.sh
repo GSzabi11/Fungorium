@@ -2,8 +2,6 @@
 
 cat test18.txt | java Proto > log18.txt
 
-cat test18.txt | java Proto > log18.txt
-
 if grep -q "Nem letezo" log18.txt; then
   echo -e "\e[32m[OK]\e[0m OK: rovar nem tud nem letezo fonalat vagni."
   exit 0

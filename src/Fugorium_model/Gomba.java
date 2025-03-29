@@ -37,11 +37,31 @@ public class Gomba {
         return fajta;
     }
 
+    public int getTermeltSporakSzama() {
+        return termeltSporak.size();
+    }
+
     /**
      * A gomba spórákat szór szét a környezetébe.
      */
     public void sporaz() {
-        System.out.println("Gomba.sporaz()");
+        System.out.println("Gomba.sporaz() called");
+        if (termeltSporak.isEmpty()) {
+            System.out.println("Nincs mit szorjon, a gombanak nincs termelt sporaja.");
+            return;
+        }
+
+        List<Tekton> szomszedok = tekton.getSzomszedok();
+        int i = 0;
+        for (Spora spora : termeltSporak) {
+            Tekton cel = szomszedok.get(i % szomszedok.size());
+            cel.getSporak().add(spora);
+            System.out.println("Gomba sporaz: spora atkerult T" + cel.getId() + "-re.");
+            i++;
+        }
+
+        termeltSporak.clear();
+        System.out.println("Gomba.sporaz(): minden spora elszorva, lista uritve.");
     }
 
     /**
