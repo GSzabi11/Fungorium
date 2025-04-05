@@ -1,3 +1,5 @@
+package Zsofi;
+
 import Ricsi.SporaFactory;
 import Ricsi.Tekton;
 import Ricsi.VagastGatloHatasVisitor;

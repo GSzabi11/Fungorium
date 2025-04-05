@@ -1,3 +1,5 @@
+package Zsofi;
+
 import Ricsi.Spora;
 import Ricsi.Tekton;
 import Ricsi.VagastGatloSporaElement;
@@ -23,7 +25,7 @@ public class Proto {
     public static void main(String[] args) throws Exception {
 
         // Log fajlba iranyitasa
-        FileHandler fh = new FileHandler("proto.log", false);
+        FileHandler fh = new FileHandler("Zsofi/proto.log", false);
         logger.addHandler(fh);
         logger.setUseParentHandlers(false);
         fh.setFormatter(new SimpleFormatter());

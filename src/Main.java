@@ -1,3 +1,5 @@
+import Zsofi.Tests;
+
 import java.util.Scanner;
 
 public class Main {
