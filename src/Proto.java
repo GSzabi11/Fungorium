@@ -1,7 +1,10 @@
-import Fugorium_model.*;
+import Ricsi.Spora;
+import Ricsi.Tekton;
+import Ricsi.VagastGatloSporaElement;
+import Szabi.*;
+
 import java.util.*;
 import java.util.logging.*;
-import java.io.*;
 
 
 public class Proto {

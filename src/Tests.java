@@ -1,6 +1,10 @@
-import Fugorium_model.*;
+import Ricsi.SporaFactory;
+import Ricsi.Tekton;
+import Ricsi.VagastGatloHatasVisitor;
+import Ricsi.VagastGatloSporaElement;
+import Szabi.*;
 
-import static Fugorium_model.RovarAllapot.*;
+import static Szabi.RovarAllapot.*;
 
 public class Tests {
     /**
