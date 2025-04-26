@@ -143,14 +143,50 @@ public class Rovar {
     /** Visszaadja a paraméterként kapott rovarállapotot, hogy hatása alatt van-e
      * @param rovarallapot ellenőrzendő állapot
      */
-    public void vanAllapot(RovarAllapot rovarallapot){
-        System.out.println("Rovar.vanAllapot()");
+    public Boolean vanAllapot(RovarAllapot rovarallapot){
+        if(allapot.get(RovarAllapot.GYORSITO) > 0) {
+            System.out.println("A rovar gyorsitott allapotvan van.");
+            return true;
+        }
+        if(allapot.get(RovarAllapot.LASSITO) > 0) {
+            System.out.println("A rovar gyorsitott allapotvan van.");
+            return true;
+        }
+        if(allapot.get(RovarAllapot.BENITO) > 0) {
+            System.out.println("A rovar gyorsitott allapotvan van.");
+            return true;
+        }
+        if(allapot.get(RovarAllapot.VAGASTGATLO) > 0) {
+            System.out.println("A rovar gyorsitott allapotvan van.");
+            return true;
+        }
+        System.out.println("NINCS ALLAPOT");
+        return false;
+
+
+
+
     }
 
     /** Csökkenti a paraméterként kapott állapot időtartamát
      * @param rovarallapot ezen állapot időtartamát csökkentjük
      */
     public void csokkentAllapotIdotartam(RovarAllapot rovarallapot){
-        System.out.println("Rovar.csokkentAllapotIdotartam()");
+        int duration = allapot.get(RovarAllapot.GYORSITO);
+        if(duration > 0) {
+            duration -= 1;
+        }
+        int duration2 = allapot.get(RovarAllapot.LASSITO);
+        if(duration2 > 0) {
+            duration2 -= 1;
+        }
+        int duration3 = allapot.get(RovarAllapot.BENITO);
+        if(duration3 > 0) {
+            duration3 -= 1;
+        }
+        int duration4 = allapot.get(RovarAllapot.VAGASTGATLO);
+        if(duration4 > 0) {
+            duration4 -= 1;
+        }
     }
 }
