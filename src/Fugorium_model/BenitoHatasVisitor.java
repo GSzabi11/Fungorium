@@ -14,6 +14,11 @@ public class BenitoHatasVisitor implements RovarVisitor{
      */
     @Override
     public void visit(Rovar rovar){
-        System.out.println("BenitoHatasVisitor.visit()");
+        if (rovar.getAllapotMap().get(RovarAllapot.BENITO) <= 0) {
+            rovar.setAllapot(RovarAllapot.BENITO, 3);
+            System.out.println("BenitoHatasVisitor: BENITO hatás alkalmazva a rovarra 3 körre.");
+        } else {
+            System.out.println("BenitoHatasVisitor: A rovar már BENITO hatás alatt van.");
+        } 
     }
 }

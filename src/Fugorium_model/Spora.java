@@ -12,7 +12,7 @@ public abstract class  Spora {
     /*
      * Spora parameter nelkuli konstruktora
      */
-    Spora() {
+    public Spora() {
         this.tapanyagtartalom = 0;
         System.out.println("Spora constructor called");
     }

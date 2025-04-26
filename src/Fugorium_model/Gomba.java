@@ -82,8 +82,21 @@ public class Gomba {
      * A gomba egy mar meglevo gombafonalat noveszt tovabb.
      */
     public void novesztMeglevoFonalt(Gombafonal fonal, Tekton celTekton) {
+        if (celTekton == null) {
+            System.out.println("Gomba: Hiba - érvénytelen céltekton.");
+            return;
+        }
+
+        // ellenőrizzük, hogy a céltekton szomszédos-e az aktuálissal
+        Collection<Tekton> szomszedok = this.tekton.getSzomszedok();
+        if (!szomszedok.contains(celTekton)) {
+            System.out.println("Gomba: Hiba - T" + celTekton.getId() + " nem szomszédos a gomba aktuális tektonjával.");
+            return;
+        }
+
+        // ha minden rendben, növesztjük a meglévő fonalat
         fonal.novekszik(celTekton);
-        System.out.println("Gomba meglevo fonalat noveszt T" + celTekton.getId() + "-re.");
+        System.out.println("Gomba: Meglévő fonal növesztése sikeres T" + celTekton.getId() + "-re.");
     }
 
     /**
@@ -109,6 +122,7 @@ public class Gomba {
      * A gomba elpusztul, és eltűnik a tektonról.
      */
     public void elpusztul() {
+        this.tekton.removeGomba();
         System.out.println("Gomba.elpusztul()");
     }
 }

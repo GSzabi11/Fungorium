@@ -10,6 +10,7 @@ public class Gombafonal {
     private int max_eletido; // A fonal maximális élettartama
     private boolean haldoklik; // Jelzi, ha a fonal haldoklik
     private int spora_kuszob_gomba_novekedeshez; // A spóraküszöb egy új gomba növekedéséhez
+    private double novekedesSebesseg;
 
     /**
      * Létrehoz egy új Gombafonal példányt.
@@ -90,15 +91,22 @@ public class Gombafonal {
      * Csökkenti a fonal életidejét.
      */
     public void csokkentiEletidot() {
-        System.out.println("Gombafonal.csokkentiEletido()");
-    }
+        eletido = eletido - 1;
+        System.out.println("Gombafonal: Életidő csökkent, új érték: " + eletido);
+        if (eletido <= 0) {
+            elpusztul();
+        }}
 
     /**
      * Felgyorsítja a fonal növekedését.
      */
     public void gyorsitNovekedest() {
-        System.out.println("Gombafonal.gyorsitNovekedest()");
-    }
+        novekedesSebesseg = novekedesSebesseg * 0.5;
+        System.out.println(
+            "Gombafonal: Növekedési ütem gyorsult, új késleltetés: " 
+            + novekedesSebesseg
+        );
+}
 
     /**
      * Megpróbál új gombát növeszteni a megadott tektonon.
@@ -106,13 +114,29 @@ public class Gombafonal {
      * @param tekton A céltekton, ahol új gomba növekedhet
      */
     public void probalGombatNoveszteni(Tekton tekton) {
-        System.out.println("Gombafonal.probalGombatNoveszteni()");
-    }
+        int sporaCount = tekton.getSporakSzama();
+        if (sporaCount >= spora_kuszob_gomba_novekedeshez) {
+            Gomba ujGomba = new Gomba(Gombafaj.KEK, tekton);
+            tekton.clearSporak();
+            System.out.println(
+                "Gombafonal: Új gombatest növesztése sikeres a T" 
+                + tekton.getId() + " ponton."
+            );
+        } else {
+            System.out.println(
+                "Gombafonal: Nem elegendő spóra a gombatest növekedéséhez T" 
+                + tekton.getId() + "."
+            );
+        }}
 
     /**
      * A fonal elpusztul.
      */
     public void elpusztul() {
-        System.out.println("Gombafonal.elpusztul()");
-    }
+        for (Tekton t : kapcsolodasiPontok) {
+            t.removeFonal(this);
+        }
+        System.out.println(
+            "Gombafonal: A fonal elpusztult és eltávolítva lett minden kapcsolódási pontból."
+        );}
 }

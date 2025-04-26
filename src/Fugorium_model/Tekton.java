@@ -85,6 +85,10 @@ public class Tekton {
         gombafonalak.remove(fonal);
         System.out.println("Tekton T" + id + " eltavolitotta a fonalat.");
     }
+
+    public void removeGomba(){
+        this.gomba=null;
+    }
     
     public List<Gombafonal> getGombafonalak() {
         return gombafonalak;
@@ -93,8 +97,9 @@ public class Tekton {
     /**
      * Kiírja a tektonon található spórák számát.
      */
-    public void getSporakSzama() {
+    public int getSporakSzama() {
         System.out.println("Tekton.getSporakSzama() called");
+        return sporak.size();
     }
 
     /**
