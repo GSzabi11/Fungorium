@@ -51,10 +51,20 @@ public class Gomba {
             return;
         }
 
-        List<Tekton> szomszedok = tekton.getSzomszedok();
+        Set<Tekton> celpontok = new LinkedHashSet<>(tekton.getSzomszedok());
+
+        if(szint >=2)
+        {
+            for (Tekton sz : tekton.getSzomszedok()) {
+                celpontok.addAll(sz.getSzomszedok());
+            }
+            celpontok.remove(tekton); //sajat magat ne sporazza
+        }
+
+        List<Tekton> celpontLista = new ArrayList<>(celpontok);
         int i = 0;
         for (Spora spora : termeltSporak) {
-            Tekton cel = szomszedok.get(i % szomszedok.size());
+            Tekton cel = celpontLista.get(i % celpontLista.size());
             cel.getSporak().add(spora);
             System.out.println("Gomba sporaz: spora atkerult T" + cel.getId() + "-re.");
             i++;
@@ -97,6 +107,10 @@ public class Gomba {
         // ha minden rendben, növesztjük a meglévő fonalat
         fonal.novekszik(celTekton);
         System.out.println("Gomba: Meglévő fonal növesztése sikeres T" + celTekton.getId() + "-re.");
+    }
+
+    public void fejlodik() {
+        this.szint ++;
     }
 
     /**
