@@ -38,6 +38,22 @@ public class Gombafonal {
 
     }
 
+    public Gombafonal(Gomba gomba, List<Tekton> pontok) {
+        System.out.println("Gombafonal constructor #2 called");
+        this.kiindulasiGomba = gomba;
+        this.kapcsolodasiPontok = new ArrayList<>(pontok);
+        this.eletido = 0;
+        this.max_eletido = 10;
+        this.haldoklik = false;
+        this.spora_kuszob_gomba_novekedeshez = 3;
+    
+        for (Tekton t : pontok) {
+            t.hozzaadFonal(this);
+        }
+    
+        System.out.println("Gombafonal letrehozva, utvonal: " + pontok.stream().map(p -> "T" + p.getId()).toList());
+    }
+
     public List<Tekton> getKapcsolodasiPontok() {
         return kapcsolodasiPontok;
     }
@@ -51,12 +67,43 @@ public class Gombafonal {
         for (int i = 0; i < kapcsolodasiPontok.size() - 1; i++) {
             Tekton egyik = kapcsolodasiPontok.get(i);
             Tekton masik = kapcsolodasiPontok.get(i + 1);
-            
-            // Ha mar egyik sem tartalmazza ezt a fonalat (el lett vagva)
+
             if (!egyik.getGombafonalak().contains(this) && !masik.getGombafonalak().contains(this)) {
-                // Vagas pontjanal megszakitjuk a fonalat: csak az addigi resze marad meg
-                kapcsolodasiPontok = kapcsolodasiPontok.subList(0, i + 1); // A vagas elotti resz megmarad
+                // Ez a pont a szakadasi hely
                 System.out.println("Fonal megszakadt a pontnal: T" + egyik.getId() + " <-> T" + masik.getId());
+    
+                // Szakadasi pont utani szakasz
+                List<Tekton> haldokloPontok = new ArrayList<>(kapcsolodasiPontok.subList(i + 1, kapcsolodasiPontok.size()));
+    
+                // A gombához kozelebbi resz marad az eredeti fonal
+                kapcsolodasiPontok = new ArrayList<>(kapcsolodasiPontok.subList(0, i + 1));
+    
+                // A szakadas utani resz uj fonal objektum
+                Gombafonal haldokloFonal = new Gombafonal(this.kiindulasiGomba, haldokloPontok);
+                haldokloFonal.haldoklik = true;
+    
+                // Ha egyik tekton sem eletben tarto, akkor csokkentjuk az eletidot
+                boolean eletbenTartoVan = false;
+                for (Tekton t : haldokloPontok) {
+                    if (t.getFonalFelszivodas()) {
+                        eletbenTartoVan = true;
+                        break;
+                    }
+                }
+    
+                if (!eletbenTartoVan) {
+                    haldokloFonal.eletido = haldokloFonal.max_eletido;
+                    System.out.println("Haldoklo fonal letrehozva, el fog pusztulni " + haldokloFonal.max_eletido + " kor mulva.");
+                } else {
+                    haldokloFonal.haldoklik = false;
+                    System.out.println("Fonal nem haldoklik, mert van eletben tarto tekton.");
+                }
+    
+                // Fontos: hozza kell adni a o fonalat a pontjaihoz
+                for (Tekton t : haldokloPontok) {
+                    t.hozzaadFonal(haldokloFonal);
+                }
+    
                 return;
             }
         }
@@ -91,22 +138,23 @@ public class Gombafonal {
      * Csökkenti a fonal életidejét.
      */
     public void csokkentiEletidot() {
-        eletido = eletido - 1;
-        System.out.println("Gombafonal: Életidő csökkent, új érték: " + eletido);
-        if (eletido <= 0) {
-            elpusztul();
-        }}
+        System.out.println("Gombafonal.csokkentiEletido()");
+        if (haldoklik) {
+            eletido--;
+            System.out.println("Haldoklo fonal eletideje csokkent: " + eletido);
+            if (eletido <= 0) {
+                elpusztul();
+            }
+        }
+    }
 
     /**
      * Felgyorsítja a fonal növekedését.
      */
     public void gyorsitNovekedest() {
+        System.out.println("Gombafonal.gyorsitNovekedest()");
         novekedesSebesseg = novekedesSebesseg * 0.5;
-        System.out.println(
-            "Gombafonal: Növekedési ütem gyorsult, új késleltetés: " 
-            + novekedesSebesseg
-        );
-}
+    }
 
     /**
      * Megpróbál új gombát növeszteni a megadott tektonon.
@@ -114,6 +162,7 @@ public class Gombafonal {
      * @param tekton A céltekton, ahol új gomba növekedhet
      */
     public void probalGombatNoveszteni(Tekton tekton) {
+        System.out.println("Gombafonal.probalGombatNoveszteni()");
         int sporaCount = tekton.getSporakSzama();
         if (sporaCount >= spora_kuszob_gomba_novekedeshez) {
             Gomba ujGomba = new Gomba(Gombafaj.KEK, tekton);
@@ -127,16 +176,16 @@ public class Gombafonal {
                 "Gombafonal: Nem elegendő spóra a gombatest növekedéséhez T" 
                 + tekton.getId() + "."
             );
-        }}
+        }
+    }
 
     /**
      * A fonal elpusztul.
      */
     public void elpusztul() {
+        System.out.println("Gombafonal.elpusztul()");
         for (Tekton t : kapcsolodasiPontok) {
             t.removeFonal(this);
         }
-        System.out.println(
-            "Gombafonal: A fonal elpusztult és eltávolítva lett minden kapcsolódási pontból."
-        );}
+    }
 }

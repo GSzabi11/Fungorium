@@ -3,5 +3,5 @@ Gomba constructor called
 Sporak szama spora termeles elott: 0
 SporaFactory createRandomSpora method called
 SporaFactory created VagastGatloSporaElement
-VagastGatloSporaElement constructor called, nutrition value: 8
+VagastGatloSporaElement constructor called, nutrition value: 10
 Gomba.sporaTermel() - sporak szama: 1
