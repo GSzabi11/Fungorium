@@ -1,7 +1,7 @@
-Tekton constructor called
+Tekton basic constructor called
 Gomba constructor called
 Sporak szama spora termeles elott: 0
 SporaFactory createRandomSpora method called
-SporaFactory created VagastGatloSporaElement
-VagastGatloSporaElement constructor called, nutrition value: 10
+SporaFactory created GyorsitoSporaElement
+GyorsitoSporaElement constructor called, nutrition value: 6
 Gomba.sporaTermel() - sporak szama: 1

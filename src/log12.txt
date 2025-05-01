@@ -1,5 +1,5 @@
-Tekton constructor called
-Tekton constructor called
+Tekton basic constructor called
+Tekton basic constructor called
 Tekton T1 szomszedaihoz hozzaadjuk: T2
 Tekton T2 szomszedaihoz hozzaadjuk: T1
 Tekton.kettetor called

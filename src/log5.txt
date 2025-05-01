@@ -1,4 +1,4 @@
-Tekton constructor called
+Tekton basic constructor called
 Rovar konstructor
 RovarOsztodoSporaElement letrehozva, tapanyag: 5
 A rovar tapanyagtartalma: 0

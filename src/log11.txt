@@ -1,9 +1,9 @@
-Tekton constructor called
-Tekton constructor called
+Tekton basic constructor called
+Tekton basic constructor called
 Tekton T1 szomszedaihoz hozzaadjuk: T2
 Tekton T2 szomszedaihoz hozzaadjuk: T1
 Tekton.kettetor called
-Tekton constructor called
+Tekton basic constructor called
 Gomba constructor called
 Gombafonal constructor called
 Gombafonal letrehozva: kiindulasi gomba = SARGA, utvonal: T1 -> T2

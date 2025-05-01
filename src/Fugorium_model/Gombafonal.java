@@ -6,7 +6,7 @@ import java.util.*;
 public class Gombafonal {
     private Gomba kiindulasiGomba; // A fonalat létrehozó gomba
     private List<Tekton> kapcsolodasiPontok; // A fonal által érintett tektonok
-    public int eletido = 0; // A fonal jelenlegi életideje
+    public int eletido; // A fonal jelenlegi életideje
     private int max_eletido; // A fonal maximális élettartama
     private boolean haldoklik; // Jelzi, ha a fonal haldoklik
     private int spora_kuszob_gomba_novekedeshez; // A spóraküszöb egy új gomba növekedéséhez
@@ -19,10 +19,10 @@ public class Gombafonal {
         System.out.println("Gombafonal constructor called");
         this.kiindulasiGomba = gomba;
         this.kapcsolodasiPontok = new ArrayList<>();
-        this.eletido = 0;
         this.max_eletido = 10;
         this.haldoklik = false;
         this.spora_kuszob_gomba_novekedeshez = 3;
+        this.eletido = gomba.getFajta().elhalasIdo;
 
         // Kiinduló pont: a gomba helye
         this.kapcsolodasiPontok.add(gomba.getTekton());
@@ -153,7 +153,7 @@ public class Gombafonal {
      */
     public void gyorsitNovekedest() {
         System.out.println("Gombafonal.gyorsitNovekedest()");
-        novekedesSebesseg = novekedesSebesseg * 0.5;
+        novekedesSebesseg = novekedesSebesseg * 1.5;
     }
 
     /**
@@ -165,7 +165,7 @@ public class Gombafonal {
         System.out.println("Gombafonal.probalGombatNoveszteni()");
         int sporaCount = tekton.getSporakSzama();
         if (sporaCount >= spora_kuszob_gomba_novekedeshez) {
-            Gomba ujGomba = new Gomba(Gombafaj.KEK, tekton); //ajajj, ezt kesobb ki kell JAVITANI!!!
+            Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton);
             tekton.clearSporak();
             tekton.setNohetGomba(false);
             System.out.println(

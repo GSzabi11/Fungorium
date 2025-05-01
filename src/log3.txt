@@ -1,4 +1,4 @@
-Tekton constructor called
+Tekton basic constructor called
 Rovar konstructor
 GyorsitoSporaElement constructor called, nutrition value: 15
 A rovar tapanyagtartalma: 0

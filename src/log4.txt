@@ -1,4 +1,4 @@
-Tekton constructor called
+Tekton basic constructor called
 Rovar konstructor
 VagastGatloSporaElement constructor called, nutrition value: 27
 A rovar tapanyagtartalma: 0
