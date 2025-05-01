@@ -14,3 +14,6 @@ Tekton T2 eltavolitotta a fonalat.
 Rovar elvagta a fonalat a kovetkezo pontok kozott: T1 <-> T2
 Gombafonal.megszakad() method called
 Fonal megszakadt a pontnal: T1 <-> T2
+Gombafonal constructor #2 called
+Gombafonal letrehozva, utvonal: [T2]
+Haldoklo fonal letrehozva, el fog pusztulni 10 kor mulva.

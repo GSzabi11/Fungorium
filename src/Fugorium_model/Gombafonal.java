@@ -85,7 +85,7 @@ public class Gombafonal {
                 // Ha egyik tekton sem eletben tarto, akkor csokkentjuk az eletidot
                 boolean eletbenTartoVan = false;
                 for (Tekton t : haldokloPontok) {
-                    if (t.getFonalFelszivodas()) {
+                    if (t.isEletbentarto()) {
                         eletbenTartoVan = true;
                         break;
                     }
@@ -165,8 +165,9 @@ public class Gombafonal {
         System.out.println("Gombafonal.probalGombatNoveszteni()");
         int sporaCount = tekton.getSporakSzama();
         if (sporaCount >= spora_kuszob_gomba_novekedeshez) {
-            Gomba ujGomba = new Gomba(Gombafaj.KEK, tekton);
+            Gomba ujGomba = new Gomba(Gombafaj.KEK, tekton); //ajajj, ezt kesobb ki kell JAVITANI!!!
             tekton.clearSporak();
+            tekton.setNohetGomba(false);
             System.out.println(
                 "Gombafonal: Új gombatest növesztése sikeres a T" 
                 + tekton.getId() + " ponton."

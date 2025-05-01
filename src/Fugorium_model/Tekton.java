@@ -17,6 +17,7 @@ public class Tekton {
     private boolean fonalfelszivodas; // Igaz, ha a fonal felszívódik a tektonon
     private boolean keresztezodhet; // Igaz, ha a tektonon kereszteződhetnek a fonalak
     private boolean nohetGomba; // Igaz, ha a tektonon nőhet gomba
+    private boolean eletbentarto; // Igaz, ha a tekton eletben tartja a gombafonalat szakadas utan is
 
     /**
      * Létrehoz egy új Tekton példányt a megadott paraméterekkel.
@@ -35,13 +36,45 @@ public class Tekton {
         this.fonalfelszivodas = false;
         this.keresztezodhet = false;
         this.nohetGomba = false;
+        this.eletbentarto = false;
 
         this.gomba = null;
-        System.out.println("Tekton constructor called");
+        System.out.println("Tekton basic constructor called");
+    }
+
+    public Tekton(int id, boolean fonalfelszivodas, boolean keresztezodhet, boolean nohetGomba, boolean eletbentarto) {
+        this.id = id;
+        this.szomszedok = new ArrayList<>();
+        this.sporak = new ArrayList<>();
+        this.gombafonalak = new ArrayList<>();
+        this.gomba = null;
+    
+        this.fonalfelszivodas = fonalfelszivodas;
+        this.keresztezodhet = keresztezodhet;
+        this.nohetGomba = nohetGomba;
+        this.eletbentarto = eletbentarto;
+    
+        System.out.println("Tekton constructor called: T" + id + 
+            " (fonalfelszivodas: " + fonalfelszivodas +
+            ", fonalak keresztezodhetnek: " + keresztezodhet +
+            ", nohet gomba: " + nohetGomba +
+            ", eletben tarto: " + eletbentarto + ")");
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setNohetGomba(boolean tf){
+        this.nohetGomba = tf;
+    }
+
+    public boolean isFonalfelszivodo(){
+        return fonalfelszivodas;
+    }
+
+    public boolean isEletbentarto(){
+        return eletbentarto;
     }
 
     public List<Spora> getSporak() {
@@ -60,8 +93,26 @@ public class Tekton {
      * A tekton kettétörését végrehajtó metódus.
      */
     public void kettetor(Tekton ujTekton) {
-        hozzaadSzomszed(ujTekton);
+        ujTekton.fonalfelszivodas = this.fonalfelszivodas;
+        ujTekton.keresztezodhet = this.keresztezodhet;
+        ujTekton.eletbentarto = this.eletbentarto;
+
+        if (this.gomba == null) {
+            ujTekton.nohetGomba = this.nohetGomba;
+        } else {
+            ujTekton.nohetGomba = true;
+        }
+
+        this.hozzaadSzomszed(ujTekton);
         ujTekton.hozzaadSzomszed(this);
+
+        for (Tekton szomszed : this.szomszedok) {
+            if (szomszed != ujTekton) {
+                ujTekton.hozzaadSzomszed(szomszed);
+                szomszed.hozzaadSzomszed(ujTekton);
+            }
+        }
+
         System.out.println("Tekton.kettetor called");
     }
 
