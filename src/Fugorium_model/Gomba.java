@@ -70,6 +70,13 @@ public class Gomba {
             i++;
         }
 
+        for (Tekton cel : celpontLista) {
+            for (Gombafonal fonal : cel.getGombafonalak()) {
+                fonal.setGyorsitottNovekedes(true);
+                System.out.println("Gombafonal gyorsitva a T" + cel.getId() + " tektonon.");
+            }
+        }
+
         termeltSporak.clear();
         System.out.println("Gomba.sporaz(): minden spora elszorva, lista uritve.");
     }

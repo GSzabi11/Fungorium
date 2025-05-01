@@ -1,5 +1,5 @@
 Tekton basic constructor called
-Rovar konstructor
+Rovar konstruktor
 BenitoSporaElement constructor called, nutrition value: 8
 A rovar tapanyagtartalma: 0
 Rovar elfogyasztotta a sporat! +8 tapanyag. Osszesen: 8

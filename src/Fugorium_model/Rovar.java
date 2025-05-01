@@ -25,7 +25,7 @@ public class Rovar {
         for (RovarAllapot a : RovarAllapot.values()) {
             allapot.put(a, 0);
         }
-        System.out.println("Rovar konstructor");
+        System.out.println("Rovar konstruktor");
     }
 
     public Tekton getHelyzet() {
@@ -104,6 +104,17 @@ public class Rovar {
 
         HatastAlkalmazVisitor visitor = new HatastAlkalmazVisitor(this);
         spora.accept(visitor);
+
+        //Spora eltavolitasa a tektonrol
+        List<Spora> sporak = helyzet.getSporak();
+        sporak.remove(spora);
+
+        //Ha az elfogyasztott spora volt az utolso a tektonon, akkor kikapcsoljuk a gyorsitast a fonalon
+        if (sporak.isEmpty()) {
+            for (Gombafonal fonal : helyzet.getGombafonalak()) {
+                fonal.setGyorsitottNovekedes(false);
+            }
+        }
     }
 
     public int getTapanyag() {
@@ -188,5 +199,9 @@ public class Rovar {
         if(duration4 > 0) {
             duration4 -= 1;
         }
+    }
+
+    public void elpusztul() {
+        System.out.println("Rovar elpusztult!");
     }
 }

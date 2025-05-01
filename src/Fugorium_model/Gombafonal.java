@@ -10,7 +10,7 @@ public class Gombafonal {
     private int max_eletido; // A fonal maximális élettartama
     private boolean haldoklik; // Jelzi, ha a fonal haldoklik
     private int spora_kuszob_gomba_novekedeshez; // A spóraküszöb egy új gomba növekedéséhez
-    private double novekedesSebesseg;
+    private boolean gyorsitottNovekedes = false;
 
     /**
      * Létrehoz egy új Gombafonal példányt.
@@ -56,6 +56,14 @@ public class Gombafonal {
 
     public List<Tekton> getKapcsolodasiPontok() {
         return kapcsolodasiPontok;
+    }
+
+    public void setGyorsitottNovekedes(boolean b) {
+        this.gyorsitottNovekedes = b;
+    }
+    
+    public boolean isGyorsitottNovekedes() {
+        return gyorsitottNovekedes;
     }
 
     /**
@@ -111,6 +119,24 @@ public class Gombafonal {
         System.out.println("Nem talaltunk vagasi pontot, kapcsolodasiPontok valtozatlan."); //nem kellene elofordulnia
     }
 
+    public void rovartFogyaszt(List<Rovar> rovarok) {
+        System.out.println("Gombafonal.rovartFogyaszt() called");
+    
+        for (Tekton tekton : kapcsolodasiPontok) {
+            Iterator<Rovar> iterator = rovarok.iterator();
+            while (iterator.hasNext()) {
+                Rovar rovar = iterator.next();
+                if (rovar.getHelyzet() == tekton && rovar.getAllapotMap().get(RovarAllapot.BENITO) > 0) {
+                    System.out.println("Fonal megette a benult rovart a T" + tekton.getId() + " zektonon.");
+                    iterator.remove();  // rovar elpusztul
+    
+                    // Gombat noveszt az adott tektonon
+                    gombatNovesztDoglottRovarbol(tekton);
+                }
+            }
+        }
+    }
+
     /**
      * Növekedést végez a megadott tekton irányába.
      *
@@ -149,14 +175,6 @@ public class Gombafonal {
     }
 
     /**
-     * Felgyorsítja a fonal növekedését.
-     */
-    public void gyorsitNovekedest() {
-        System.out.println("Gombafonal.gyorsitNovekedest()");
-        novekedesSebesseg = novekedesSebesseg * 1.5;
-    }
-
-    /**
      * Megpróbál új gombát növeszteni a megadott tektonon.
      *
      * @param tekton A céltekton, ahol új gomba növekedhet
@@ -178,6 +196,19 @@ public class Gombafonal {
                 + tekton.getId() + "."
             );
         }
+    }
+
+    public void gombatNovesztDoglottRovarbol(Tekton tekton) {
+        System.out.println("Gombafonal.gombatNovesztDoglottRovarbol()");
+    
+        if (tekton == null || !tekton.isNohetGomba()) {
+            System.out.println("Nem lehet gombat noveszteni ezen a tektonon (T" + tekton.getId() + ").");
+            return;
+        }
+    
+        Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton);
+        tekton.setNohetGomba(false);
+        System.out.println("Gombatest novesztese elfogyasztitt rovarbol sikeres a T" + tekton.getId() + " tektonon.");
     }
 
     /**

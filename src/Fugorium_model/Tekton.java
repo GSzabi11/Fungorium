@@ -69,6 +69,10 @@ public class Tekton {
         this.nohetGomba = tf;
     }
 
+    public boolean isNohetGomba(){
+        return nohetGomba;
+    }
+
     public boolean isFonalfelszivodo(){
         return fonalfelszivodas;
     }

@@ -7,7 +7,7 @@ Gomba constructor called
 Gombafonal constructor called
 Gombafonal letrehozva: kiindulasi gomba = KEK, utvonal: T1 -> T2
 Gomba uj gombafonalat noveszt T2-re.
-Rovar konstructor
+Rovar konstruktor
 Rovar.fonalatVag() method called
 Tekton T1 eltavolitotta a fonalat.
 Tekton T2 eltavolitotta a fonalat.

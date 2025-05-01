@@ -7,7 +7,7 @@ Gomba constructor called
 Gombafonal constructor called
 Gombafonal letrehozva: kiindulasi gomba = KEK, utvonal: T1 -> T2
 Gomba uj gombafonalat noveszt T2-re.
-Rovar konstructor
+Rovar konstruktor
 VagastGatloSporaElement constructor called, nutrition value: 8
 A rovar tapanyagtartalma: 0
 Rovar elfogyasztotta a sporat! +8 tapanyag. Osszesen: 8
