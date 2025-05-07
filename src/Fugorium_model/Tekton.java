@@ -73,6 +73,10 @@ public class Tekton {
         return nohetGomba;
     }
 
+    public boolean isSzomszed(Tekton masikTekton){
+        return szomszedok.contains(masikTekton);
+    }
+
     public boolean isFonalfelszivodo(){
         return fonalfelszivodas;
     }
