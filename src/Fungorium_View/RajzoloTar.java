@@ -59,7 +59,5 @@ public class RajzoloTar {
         rajzolo.rajzol(g2, model);
     }
 
-    public void register(Class<Tekton> tektonClass, TektonView tektonView) {
-    }
 }
 
