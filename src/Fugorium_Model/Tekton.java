@@ -1,5 +1,9 @@
 package Fugorium_Model;
 
+import Fungorium_View.JatekTer;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 /**
@@ -17,13 +21,12 @@ public class Tekton {
     private boolean fonalfelszivodas; // Igaz, ha a fonal felszívódik a tektonon
     private boolean keresztezodhet; // Igaz, ha a tektonon kereszteződhetnek a fonalak
     private boolean nohetGomba; // Igaz, ha a tektonon nőhet gomba
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Létrehoz egy új Tekton példányt a megadott paraméterekkel.
      *
      * @param id A tekton egyedi azonosítója
-     * @param tipus A tekton típusa
-     * @param gomba A tektonhoz tartozó gomba objektum
      */
     public Tekton(int id) {
         this.id = id;
@@ -114,5 +117,17 @@ public class Tekton {
      */
     public List<Tekton> getSzomszedok() {
         return szomszedok;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String property, Object oldVal, Object newVal) {
+        pcs.firePropertyChange(property, oldVal, newVal);
     }
 }

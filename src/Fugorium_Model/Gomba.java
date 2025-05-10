@@ -1,5 +1,9 @@
 package Fugorium_Model;
 
+import Fungorium_View.JatekTer;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 /**
  * A Gomba osztály egy gomba objektumot reprezentál a játékban.
@@ -12,6 +16,7 @@ public class Gomba {
     private int eletido; // A gomba élettartama
     public int szint; // A gomba fejlettségi szintje
     private List<Spora> termeltSporak; // A gomba által termelt spórák listája
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Létrehoz egy új Gomba példányt.
@@ -124,5 +129,17 @@ public class Gomba {
     public void elpusztul() {
         this.tekton.removeGomba();
         System.out.println("Gomba.elpusztul()");
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String property, Object oldVal, Object newVal) {
+        pcs.firePropertyChange(property, oldVal, newVal);
     }
 }

@@ -67,7 +67,7 @@ public class Gombafonal {
     /**
      * Növekedést végez a megadott tekton irányába.
      *
-     * @param tekton A céltekton, amelybe a fonal nő
+     * @param Tekton A céltekton, amelybe a fonal nő
      */
     public void novekszik(Tekton celTekton) {
         System.out.println("Gombafonal.novekszik()");
@@ -139,4 +139,9 @@ public class Gombafonal {
         System.out.println(
             "Gombafonal: A fonal elpusztult és eltávolítva lett minden kapcsolódási pontból."
         );}
+
+    public List<Tekton> getKapcsolodasPontok() {
+        return kapcsolodasiPontok;
+    }
+
 }

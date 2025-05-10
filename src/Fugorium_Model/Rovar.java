@@ -1,5 +1,9 @@
 package Fugorium_Model;
 
+import Fungorium_View.JatekTer;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +14,7 @@ public class Rovar {
     private int tapanyag;
     private double sebesseg;
     private HashMap<RovarAllapot, Integer> allapot;
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Konstruktor
@@ -187,5 +192,18 @@ public class Rovar {
         if(duration4 > 0) {
             duration4 -= 1;
         }
+    }
+
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String property, Object oldVal, Object newVal) {
+        pcs.firePropertyChange(property, oldVal, newVal);
     }
 }
