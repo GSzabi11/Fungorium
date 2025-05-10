@@ -1,6 +1,4 @@
 import Fugorium_Model.*;
-import Fugorium_controller.*;
-import Fugorium_View.*;
 import Fungorium_Controller.GameEngine;
 import Fungorium_View.*;
 
@@ -14,7 +12,7 @@ public class MainFrame {
             Vilag vilag = new Vilag();
 
             // Rajzolóregiszter feltöltése
-            RajzoloRegistry rajzoloTar = new RajzoloRegistry();
+            RajzoloTar rajzoloTar = new RajzoloTar();
             rajzoloTar.register(Tekton.class, new TektonView());
             rajzoloTar.register(Rovar.class, new RovarView());
             rajzoloTar.register(Gombafonal.class, new GombafonalView());

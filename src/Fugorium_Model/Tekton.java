@@ -51,6 +51,12 @@ public class Tekton {
         return sporak;
     }
 
+    public void addSpora(Spora spora) {
+        if (!sporak.contains(spora)) {
+            sporak.add(spora);
+        }
+    }
+
     /*
     *setter, hogy a gomba tekton attributuma es a tekton gomba attributuma szinkronban legyen
     * @param Gomba A tektonon levo gomba referenciaja

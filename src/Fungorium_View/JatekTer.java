@@ -1,9 +1,7 @@
 package Fungorium_View;
 
 import Fugorium_Model.*;
-import Fungorium_Controller.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.*;
@@ -11,9 +9,9 @@ import javax.swing.*;
 public class JatekTer extends JPanel implements PropertyChangeListener {
 
     private final Vilag vilag;
-    private final RajzoloRegistry rajzoloTar;
+    private final RajzoloTar rajzoloTar;
 
-    public JatekTer(Vilag vilag, RajzoloRegistry rajzoloTar) {
+    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar) {
         this.vilag = vilag;
         this.rajzoloTar = rajzoloTar;
 
@@ -80,16 +78,16 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
-    void peldaHaznalat(){
-        rajzoloTar.regisztral(Tekton.class, new TektonView());
-        rajzoloTar.regisztral(Gombafonal.class, new GombafonalView());
-        rajzoloTar.regisztral(Gomba.class, new GombaView());
-        rajzoloTar.regisztral(Rovar.class, new RovarView());
-        rajzoloTar.regisztral(Spora.class, new SporaView());
-
-        rajzoloTar.rajzol(g2, tekton);
-        rajzoloTar.rajzol(g2, rovar);
-
-    }
+//    void peldaHaznalat(){
+//        rajzoloTar.regisztral(Tekton.class, new TektonView());
+//        rajzoloTar.regisztral(Gombafonal.class, new GombafonalView());
+//        rajzoloTar.regisztral(Gomba.class, new GombaView());
+//        rajzoloTar.regisztral(Rovar.class, new RovarView());
+//        rajzoloTar.regisztral(Spora.class, new SporaView());
+//
+//        rajzoloTar.rajzol(g2, tekton);
+//        rajzoloTar.rajzol(g2, rovar);
+//
+//    }
 }
 

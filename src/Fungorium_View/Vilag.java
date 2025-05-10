@@ -77,35 +77,15 @@ public class Vilag {
 
         // Gombák termelnek
         for (Gomba g : new ArrayList<>(gombak)) {
-            List<Spora> ujSporak = g.sporaTermel();
-            if (ujSporak != null && !ujSporak.isEmpty()) {
-                Tekton t = g.getTekton();
-                for (Spora s : ujSporak) {
-                    t.addSpora(s);
-                }
-                fireChange("spora", null, ujSporak);
-            }
-        }
-
-        // Fonalak növekednek és elhalnak ha kell
-        for (Tekton t : mezok) {
-            for (Gombafonal gf : t.getGombafonalak()) {
-                //gf.scheduleDestruction(); // fonaltípus alapján időzített elhalás
-                //gf.eatParalyzedRovarok(); // ha van ilyen rovar
-            }
+            g.sporaTermel();
         }
     }
 
-    // === KERESÉSEK ID ALAPJÁN (opcionális) ===
-    public Tekton findTektonById(int id) {
-        return mezok.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
-    }
-
-    public Rovar findRovarById(int id) {
-        return rovarok.stream().filter(r -> r.getId() == id).findFirst().orElse(null);
-    }
-
-    public Gomba findGombaById(int id) {
-        return gombak.stream().filter(g -> g.getId() == id).findFirst().orElse(null);
-    }
+    // Fonalak növekednek és elhalnak ha kell
+//        for(Tekton t : mezok) {
+//            for (Gombafonal gf : t.getGombafonalak()) {
+//                //gf.scheduleDestruction(); // fonaltípus alapján időzített elhalás
+//                //gf.eatParalyzedRovarok(); // ha van ilyen rovar
+//            }
+//        }
 }

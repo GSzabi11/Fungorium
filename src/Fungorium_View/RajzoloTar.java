@@ -1,5 +1,7 @@
 package Fungorium_View;
 
+import Fugorium_Model.Tekton;
+
 import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +57,9 @@ public class RajzoloTar {
     public void rajzol(Graphics2D g2, Object model) {
         Rajzolo rajzolo = getRajzolo(model);
         rajzolo.rajzol(g2, model);
+    }
+
+    public void register(Class<Tekton> tektonClass, TektonView tektonView) {
     }
 }
 

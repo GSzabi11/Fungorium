@@ -57,7 +57,7 @@ public class Rovar {
     }
 
     /** Rovart mozgat a paraméterként kapott tektonra
-     * @param tekton céltekton
+     * @param celtekton céltekton
      */
     public void mozog(Tekton celtekton){
         if (allapot.get(RovarAllapot.BENITO) > 0) {
