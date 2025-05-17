@@ -14,13 +14,15 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     private final Vilag vilag;
     private final RajzoloTar rajzoloTar;
     private Image backgroundImage;
+    private KorView korView;
 
     // Új mező: kié a kör
     private String korTulajdonos = "Rovarász"; // alapértelmezett
 
-    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar) {
+    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar, KorView korView) {
         this.vilag = vilag;
         this.rajzoloTar = rajzoloTar;
+        this.korView = korView;
 
         try {
             backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/background.jpg")));
@@ -51,6 +53,18 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     public void setKorTulajdonos(String korTulajdonos) {
         this.korTulajdonos = korTulajdonos;
         repaint();
+
+        if (korView != null) {
+            if (korTulajdonos.equals("Gombász")) {
+                korView.csakGombasznak();
+            } else {
+                korView.csakRovarasznak();
+            }
+        }
+    }
+
+    public String getKorTulajdonos() {
+        return korTulajdonos;
     }
 
     @Override

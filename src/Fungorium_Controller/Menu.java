@@ -108,7 +108,7 @@ public class Menu {
             // Proceed to game
             frame.dispose();
             MainFrame mainFrame = new MainFrame();
-            mainFrame.jatekMenu();
+            mainFrame.jatekMenu(playerList);
         });
 
         frame.setVisible(true);
