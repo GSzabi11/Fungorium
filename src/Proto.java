@@ -1,7 +1,6 @@
-import Fugorium_model.*;
+import Fugorium_Model.*;
 import java.util.*;
 import java.util.logging.*;
-import java.io.*;
 
 
 public class Proto {

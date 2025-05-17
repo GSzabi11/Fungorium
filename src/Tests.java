@@ -1,6 +1,6 @@
-import Fugorium_model.*;
+import Fugorium_Model.*;
 
-import static Fugorium_model.RovarAllapot.*;
+import static Fugorium_Model.RovarAllapot.*;
 
 public class Tests {
     /**
