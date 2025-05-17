@@ -19,10 +19,12 @@ public class GameEngine {
         this.vilag = vilag;
         this.jatekTer = jatekTer;
 
+
         // Timer csak a repainthez és léptetéshez, de nem vált köröket
         this.timer = new Timer(1000 / 30, e -> {
             vilag.leptet();
             jatekTer.repaint();
+            vilag.initEntities();
         });
     }
 
