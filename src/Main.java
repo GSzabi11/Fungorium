@@ -1,9 +1,7 @@
-import Fungorium_Controller.*;
+import Fungorium_Controller.Menu;
 
-
-public class Main{
+public class Main {
     public static void main(String[] args) {
-        Menu menu = new Menu();
-        menu.menu();
+        Menu.menu();
     }
 }

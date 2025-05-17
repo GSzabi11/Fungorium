@@ -1,23 +1,23 @@
-import Fugorium_Model.*;
-import Fungorium_Controller.GameEngine;
-import Fungorium_View.*;
+package Fungorium_Controller;
 
+import Fugorium_Model.*;
+import Fungorium_View.*;
 import javax.swing.*;
 
 public class MainFrame {
 
-    public void majdnemmain() {
+    public void jatekMenu() {
         SwingUtilities.invokeLater(() -> {
             // Modell
             Vilag vilag = new Vilag();
 
             // Rajzolóregiszter feltöltése
             RajzoloTar rajzoloTar = new RajzoloTar();
-            rajzoloTar.regisztral(Tekton.class, new TektonView(500,500, 50, 50, new ImageIcon("fung_pngk/image9.png").getImage()));
-            rajzoloTar.regisztral(Rovar.class, new RovarView());
-            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView());
-            rajzoloTar.regisztral(Gomba.class, new GombaView());
-            rajzoloTar.regisztral(Spora.class, new SporaView());
+            rajzoloTar.regisztral(Tekton.class, new TektonView(500,500, 50, 50, new ImageIcon("fung_pngk/tekton.png").getImage()));
+            rajzoloTar.regisztral(Rovar.class, new RovarView(500,500, 50, 50, new ImageIcon("fung_pngk/rovar_barna.png").getImage()));
+            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(500,500, 50, 50, new ImageIcon("gombafonal_lila/image9.png").getImage()));
+            rajzoloTar.regisztral(Gomba.class, new GombaView(500,500, 50, 50, new ImageIcon("fung_pngk/gomba_kek.png").getImage()));
+            rajzoloTar.regisztral(Spora.class, new SporaView(500,500, 50, 50, new ImageIcon("fung_pngk/spora.png").getImage()));
             // … további regisztrációk, pl. OsztodoSpora, ha van külön típus
 
             // Nézet
