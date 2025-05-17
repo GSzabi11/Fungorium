@@ -31,7 +31,7 @@ public class Menu {
         frame.setLocationRelativeTo(null);
 
         // Background image
-        JLabel background = new JLabel(new ImageIcon(new ImageIcon("fung_pngk/background.jpg").getImage()));
+        JLabel background = new JLabel(new ImageIcon(new ImageIcon("Images/background.jpg").getImage()));
         background.setLayout(null);
         frame.setContentPane(background);
 

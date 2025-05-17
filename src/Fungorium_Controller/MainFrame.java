@@ -13,11 +13,11 @@ public class MainFrame {
 
             // Rajzolóregiszter feltöltése
             RajzoloTar rajzoloTar = new RajzoloTar();
-            rajzoloTar.regisztral(Tekton.class, new TektonView(500,500, 50, 50, new ImageIcon("fung_pngk/tekton.png").getImage()));
-            rajzoloTar.regisztral(Rovar.class, new RovarView(500,500, 50, 50, new ImageIcon("fung_pngk/rovar_barna.png").getImage()));
-            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(500,500, 50, 50, new ImageIcon("gombafonal_lila/image9.png").getImage()));
-            rajzoloTar.regisztral(Gomba.class, new GombaView(500,500, 50, 50, new ImageIcon("fung_pngk/gomba_kek.png").getImage()));
-            rajzoloTar.regisztral(Spora.class, new SporaView(500,500, 50, 50, new ImageIcon("fung_pngk/spora.png").getImage()));
+            rajzoloTar.regisztral(Tekton.class, new TektonView(500,500, 50, 50, new ImageIcon("Images/tekton.png").getImage()));
+            rajzoloTar.regisztral(Rovar.class, new RovarView(500,500, 50, 50, new ImageIcon("Images/rovar_barna.png").getImage()));
+            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(500,500, 50, 50, new ImageIcon("Images/gombafonal_lila.png").getImage()));
+            rajzoloTar.regisztral(Gomba.class, new GombaView(500,500, 50, 50, new ImageIcon("Images/gomba_kek.png").getImage()));
+            rajzoloTar.regisztral(Spora.class, new SporaView(500,500, 50, 50, new ImageIcon("Images/spora.png").getImage()));
             // … további regisztrációk, pl. OsztodoSpora, ha van külön típus
 
             // Nézet
