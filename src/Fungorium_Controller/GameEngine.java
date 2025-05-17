@@ -13,15 +13,17 @@ public class GameEngine {
     private final Vilag vilag;
     private final JatekTer jatekTer;
     private final Timer timer;
-    private final List<String> szerepek;
+    //private final List<String> szerepek;
+    private final List<Menu.Player> jatekosok;
     private int korIndex = 0;
 
     //private boolean rovaraszKor = true; // true = rovarász, false = gombász
 
-    public GameEngine(Vilag vilag, JatekTer jatekTer, List<String> szerepek) {
+    public GameEngine(Vilag vilag, JatekTer jatekTer, List<Menu.Player> jatekosok) {
         this.vilag = vilag;
         this.jatekTer = jatekTer;
-        this.szerepek = szerepek;
+        this.jatekosok = jatekosok;
+        this.korIndex = 0;
 
 
         // Timer csak a repainthez és léptetéshez, de nem vált köröket
@@ -36,15 +38,22 @@ public class GameEngine {
      * Ezt a metódust kell meghívni, amikor a játékos befejezi a lépését.
      */
     public void kovetkezoKor() {
-        korIndex = (korIndex + 1) % szerepek.size();
-        jatekTer.setKorTulajdonos(szerepek.get(korIndex));
-        System.out.println("Köre van: " + szerepek.get(korIndex));
+        korIndex = (korIndex + 1) % jatekosok.size();
+        updateKorTulajdonosFelirat();
 
         // Itt lehet további körváltáshoz kötött logikát elhelyezni
     }
 
+    private void updateKorTulajdonosFelirat() {
+        Menu.Player aktualis = jatekosok.get(korIndex);
+        String felirat = aktualis.name + " (" + aktualis.role + ")";
+        jatekTer.setKorTulajdonos(felirat);
+        System.out.println("Köre van: " + felirat);
+    }
+
+
     public void start() {
-        jatekTer.setKorTulajdonos(szerepek.get(korIndex));
+        updateKorTulajdonosFelirat();
         timer.start();
     }
 
@@ -55,5 +64,9 @@ public class GameEngine {
     public void restart() {
         stop();
         start();
+    }
+
+    public int getKorIndex() {
+        return korIndex;
     }
 }

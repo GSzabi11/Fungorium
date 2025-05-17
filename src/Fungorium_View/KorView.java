@@ -38,11 +38,45 @@ public class KorView extends JPanel {
         fonalVagas.setVisible(false);
     }
 
+    public void csakKorVegeMarad() {
+        gombatestNoveszt.setEnabled(false);
+        sporaz.setEnabled(false);
+        fonalNoveszt.setEnabled(false);
+        mozgas.setEnabled(false);
+        fonalVagas.setEnabled(false);
+        korVege.setEnabled(true); // ez marad aktív
+    }
+
     public void csakRovarasznak() {
         gombatestNoveszt.setVisible(false);
         sporaz.setVisible(false);
         fonalNoveszt.setVisible(false);
         mozgas.setVisible(true);
         fonalVagas.setVisible(true);
+    }
+
+    public JButton getFonalVagasButton() {
+        return fonalVagas;
+    }
+
+    public JButton getGombatestNovesztButton() {
+        return gombatestNoveszt;
+    }
+
+    public JButton getSporazButton() {
+        return sporaz;
+    }
+
+    public JButton getFonalNovesztButton() {
+        return fonalNoveszt;
+    }
+
+    public void resetAllButtons() {
+        gombatestNoveszt.setEnabled(true);
+        sporaz.setEnabled(true);
+        fonalNoveszt.setEnabled(true);
+        mozgas.setEnabled(true);
+        fonalVagas.setEnabled(true);
+        korVege.setEnabled(true);
     }
 }

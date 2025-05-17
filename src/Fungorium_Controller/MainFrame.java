@@ -15,11 +15,11 @@ public class MainFrame extends JFrame {
             this.korView = new KorView();
 
             RajzoloTar rajzoloTar = new RajzoloTar();
-            rajzoloTar.regisztral(Tekton.class, new TektonView(20,12, 40, 40));
-            rajzoloTar.regisztral(Rovar.class, new RovarView(21,24, 50, 50));
-            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145,76, 50, 56));
-            rajzoloTar.regisztral(Gomba.class, new GombaView(28,15, 50, 50));
-            rajzoloTar.regisztral(Spora.class, new SporaView(35,46, 50, 50));
+            rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
+            rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
+            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145, 76, 50, 56));
+            rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
+            rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
             JatekTer jatekTer = new JatekTer(vilag, rajzoloTar, korView);
 
@@ -35,16 +35,51 @@ public class MainFrame extends JFrame {
 
             frame.setVisible(true);
 
-            // 🎯 átadjuk a játékosokat a motorba
+            // átadjuk a játékosokat a motorba
             List<String> szerepek = playerList.stream().map(p -> p.role.equalsIgnoreCase("gombász") ? "Gombász" : "Rovarász").toList();
-            GameEngine engine = new GameEngine(vilag, jatekTer, szerepek);
+            GameEngine engine = new GameEngine(vilag, jatekTer, playerList); // már a teljes játékoslista
+
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
-                String ujKor = jatekTer.getKorTulajdonos();
-                if (ujKor.equals("Gombász")) korView.csakGombasznak();
-                else korView.csakRovarasznak();
+                Menu.Player aktualis = playerList.get(engine.getKorIndex());
+                if (aktualis.role.equalsIgnoreCase("gombász")) {
+                    korView.csakGombasznak();
+                } else {
+                    korView.csakRovarasznak();
+                }
+
+                korView.resetAllButtons();
             });
+
             engine.start();
+
+            Menu.Player aktualis = playerList.get(0);
+            if (aktualis.role.equalsIgnoreCase("gombász")) {
+                korView.csakGombasznak();
+            } else {
+                korView.csakRovarasznak();
+            }
+
+            korView.getFonalVagasButton().addActionListener(e -> {
+                // Itt jönne a fonalvágás konkrétan, pl. egy controller meghívása (most még nincs)
+                korView.csakKorVegeMarad();
+            });
+
+            korView.getGombatestNovesztButton().addActionListener(e -> {
+                // növesztés logika ide
+                korView.csakKorVegeMarad();
+            });
+
+            korView.getSporazButton().addActionListener(e -> {
+                // spórázás logika ide
+                korView.csakKorVegeMarad();
+            });
+
+            korView.getFonalNovesztButton().addActionListener(e -> {
+                // fonal növesztés logika ide
+                korView.csakKorVegeMarad();
+            });
+
         });
     }
 }
