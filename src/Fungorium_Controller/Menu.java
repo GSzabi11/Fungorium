@@ -30,7 +30,7 @@ public class Menu {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
-        // Background image
+        // Background image (update path as needed)
         JLabel background = new JLabel(new ImageIcon(new ImageIcon("Images/windows.jpg").getImage()));
         background.setLayout(null);
         frame.setContentPane(background);
@@ -61,16 +61,21 @@ public class Menu {
         // Exit behavior
         exitButton.addActionListener(e -> System.exit(0));
 
-        // Start behavior
+        // Start button behavior
         startButton.addActionListener(e -> {
             int playerCount = Integer.parseInt((String) playerDropdown.getSelectedItem());
             ArrayList<Player> playerList = new ArrayList<>();
 
             for (int i = 1; i <= playerCount; i++) {
                 String name = JOptionPane.showInputDialog(frame, "Enter name for Player " + i + ":");
-                if (name == null || name.trim().isEmpty()) {
+                if (name == null) {
+                    JOptionPane.showMessageDialog(frame, "Player setup cancelled.");
+                    return;
+                }
+                name = name.trim();
+                if (name.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "Name cannot be empty. Please try again.");
-                    i--; // retry this player
+                    i--;
                     continue;
                 }
 
@@ -86,9 +91,8 @@ public class Menu {
                 );
 
                 if (role == null) {
-                    JOptionPane.showMessageDialog(frame, "Role must be selected. Please try again.");
-                    i--; // retry this player
-                    continue;
+                    JOptionPane.showMessageDialog(frame, "Player setup cancelled.");
+                    return;
                 }
 
                 playerList.add(new Player(name, role));
@@ -101,7 +105,8 @@ public class Menu {
             }
             JOptionPane.showMessageDialog(frame, summary.toString());
 
-            // Here you can proceed to the next part of your game
+            // Proceed to game
+            frame.dispose();
             MainFrame mainFrame = new MainFrame();
             mainFrame.jatekMenu();
         });
