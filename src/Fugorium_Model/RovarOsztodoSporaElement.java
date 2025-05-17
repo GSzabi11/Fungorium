@@ -17,7 +17,7 @@ public class RovarOsztodoSporaElement extends Spora {
         Tekton helyzet = rovar.getHelyzet();
         Rovarfaj fajta = rovar.getFajta();
 
-        Rovar klonRovar = new Rovar(fajta, helyzet);
+        Rovar klonRovar = new Rovar(fajta, helyzet, rovar.getX(), rovar.getY());
 
         // Most hova tegyük az új rovart?
         // Ideiglenesen csak logoljuk:

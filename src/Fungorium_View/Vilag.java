@@ -5,11 +5,15 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
 
+import static Fugorium_Model.Gombafaj.KEK;
+import static Fugorium_Model.Rovarfaj.BARNA;
+
 public class Vilag {
 
     private final List<Tekton> mezok = new ArrayList<>();
     private final List<Rovar> rovarok = new ArrayList<>();
     private final List<Gomba> gombak = new ArrayList<>();
+    private final List<Gombafonal> fonalak = new ArrayList<>();
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     // === OBSZERVER KEZELÉS ===
@@ -78,6 +82,25 @@ public class Vilag {
         for (Gomba g : new ArrayList<>(gombak)) {
             g.sporaTermel();
         }
+    }
+
+    public void initEntities() {
+        // 2. Tektonok statikus elhelyezése
+        mezok.add(new Tekton(0, 200, 54));
+        mezok.add(new Tekton(1, 550, 65));
+
+
+        // 1. Gombák statikus elhelyezése
+        gombak.add(new Gomba(KEK,mezok.get(0) ,100, 200));
+        gombak.add(new Gomba(KEK,mezok.get(1),150, 240));
+
+
+        // 3. Rovarok statikus elhelyezése
+        rovarok.add(new Rovar(BARNA,mezok.get(0),300, 400));
+        rovarok.add(new Rovar(BARNA,mezok.get(1),500, 350));
+
+        fonalak.add(new Gombafonal(gombak.getFirst(), mezok.get(0), 201, 155));
+
     }
 
     // Fonalak növekednek és elhalnak ha kell

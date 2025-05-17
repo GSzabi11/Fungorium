@@ -7,53 +7,45 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * A GameEngine felelős a játék fő ütemezéséért (game loop).
- * Meghatározott időközönként lépteti a világot és újrarajzoltatja a felületet.
- */
 public class GameEngine {
 
     private final Vilag vilag;
     private final JatekTer jatekTer;
     private final Timer timer;
 
-    /**
-     * Konstruktor – példányosítja az időzítőt, de nem indítja el.
-     *
-     * @param vilag     a játék logikai világa (modell)
-     * @param jatekTer  a megjelenítő felület (view)
-     */
+    private boolean rovaraszKor = true; // true = rovarász, false = gombász
+
     public GameEngine(Vilag vilag, JatekTer jatekTer) {
         this.vilag = vilag;
         this.jatekTer = jatekTer;
 
-        // Timer: 1000ms / 30 = ~33ms (~30 FPS)
-        this.timer = new Timer(1000 / 30, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vilag.leptet();
-                jatekTer.repaint();
-            }
+        // Timer csak a repainthez és léptetéshez, de nem vált köröket
+        this.timer = new Timer(1000 / 30, e -> {
+            vilag.leptet();
+            jatekTer.repaint();
         });
     }
 
     /**
-     * Elindítja a játékot.
+     * Ezt a metódust kell meghívni, amikor a játékos befejezi a lépését.
      */
+    public void kovetkezoKor() {
+        rovaraszKor = !rovaraszKor;
+        String korTulajdonos = rovaraszKor ? "Rovarász" : "Gombász";
+        System.out.println("Körváltás: most " + korTulajdonos + " köre van.");
+        jatekTer.setKorTulajdonos(korTulajdonos);
+
+        // Itt lehet további körváltáshoz kötött logikát elhelyezni
+    }
+
     public void start() {
         timer.start();
     }
 
-    /**
-     * Leállítja a játékot.
-     */
     public void stop() {
         timer.stop();
     }
 
-    /**
-     * Újraindítja a játékot (opcionális).
-     */
     public void restart() {
         stop();
         start();

@@ -13,16 +13,20 @@ public class Rovar {
     private double sebesseg;
     private HashMap<RovarAllapot, Integer> allapot;
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    int x;
+    int y;
 
     /**
      * Konstruktor
      */
-    public Rovar(Rovarfaj rfajta, Tekton helyzet){
+    public Rovar(Rovarfaj rfajta, Tekton helyzet, int x, int y) {
         this.rfajta = rfajta;
         this.helyzet = helyzet;
         this.tapanyag = 0;
         this.sebesseg = 1.0;
         this.allapot = new HashMap<>();
+        this.x = x;
+        this.y = y;
         //HashMap feltoltese
         for (RovarAllapot a : RovarAllapot.values()) {
             allapot.put(a, 0);
@@ -55,7 +59,7 @@ public class Rovar {
     }
 
     /** Rovart mozgat a paraméterként kapott tektonra
-     * @param tekton céltekton
+     * @param celtekton céltekton
      */
     public void mozog(Tekton celtekton){
         if (allapot.get(RovarAllapot.BENITO) > 0) {
@@ -182,7 +186,6 @@ public class Rovar {
     }
 
     /** Csökkenti a paraméterként kapott állapot időtartamát
-     * @param rovarallapot ezen állapot időtartamát csökkentjük
      */
     public void csokkentAllapotIdotartam(){
         int duration = allapot.get(RovarAllapot.GYORSITO);
@@ -217,6 +220,34 @@ public class Rovar {
 
     protected void firePropertyChange(String property, Object oldVal, Object newVal) {
         pcs.firePropertyChange(property, oldVal, newVal);
+    }
+
+    /**
+     * @return the x coordinate of the Rovar
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @return the y coordinate of the Rovar
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param x the x coordinate to set
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * @param y the y coordinate to set
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 
 }

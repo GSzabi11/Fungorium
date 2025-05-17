@@ -13,11 +13,11 @@ public class MainFrame {
 
             // Rajzolóregiszter feltöltése
             RajzoloTar rajzoloTar = new RajzoloTar();
-            rajzoloTar.regisztral(Tekton.class, new TektonView(500,500, 50, 50, new ImageIcon("Images/tekton.png").getImage()));
-            rajzoloTar.regisztral(Rovar.class, new RovarView(500,500, 50, 50, new ImageIcon("Images/rovar_barna.png").getImage()));
-            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(500,500, 50, 50, new ImageIcon("Images/gombafonal_lila.png").getImage()));
-            rajzoloTar.regisztral(Gomba.class, new GombaView(500,500, 50, 50, new ImageIcon("Images/gomba_kek.png").getImage()));
-            rajzoloTar.regisztral(Spora.class, new SporaView(500,500, 50, 50, new ImageIcon("Images/spora.png").getImage()));
+            rajzoloTar.regisztral(Tekton.class, new TektonView(20,12, 40, 40));
+            rajzoloTar.regisztral(Rovar.class, new RovarView(21,24, 50, 50));
+            rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145,76, 50, 56));
+            rajzoloTar.regisztral(Gomba.class, new GombaView(28,15, 50, 50));
+            rajzoloTar.regisztral(Spora.class, new SporaView(35,46, 50, 50));
             // … további regisztrációk, pl. OsztodoSpora, ha van külön típus
 
             // Nézet

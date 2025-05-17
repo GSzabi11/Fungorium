@@ -11,18 +11,22 @@ public class Gombafonal {
     private boolean haldoklik; // Jelzi, ha a fonal haldoklik
     private int spora_kuszob_gomba_novekedeshez; // A spóraküszöb egy új gomba növekedéséhez
     private boolean gyorsitottNovekedes = false;
+    int x;
+    int y;
 
     /**
      * Létrehoz egy új Gombafonal példányt.
      */
-    public Gombafonal(Gomba gomba, Tekton celTekton) {
+    public Gombafonal(Gomba gomba, Tekton celTekton, int x, int y) {
         System.out.println("Gombafonal constructor called");
         this.kiindulasiGomba = gomba;
         this.kapcsolodasiPontok = new ArrayList<>();
         this.max_eletido = 10;
         this.haldoklik = false;
         this.spora_kuszob_gomba_novekedeshez = 3;
-        this.eletido = gomba.getFajta().elhalasIdo;
+        this.eletido = 5;
+        this.x = x;
+        this.y = y;
 
         // Kiinduló pont: a gomba helye
         this.kapcsolodasiPontok.add((Tekton)gomba.getTekton());
@@ -140,7 +144,7 @@ public class Gombafonal {
     /**
      * Növekedést végez a megadott tekton irányába.
      *
-     * @param tekton A céltekton, amelybe a fonal nő
+
      */
     public void novekszik(Tekton celTekton) {
         System.out.println("Gombafonal.novekszik()");
@@ -183,7 +187,7 @@ public class Gombafonal {
         System.out.println("Gombafonal.probalGombatNoveszteni()");
         int sporaCount = tekton.getSporakSzama();
         if (sporaCount >= spora_kuszob_gomba_novekedeshez) {
-            Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton);
+            Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton, 5,26);
             tekton.clearSporak();
             tekton.setNohetGomba(false);
             System.out.println(
@@ -206,7 +210,7 @@ public class Gombafonal {
             return;
         }
     
-        Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton);
+        Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton, 5, 26);
         tekton.setNohetGomba(false);
         System.out.println("Gombatest novesztese elfogyasztitt rovarbol sikeres a T" + tekton.getId() + " tektonon.");
     }
@@ -219,5 +223,33 @@ public class Gombafonal {
         for (Tekton t : kapcsolodasiPontok) {
             t.removeFonal(this);
         }
+    }
+
+    /**
+     * Getterek és setterek
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * Getterek és setterek
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * Getterek és setterek
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * Getterek és setterek
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 }

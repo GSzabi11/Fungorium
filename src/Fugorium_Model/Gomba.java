@@ -15,11 +15,13 @@ public class Gomba {
     public int szint; // A gomba fejlettségi szintje
     private List<Spora> termeltSporak; // A gomba által termelt spórák listája
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    int x;
+    int y;
 
     /**
      * Létrehoz egy új Gomba példányt.
      */
-    public Gomba(Gombafaj fajta, Tekton tekton) {
+    public Gomba(Gombafaj fajta, Tekton tekton, int x, int y) {
         this.fajta = fajta;
         this.tekton = tekton;
 
@@ -28,6 +30,8 @@ public class Gomba {
         this.szint = 1;             // alap szint
 
         this.termeltSporak = new ArrayList<>();
+        this.x = x;
+        this.y = y;
 
         System.out.println("Gomba constructor called");
     }
@@ -93,7 +97,7 @@ public class Gomba {
             return null;
         }
 
-        Gombafonal fonal = new Gombafonal(this, celTekton);
+        Gombafonal fonal = new Gombafonal(this, celTekton, this.x,this.y);
         System.out.println("Gomba uj gombafonalat noveszt T" + celTekton.getId() + "-re.");
         return fonal;
     }
@@ -160,5 +164,33 @@ public class Gomba {
 
     protected void firePropertyChange(String property, Object oldVal, Object newVal) {
         pcs.firePropertyChange(property, oldVal, newVal);
+    }
+
+    /**
+     * A gomba élettartamának csökkentése.
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * A gomba élettartamának csökkentése.
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * A gomba élettartamának csökkentése.
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * A gomba élettartamának csökkentése.
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 }

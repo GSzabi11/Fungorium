@@ -8,6 +8,8 @@ public abstract class Spora {
      * tapanyagtartalom (a sporat elfogyasztva ennyi tapanyaggal no a rovar tapanyag parametere)
      */
     private int tapanyagtartalom;
+    int x;
+    int y;
 
     /*
      * Spora parameter nelkuli konstruktora
@@ -45,4 +47,20 @@ public abstract class Spora {
      * @param duration az allapot idotartama
      */
     public void alkalmazHatast(Rovar rovar, RovarAllapot allapot, int duration){};
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 }

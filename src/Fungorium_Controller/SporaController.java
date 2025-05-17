@@ -22,6 +22,7 @@ public class SporaController {
 
         // Itt el is távolíthatnánk a spórát a tektonról, ha szükséges lenne
         // (pl. ha tudjuk, hol van a spóra, vagy a Tekton példányt is átadnánk)
+
     }
 }
 

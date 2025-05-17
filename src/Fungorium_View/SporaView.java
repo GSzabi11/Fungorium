@@ -1,20 +1,22 @@
 package Fungorium_View;
 
 import Fugorium_Model.Spora;
+import java.awt.Graphics2D;
 
-import java.awt.*;
-
-public class SporaView extends Sprite implements Rajzolo {
-    public SporaView(int x, int y, int width, int height, Image image) {
-        super(x, y, width, height, image);
+public class SporaView extends AbstractEntityView {
+    public SporaView(int x, int y, int width, int height) {
+        super("/spora.png", width, height, x,y);
     }
 
     @Override
-    public void rajzol(Graphics2D g2, Object model) {
+    protected void drawEntity(Graphics2D g2, Object model) {
         if (model instanceof Spora spora) {
-            g2.drawImage(image, (int) x, (int) y, width, height, null);
-            // Rajzolás logika itt
-            // Például: g2.drawString(spora.getName(), (int) x, (int) y);
+            g2.drawImage(
+                    getImage(),
+                    spora.getX(), spora.getY(),
+                    getWidth(), getHeight(),
+                    null
+            );
         }
     }
 }

@@ -39,6 +39,7 @@ public class MozgasController {
             System.out.println("Nincs gombafonal az áthaladáshoz: " +
                     aktualis.getId() + " ↛ " + cel.getId());
         }
+
     }
 }
 

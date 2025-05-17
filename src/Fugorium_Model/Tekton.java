@@ -30,7 +30,7 @@ public class Tekton {
      * @param tipus A tekton típusa
      * @param gomba A tektonhoz tartozó gomba objektum
      */
-    public Tekton(int id) {
+    public Tekton(int id, int x, int y) {
         this.id = id;
 
         this.szomszedok = new ArrayList<>();
@@ -41,6 +41,8 @@ public class Tekton {
         this.keresztezodhet = false;
         this.nohetGomba = false;
         this.eletbentarto = false;
+        this.x = x;
+        this.y = y;
 
         this.gomba = null;
         System.out.println("Tekton basic constructor called");
