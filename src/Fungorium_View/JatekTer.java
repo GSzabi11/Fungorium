@@ -4,12 +4,16 @@ import Fugorium_Model.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.Objects;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class JatekTer extends JPanel implements PropertyChangeListener {
 
     private final Vilag vilag;
     private final RajzoloTar rajzoloTar;
+    private Image backgroundImage;
 
     // Új mező: kié a kör
     private String korTulajdonos = "Rovarász"; // alapértelmezett
@@ -18,7 +22,12 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         this.vilag = vilag;
         this.rajzoloTar = rajzoloTar;
 
-        setBackground(Color.WHITE);
+        try {
+            backgroundImage = ImageIO.read(Objects.requireNonNull(getClass().getResource("/background.jpg")));
+        } catch (Exception e) {
+            System.err.println("Hiba a háttérkép betöltésekor: " + e.getMessage());
+            backgroundImage = new ImageIcon("images/background.jpg").getImage();
+        }
 
         vilag.addPropertyChangeListener(this);
 
@@ -49,6 +58,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+        g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
         // Kirajzoljuk a felső sávot
         int sávMagasság = 40;
@@ -98,6 +109,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
         // Visszaállítjuk az eredeti koordinátarendszert
         g2.translate(0, -sávMagasság);
+
+
     }
 
     @Override
