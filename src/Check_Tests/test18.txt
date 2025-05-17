@@ -1,4 +1,0 @@
-init tekton T1
-init tekton T2
-init rovar R1 LILA T1
-rovar R1 vag GF1

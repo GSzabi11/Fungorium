@@ -1,3 +1,0 @@
-init tekton T1
-tekton T1 torik
-tekton T1 szomszedok

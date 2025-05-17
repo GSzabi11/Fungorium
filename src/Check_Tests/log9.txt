@@ -1,4 +1,0 @@
-Tekton basic constructor called
-Tekton basic constructor called
-Gomba constructor called
-HIBA: T2 nem szomszedja a gomba tektonjanak (T1)
