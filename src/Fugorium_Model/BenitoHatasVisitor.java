@@ -12,7 +12,6 @@ public class BenitoHatasVisitor implements RovarVisitor{
     /** Implementálja a RovarVisitor függvényét és meglátogatja a paraméterként kapott rovaron
      * @param rovar Ezen látogatja meg a RovarVisitor függvényét
      */
-    @Override
     public void visit(Rovar rovar){
         if (rovar.getAllapotMap().get(RovarAllapot.BENITO) <= 0) {
             rovar.setAllapot(RovarAllapot.BENITO, 3);
@@ -21,4 +20,5 @@ public class BenitoHatasVisitor implements RovarVisitor{
             System.out.println("BenitoHatasVisitor: A rovar már BENITO hatás alatt van.");
         } 
     }
+
 }

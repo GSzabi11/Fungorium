@@ -3,7 +3,7 @@ package Fugorium_Model;
 /*
  * Spora absztrakt osztaly amibol a kulonbozo sporaElement-ek szarmaznak
  */
-public abstract class  Spora {
+public abstract class Spora {
     /*
      * tapanyagtartalom (a sporat elfogyasztva ennyi tapanyaggal no a rovar tapanyag parametere)
      */
@@ -36,7 +36,7 @@ public abstract class  Spora {
     /*
      * Visitor design pattern reszekent, az accept metodus deklaracioja
      */
-    public abstract void accept(SporaVisitor visitor);
+    public void accept(SporaVisitor visitor){};
 
     /*
      * Visitor design pattern reszekent, az alkalmazHatast metodus deklaracioja
@@ -44,5 +44,5 @@ public abstract class  Spora {
      * @param RovarAllapot amilyen allapotot alklamaz a metodus a rovarra
      * @param duration az allapot idotartama
      */
-    public abstract void alkalmazHatast(Rovar rovar, RovarAllapot allapot, int duration);
+    public void alkalmazHatast(Rovar rovar, RovarAllapot allapot, int duration){};
 }

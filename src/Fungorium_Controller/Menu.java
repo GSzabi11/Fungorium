@@ -1,11 +1,11 @@
-import javax.swing.*;
+package Fungorium_Controller;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
 
 
 
-public class menu extends JFrame {
+public class Menu extends JFrame {
     public static void menu() {
         int boardWidth = 1024;
         int boardHeight = 768;
@@ -18,7 +18,7 @@ public class menu extends JFrame {
         frame.setLocationRelativeTo(null);
 
         // Set background image
-        JLabel background = new JLabel(new ImageIcon(Main.class.getResource("/background.jpg")));
+        JLabel background = new JLabel(new ImageIcon(new ImageIcon("images/box.png").getImage()));
 
         background.setLayout(null);  // We'll use absolute positioning
         frame.setContentPane(background);

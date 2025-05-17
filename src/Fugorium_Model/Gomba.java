@@ -1,7 +1,5 @@
 package Fugorium_Model;
 
-import Fungorium_View.JatekTer;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;

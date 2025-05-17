@@ -2,7 +2,7 @@ package Fungorium_View;
 
 import java.awt.*;
 
-public interface Rajzolo {
+public abstract interface Rajzolo {
     /**
      * Kirajzolja a modellobjektumot a megadott Graphics2D felületre.
      *

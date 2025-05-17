@@ -3,6 +3,7 @@ package Fungorium_View;
 import Fugorium_Model.Gombafonal;
 import Fugorium_Model.Tekton;
 import java.awt.*;
+import java.util.List;
 
 public class GombafonalView extends Sprite implements Rajzolo {
     public GombafonalView(int x, int y, int width, int height, Image image) {
@@ -17,7 +18,8 @@ public class GombafonalView extends Sprite implements Rajzolo {
      */
     @Override
     public void rajzol(Graphics2D g2, Object gf) {
-        List<Tekton> pontok = gf.getKapcsolodasPontok();
+        Gombafonal gombafonal = (Gombafonal) gf;
+        List<Tekton> pontok = gombafonal.kapcsolodasiPontok;
         if (pontok == null || pontok.size() < 2) {
             return; // nincs elég pont a kirajzoláshoz
         }

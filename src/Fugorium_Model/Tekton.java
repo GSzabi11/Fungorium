@@ -1,5 +1,7 @@
-package Fugorium_model;
+package Fugorium_Model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.*;
 
 /**
@@ -18,7 +20,9 @@ public class Tekton {
     private boolean keresztezodhet; // Igaz, ha a tektonon kereszteződhetnek a fonalak
     private boolean nohetGomba; // Igaz, ha a tektonon nőhet gomba
     private boolean eletbentarto; // Igaz, ha a tekton eletben tartja a gombafonalat szakadas utan is
-
+    private int x; // A tekton x koordinátája
+    private int y; // A tekton y koordinátája
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     /**
      * Létrehoz egy új Tekton példányt a megadott paraméterekkel.
      *
@@ -173,5 +177,44 @@ public class Tekton {
      */
     public List<Tekton> getSzomszedok() {
         return szomszedok;
+    }
+
+    /**
+     * Kiírja a tekton szomszédos tektonjait.
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+    /**
+     * Kiírja a tekton szomszédos tektonjait.
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * Kiírja a tekton szomszédos tektonjait.
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * Kiírja a tekton szomszédos tektonjait.
+     */
+    public int getY() {
+        return y;
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String property, Object oldVal, Object newVal) {
+        pcs.firePropertyChange(property, oldVal, newVal);
     }
 }

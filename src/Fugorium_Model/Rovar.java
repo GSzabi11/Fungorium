@@ -1,8 +1,9 @@
-package Fugorium_model;
+package Fugorium_Model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Rovar {
     
@@ -11,6 +12,7 @@ public class Rovar {
     private int tapanyag;
     private double sebesseg;
     private HashMap<RovarAllapot, Integer> allapot;
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
      * Konstruktor
@@ -182,7 +184,7 @@ public class Rovar {
     /** Csökkenti a paraméterként kapott állapot időtartamát
      * @param rovarallapot ezen állapot időtartamát csökkentjük
      */
-    public void csokkentAllapotIdotartam(RovarAllapot rovarallapot){
+    public void csokkentAllapotIdotartam(){
         int duration = allapot.get(RovarAllapot.GYORSITO);
         if(duration > 0) {
             duration -= 1;
@@ -204,4 +206,17 @@ public class Rovar {
     public void elpusztul() {
         System.out.println("Rovar elpusztult!");
     }
+
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String property, Object oldVal, Object newVal) {
+        pcs.firePropertyChange(property, oldVal, newVal);
+    }
+
 }

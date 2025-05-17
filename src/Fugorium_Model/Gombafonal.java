@@ -1,11 +1,11 @@
-package Fugorium_model;
+package Fugorium_Model;
 import java.util.*;
 /**
  * A Gombafonal osztály egy gomba növekedését és kapcsolatát biztosító fonalat reprezentál.
  */
 public class Gombafonal {
     private Gomba kiindulasiGomba; // A fonalat létrehozó gomba
-    private List<Tekton> kapcsolodasiPontok; // A fonal által érintett tektonok
+    public List<Tekton> kapcsolodasiPontok; // A fonal által érintett tektonok
     public int eletido; // A fonal jelenlegi életideje
     private int max_eletido; // A fonal maximális élettartama
     private boolean haldoklik; // Jelzi, ha a fonal haldoklik
@@ -25,16 +25,16 @@ public class Gombafonal {
         this.eletido = gomba.getFajta().elhalasIdo;
 
         // Kiinduló pont: a gomba helye
-        this.kapcsolodasiPontok.add(gomba.getTekton());
+        this.kapcsolodasiPontok.add((Tekton)gomba.getTekton());
 
         // Majd a cél tekton
         this.kapcsolodasiPontok.add(celTekton);
 
-        gomba.getTekton().hozzaadFonal(this);
+        Tekton t1=(Tekton)gomba.getTekton();
+        t1.hozzaadFonal(this);
+
         celTekton.hozzaadFonal(this);
 
-        System.out.println("Gombafonal letrehozva: kiindulasi gomba = " + gomba.getFajta()
-            + ", utvonal: T" + gomba.getTekton().getId() + " -> T" + celTekton.getId());
 
     }
 

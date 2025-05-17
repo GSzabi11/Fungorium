@@ -1,6 +1,6 @@
 package Fugorium_Model;
 
-public interface RovarVisitor {
+public abstract interface RovarVisitor {
     
     public void visit(Rovar rovar);
 }

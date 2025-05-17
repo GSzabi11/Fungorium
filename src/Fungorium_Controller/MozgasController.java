@@ -1,9 +1,6 @@
 package Fungorium_Controller;
 
-import Fugorium_Model.Rovar;
-import Fugorium_Model.Tekton;
-import Fugorium_Model.Gombafonal;
-
+import Fugorium_Model.*;
 import java.util.List;
 
 public class MozgasController {
@@ -28,7 +25,7 @@ public class MozgasController {
 
         boolean vanFonal = false;
         for (Gombafonal gf : fonalak) {
-            List<Tekton> pontok = gf.getKapcsolodasPontok();
+            List<Tekton> pontok = gf.kapcsolodasiPontok;
             if (pontok.contains(aktualis) && pontok.contains(cel)) {
                 vanFonal = true;
                 break;

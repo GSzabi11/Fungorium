@@ -1,6 +1,6 @@
 package Fugorium_Model;
 
-public class LassitoHatasVisitor implements RovarVisitor{
+public abstract class LassitoHatasVisitor implements RovarVisitor{
 
     /**
      * Konstruktor
