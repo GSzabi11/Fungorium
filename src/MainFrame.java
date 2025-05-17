@@ -6,14 +6,14 @@ import javax.swing.*;
 
 public class MainFrame {
 
-    public static void main(String[] args) {
+    public void majdnemmain() {
         SwingUtilities.invokeLater(() -> {
             // Modell
             Vilag vilag = new Vilag();
 
             // Rajzolóregiszter feltöltése
             RajzoloTar rajzoloTar = new RajzoloTar();
-            rajzoloTar.regisztral(Tekton.class, new TektonView());
+            rajzoloTar.regisztral(Tekton.class, new TektonView(500,500, 50, 50, new ImageIcon("fung_pngk/image9.png").getImage()));
             rajzoloTar.regisztral(Rovar.class, new RovarView());
             rajzoloTar.regisztral(Gombafonal.class, new GombafonalView());
             rajzoloTar.regisztral(Gomba.class, new GombaView());
