@@ -12,7 +12,7 @@ public class MozgasController {
      * @param rovar a mozgatandó rovar
      * @param cel   a céltekton
      */
-    public void move(Rovar rovar, Tekton cel) {
+    public static void move(Rovar rovar, Tekton cel) {
         Tekton aktualis = rovar.getHelyzet();
 
         if (aktualis == null) {

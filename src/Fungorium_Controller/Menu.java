@@ -8,27 +8,6 @@ import javax.swing.*;
 
 public class Menu {
 
-    public static class Player {
-        public String name;
-        public String role;
-        public int score;
-
-        public Player(String name, String role) {
-            this.name = name;
-            this.role = role;
-            this.score = 0;
-        }
-
-        public void AddScore(int a) {
-            this.score += a;
-        }
-
-        @Override
-        public String toString() {
-            return name + " - " + role + " - " + score;
-        }
-    }
-
     public static ArrayList<Player> playersarraylist = new ArrayList<Player>();
     public static void menu() {
         int boardWidth = 1366;

@@ -2,6 +2,7 @@ package Fungorium_View;
 
 import Fugorium_Model.*;
 import Fungorium_Controller.Menu;
+import Fungorium_Controller.Player;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -16,10 +17,9 @@ public class Vilag {
     private final List<Rovar> rovarok = new ArrayList<>();
     private final List<Gomba> gombak = new ArrayList<>();
     private final List<Gombafonal> fonalak = new ArrayList<>();
-    private List<Menu.Player> jatekosok = new ArrayList<>();
+    private List<Player> jatekosok = new ArrayList<>();
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    // === OBSZERVER KEZELÉS ===
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -28,13 +28,17 @@ public class Vilag {
         pcs.removePropertyChangeListener(l);
     }
 
+    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        pcs.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
     private void fireChange(String prop, Object oldVal, Object newVal) {
         pcs.firePropertyChange(prop, oldVal, newVal);
     }
 
     // === MEZŐK, ROVAROK, GOMBÁK HOZZÁADÁSA ===
 
-    public void setJatekosok(List<Menu.Player> lista) {
+    public void setJatekosok(List<Player> lista) {
         this.jatekosok = lista;
     }
 
@@ -78,15 +82,10 @@ public class Vilag {
         return Collections.unmodifiableList(t.getGombafonalak());
     }
 
-    // === LÉPTETÉS ===
     public void leptet() {
-        // Rovarok mozognak
         for (Rovar r : new ArrayList<>(rovarok)) {
-            r.csokkentAllapotIdotartam();  // pl. bénultság, gyorsítás lejár
-            // Mozgatás lehet AI, véletlen vagy játékosvezérelt -> külön controller dönt róla
+            r.csokkentAllapotIdotartam();
         }
-
-        // Gombák termelnek
         for (Gomba g : new ArrayList<>(gombak)) {
             g.sporaTermel();
         }
@@ -103,20 +102,20 @@ public class Vilag {
         // 2) Játékos- és szerepszámok
         int totalPlayers = jatekosok.size();
         long rovaraszCount = jatekosok.stream()
-                .filter(p -> p.role.equalsIgnoreCase("rovarász"))
+                .filter(p -> p.getRole().equalsIgnoreCase("rovarász"))
                 .count();
         long gombaszCount = jatekosok.stream()
-                .filter(p -> p.role.equalsIgnoreCase("gombász"))
+                .filter(p -> p.getRole().equalsIgnoreCase("gombász"))
                 .count();
 
         // 3) Tektonok létrehozása (3 tekton/játékos), körbeosztással
         int tektonCount = totalPlayers * 3;
         int centerX = 512, centerY = 384;       // például a panel közepe
-        int radius  = 200;                     // tetszőleges sugarú kör
+        int radius = 200;                     // tetszőleges sugarú kör
         for (int i = 0; i < tektonCount; i++) {
             double angle = 2 * Math.PI * i / tektonCount;
-            int x = (int)(centerX + radius * Math.cos(angle));
-            int y = (int)(centerY + radius * Math.sin(angle));
+            int x = (int) (centerX + radius * Math.cos(angle));
+            int y = (int) (centerY + radius * Math.sin(angle));
             mezok.add(new Tekton(i, x, y));
         }
 
@@ -144,7 +143,7 @@ public class Vilag {
             Tekton t1 = mezok.get(i);
             Tekton t2 = mezok.get((i + 1) % tektonCount);
             // válasszunk ki hozzá egy kiinduló gombát (pl. az i. gombát mod gombaszCount)
-            Gomba source = gombak.get((int)(i % gombak.size()));
+            Gomba source = gombak.get((int) (i % gombak.size()));
             // a fonal középpontja legyen a két pont fele
             int midX = (t1.getX() + t2.getX()) / 2;
             int midY = (t1.getY() + t2.getY()) / 2;
@@ -152,12 +151,9 @@ public class Vilag {
         }
 
     }
-
-    // Fonalak növekednek és elhalnak ha kell
-//        for(Tekton t : mezok) {
-//            for (Gombafonal gf : t.getGombafonalak()) {
-//                //gf.scheduleDestruction(); // fonaltípus alapján időzített elhalás
-//                //gf.eatParalyzedRovarok(); // ha van ilyen rovar
-//            }
-//        }
+    public void lerakGombat (Gombafaj fajta, Tekton cel, int x, int y){
+        Gomba g = new Gomba(fajta, cel, x, y);
+        gombak.add(g);
+        firePropertyChange("gomba", null, g);
+    }
 }

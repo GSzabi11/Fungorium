@@ -71,6 +71,10 @@ public class KorView extends JPanel {
         return fonalNoveszt;
     }
 
+    public JButton getMozgasButton() {
+        return mozgas;
+    }
+
     public void resetAllButtons() {
         gombatestNoveszt.setEnabled(true);
         sporaz.setEnabled(true);
