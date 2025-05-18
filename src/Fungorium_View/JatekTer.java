@@ -128,7 +128,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(PropertyChangeEvent evt)
+    {
         repaint();
     }
 }

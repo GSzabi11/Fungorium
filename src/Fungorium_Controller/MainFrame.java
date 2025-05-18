@@ -9,9 +9,10 @@ import java.util.List;
 public class MainFrame extends JFrame {
     private KorView korView;
 
-    public void jatekMenu(List<Menu.Player> playerList) {
+    public void jatekMenu(List<Player> playerList) {
         SwingUtilities.invokeLater(() -> {
             Vilag vilag = new Vilag();
+            GameEngine gameEngine = new GameEngine(vilag, null, playerList);
             this.korView = new KorView();
 
             RajzoloTar rajzoloTar = new RajzoloTar();
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
 
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
-                Menu.Player aktualis = playerList.get(engine.getKorIndex());
+                Player aktualis = playerList.get(engine.getKorIndex());
                 if (aktualis.role.equalsIgnoreCase("gombász")) {
                     korView.csakGombasznak();
                 } else {
@@ -51,9 +52,9 @@ public class MainFrame extends JFrame {
                 korView.resetAllButtons();
             });
 
-            engine.start();
+            engine.startGame();
 
-            Menu.Player aktualis = playerList.get(0);
+            Player aktualis = playerList.get(0);
             if (aktualis.role.equalsIgnoreCase("gombász")) {
                 korView.csakGombasznak();
             } else {
@@ -80,7 +81,21 @@ public class MainFrame extends JFrame {
                 korView.csakKorVegeMarad();
             });
 
+            korView.getMozgasButton().addActionListener(e -> {
+                if (gameEngine.getKivalasztottRovar() != null && gameEngine.getKivalasztottCelTekton() != null) {
+                    MozgasController mozgasController = new MozgasController();
+                    mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
+                    korView.csakKorVegeMarad(); // vagy más UI frissítés
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");
+                }
+            });
+
+
         });
     }
+
+
+
 }
 

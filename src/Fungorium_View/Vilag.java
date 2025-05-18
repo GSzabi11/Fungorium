@@ -100,6 +100,7 @@ public class Vilag {
         rovarok.add(new Rovar(BARNA,mezok.get(1),500, 350));
 
         fonalak.add(new Gombafonal(gombak.getFirst(), mezok.get(0), 201, 155));
+        fonalak.add(new Gombafonal(gombak.get(1), mezok.get(1), 202, 155));
 
     }
 
