@@ -73,7 +73,7 @@ public class MainFrame extends JFrame {
             korView.getGombatestNovesztButton().addActionListener(e -> {
                 Gomba g = gameEngine.getKivalasztottGomba();
                 if (g != null && gameEngine.getKivalasztottCelTekton().isNohetGomba()) {
-                    g.novesztTestet();
+                    //gombatestet kell valahogy noveszteni
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Válassz ki egy gombát először!");
@@ -96,7 +96,7 @@ public class MainFrame extends JFrame {
             korView.getFonalNovesztButton().addActionListener(e -> {
                 Gomba g = gameEngine.getKivalasztottGomba();
                 if (g != null && gameEngine.getKivalasztottCelTekton() != null) {
-                    g.novesztFonalt(gameEngine.getKivalasztottCelTekton()); // GRAFIKA :)
+                    g.novesztUjFonal(gameEngine.getKivalasztottCelTekton()); // GRAFIKA :)
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Válassz ki egy gombát és cél tekton mezőt!");
