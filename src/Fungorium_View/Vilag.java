@@ -115,8 +115,7 @@ public class Vilag {
             double angle = 2 * Math.PI * i / tektonCount;
             int x = (int) (centerX + radius * Math.cos(angle));
             int y = (int) (centerY + radius * Math.sin(angle));
-            Tekton temp = new Tekton(i, x, y);
-            mezok.add(temp);
+            addTekton(new Tekton(i, x, y));
         }
 
         // 4) Gombák elhelyezése: gombászok száma = gombák száma

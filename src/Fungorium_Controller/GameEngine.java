@@ -133,7 +133,4 @@ public class GameEngine {
     public void setKivalasztottGomba(Gomba gomba) {
         this.kivalasztottGomba = gomba;
     }
-
-
-
 }

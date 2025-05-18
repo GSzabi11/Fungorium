@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.*;
 
 public class JatekTer extends JPanel implements PropertyChangeListener {
@@ -95,10 +96,11 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
                 rajzoloTar.rajzol(g2, gf);
             }
         }
-        // Tektonokat
-        for (Tekton t : vilag.getMezok()) {
-            rajzoloTar.rajzol(g2, t);
-        }
+
+//        // Tektonokat
+//        for (Tekton t : vilag.getMezok()) {
+//            rajzoloTar.rajzol(g2, t);
+//        }
 
         // Spórák
         for (Tekton t : vilag.getMezok()) {
@@ -127,7 +129,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
     private void hozzaadGombaGombkent(Gomba gomba) {
 
-        // —————————————————————————————
         // 1) Dinamikusan betöltjük a Gomba sprite-ot
         String spritePath;
         switch (gomba.getFajta()) {
@@ -148,7 +149,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         // 2) A GombaView-ben használt scale
         double gScale = 2.25;
 
-        // —————————————————————————————
         // 3) Betöltjük a Tekton sprite-ot és scale-eljük ugyanúgy, mint TektonView
         BufferedImage tImg;
         try {
@@ -171,8 +171,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         // 5) Kiszámoljuk a JButton végső méretét és pozícióját:
         int btnW = (int)Math.round(gw * gScale);
         int btnH = (int)Math.round(gh * gScale);
-        int btnX = centerX - btnW/2;
-        int btnY = centerY - btnH/2;
+        int btnX = centerX - btnW/2 -2;
+        int btnY = centerY - btnH/2 + 17;
 
         // 6) Gomb létrehozása, ikon és bounds beállítása
         JButton gomb = new JButton(new ImageIcon(gImg.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
@@ -195,6 +195,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     public void hozzaadTektonGombkent(Tekton tekton) {
+        /*
         TektonView view = (TektonView) rajzoloTar.getRajzolo(tekton);
 
         gomb.setBounds(tekton.getX(), tekton.getY(), view.getWidth() + 10, view.getHeight() + 10);
@@ -209,6 +210,44 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         objektumGombok.put(tekton, gomb);
         add(gomb);
         setComponentZOrder(gomb, getComponentCount() - 1);
+        revalidate();
+        repaint();
+        */
+
+        // Load the Tekton image to get its size
+        BufferedImage tekImg;
+        try {
+            tekImg = ImageIO.read(getClass().getResourceAsStream("/tekton.png"));
+        } catch (IOException | NullPointerException e) {
+            tekImg = new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB); // fallback
+        }
+        int w = tekImg.getWidth();
+        int h = tekImg.getHeight();
+
+        double scale = 3.0; // same as in TektonView
+
+        int btnW = (int) (w * scale);
+        int btnH = (int) (h * scale);
+
+        int btnX = tekton.getX();
+        int btnY = tekton.getY() + 39;
+
+        JButton gomb = new JButton(new ImageIcon(tekImg.getScaledInstance(btnW, btnH, Image.SCALE_SMOOTH)));
+        gomb.setBorderPainted(false);
+        gomb.setContentAreaFilled(false);
+        gomb.setBounds(btnX, btnY, btnW, btnH);
+
+        gomb.addActionListener(e -> {
+            Object old = this.kijeloltObjektum;
+            this.kijeloltObjektum = tekton;
+            gameEngine.setKivalasztottCelTekton(tekton);
+            System.out.println("Tekton kijelölve: +++++++++" + tekton.getId());
+            firePropertyChange("selectedObject", old, this.kijeloltObjektum);
+        });
+
+        objektumGombok.put(tekton, gomb);
+        add(gomb);
+        setComponentZOrder(gomb, 0);
         revalidate();
         repaint();
     }
