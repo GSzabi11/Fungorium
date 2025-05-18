@@ -49,20 +49,19 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         javax.swing.Timer repaintTimer = new javax.swing.Timer(1000 / 30, e -> repaint());
         repaintTimer.start();
 
-        // Hardcoded 10 Tekton
-        for (int i = 0; i < 10; i++) {
-            int x = 100 + (i % 5) * 120;
-            int y = 100 + (i / 5) * 120;
-            Tekton t = new Tekton(i, x, y);
-            vilag.addTekton(t);
-            hozzaadTektonGombkent(t);
-        }
-
-        // Hardcoded 2 Gomba (különböző fajták)
-        Tekton t0 = vilag.getMezok().get(0);
-        Tekton t1 = vilag.getMezok().get(1);
-        vilag.lerakGombat(KEK, t0, t0.getX(), t0.getY());
-        vilag.lerakGombat(PIROS, t1, t1.getX(), t1.getY());
+//        // Hardcoded 10 Tekton
+//        for (int i = 0; i < 10; i++) {
+//            int x = 100 + (i % 5) * 120;
+//            int y = 100 + (i / 5) * 120;
+//            Tekton t = new Tekton(i, x, y);
+//            vilag.addTekton(t);
+//        }
+//
+//        // Hardcoded 2 Gomba (különböző fajták)
+//        Tekton t0 = vilag.getMezok().get(0);
+//        Tekton t1 = vilag.getMezok().get(1);
+//        vilag.lerakGombat(KEK, t0, t0.getX(), t0.getY());
+//        vilag.lerakGombat(PIROS, t1, t1.getX(), t1.getY());
     }
 
     public void setKorTulajdonos(String korTulajdonos) {
@@ -80,7 +79,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
         if (backgroundImage != null)
@@ -98,6 +96,40 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         int x = (getWidth() - szovegSzelesseg) / 2;
         int y = (sávMagasság + fm.getAscent()) / 2 - 4;
         g2.drawString(szoveg, x, y);
+
+        // A játék többi eleme alatta, kicsit lejjebb rajzolva, hogy ne takarja a sávot
+        g2.translate(0, sávMagasság);
+
+        // Először a Gombafonalakat
+        for (Tekton t : vilag.getMezok()) {
+            for (Gombafonal gf : vilag.getFonalak(t)) {
+                rajzoloTar.rajzol(g2, gf);
+            }
+        }
+        // Tektonokat
+        for (Tekton t : vilag.getMezok()) {
+            rajzoloTar.rajzol(g2, t);
+        }
+
+        // Spórák
+        for (Tekton t : vilag.getMezok()) {
+            for (Spora s : vilag.getSporak(t)) {
+                rajzoloTar.rajzol(g2, s);
+            }
+        }
+
+        // Gombatestek
+        for (Gomba k : vilag.getGombak()) {
+            rajzoloTar.rajzol(g2, k);
+        }
+
+        // Rovarok
+        for (Rovar r : vilag.getRovarok()) {
+            rajzoloTar.rajzol(g2, r);
+        }
+
+        // Visszaállítjuk az eredeti koordinátarendszert
+        g2.translate(0, -sávMagasság);
     }
 
     private void hozzaadGombaGombkent(Gomba gomba) {
@@ -148,10 +180,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
                 Gomba uj = (Gomba) evt.getNewValue();
                 hozzaadGombaGombkent(uj);
             }
-
         }
         repaint();
     }
-
-
 }

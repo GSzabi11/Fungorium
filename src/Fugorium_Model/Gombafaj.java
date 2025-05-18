@@ -5,5 +5,4 @@ package Fugorium_Model;
  */
 public enum Gombafaj {
     PIROS, KEK, ZOLD, SARGA;
-
 }

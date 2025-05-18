@@ -10,7 +10,7 @@ public class Menu {
 
     public static ArrayList<Player> playersarraylist = new ArrayList<Player>();
     public static void menu() {
-        int boardWidth = 1024;
+        int boardWidth = 1366;
         int boardHeight = 768;
 
         JFrame frame = new JFrame("Menu");
