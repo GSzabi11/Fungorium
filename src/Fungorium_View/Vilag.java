@@ -3,6 +3,9 @@ package Fungorium_View;
 import Fugorium_Model.*;
 import Fungorium_Controller.Player;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
@@ -29,10 +32,6 @@ public class Vilag {
 
     public void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
-    }
-
-    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        pcs.firePropertyChange(propertyName, oldValue, newValue);
     }
 
     private void fireChange(String prop, Object oldVal, Object newVal) {
@@ -116,7 +115,8 @@ public class Vilag {
             double angle = 2 * Math.PI * i / tektonCount;
             int x = (int) (centerX + radius * Math.cos(angle));
             int y = (int) (centerY + radius * Math.sin(angle));
-            mezok.add(new Tekton(i, x, y));
+            Tekton temp = new Tekton(i, x, y);
+            mezok.add(temp);
         }
 
         // 4) Gombák elhelyezése: gombászok száma = gombák száma
@@ -133,8 +133,7 @@ public class Vilag {
         for (int i = 0; i < gombaszCount; i++) {
             Tekton t = shuffled.get(i % shuffled.size());
             j = j % 4;
-            gombak.add(new Gomba(tempGFaj.get(j), t, t.getX(), t.getY()));
-            lerakGombat(tempGFaj.get(j), t, t.getX(), t.getY());
+            addGomba(new Gomba(tempGFaj.get(j), t, t.getX(), t.getY()));
             j += 1;
         }
 
@@ -168,10 +167,5 @@ public class Vilag {
             int midY = (t1.getY() + t2.getY()) / 2;
             fonalak.add(new Gombafonal(source, t2, midX, midY));
         }
-    }
-
-    public void lerakGombat (Gombafaj fajta, Tekton cel, int x, int y){
-        Gomba g = new Gomba(fajta, cel, x, y);
-        firePropertyChange("gomba", null, g);
     }
 }

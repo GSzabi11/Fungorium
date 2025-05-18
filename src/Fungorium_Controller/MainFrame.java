@@ -27,21 +27,33 @@ public class MainFrame extends JFrame {
 
             JatekTer jatekTer = new JatekTer(vilag, rajzoloTar, korView, gameEngine);
 
+            // 4. Infopanel, property change logic
+            JPanel infoPanel = new JPanel();
+            infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.add(new JLabel("Nincs kijelölt objektum"));
+
+            // Main layout
+            JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, korView, jatekTer);
+            mainSplit.setDividerLocation(200);
+
+            JSplitPane fullSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mainSplit, infoPanel);
+            fullSplit.setDividerLocation(900);
+
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1366, 768);
+            frame.setSize(1024, 768);
             frame.setLocationRelativeTo(null);
-
-            // elrendezés: játék + korView bal oldalt
-            JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, korView, jatekTer);
-            split.setDividerLocation(200);
-            frame.setContentPane(split);
+            frame.setContentPane(fullSplit);
 
             frame.setVisible(true);
 
-            // átadjuk a játékosokat a motorba
-            List<String> szerepek = playerList.stream().map(p -> p.role.equalsIgnoreCase("gombász") ? "Gombász" : "Rovarász").toList();
-            GameEngine engine = new GameEngine(vilag, jatekTer, playerList); // már a teljes játékoslista
+            // Infopanel - property change
+            jatekTer.addPropertyChangeListener("selectedObject", evt -> {
+                updateInfoPanel(infoPanel, jatekTer.getKijeloltObjektum());
+            });
+
+            // 5. GameEngine
+            GameEngine engine = new GameEngine(vilag, jatekTer, playerList); // <-- megfelelő paraméterezés
 
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
@@ -51,7 +63,6 @@ public class MainFrame extends JFrame {
                 } else {
                     korView.csakRovarasznak();
                 }
-
                 korView.resetAllButtons();
             });
 
@@ -64,50 +75,48 @@ public class MainFrame extends JFrame {
                 korView.csakRovarasznak();
             }
 
-            korView.getFonalVagasButton().addActionListener(e -> {
-                // Itt jönne a fonalvágás konkrétan, pl. egy controller meghívása (most még nincs)
-                korView.csakKorVegeMarad();
-            });
-
-            korView.getGombatestNovesztButton().addActionListener(e -> {
-                // növesztés logika ide
-                korView.csakKorVegeMarad();
-            });
-
-            korView.getSporazButton().addActionListener(e -> {
-                // spórázás logika ide
-                korView.csakKorVegeMarad();
-            });
-
-            korView.getFonalNovesztButton().addActionListener(e -> {
-                // fonal növesztés logika ide
-                korView.csakKorVegeMarad();
-            });
+            korView.getFonalVagasButton().addActionListener(e -> korView.csakKorVegeMarad());
+            korView.getGombatestNovesztButton().addActionListener(e -> korView.csakKorVegeMarad());
+            korView.getSporazButton().addActionListener(e -> korView.csakKorVegeMarad());
+            korView.getFonalNovesztButton().addActionListener(e -> korView.csakKorVegeMarad());
 
             korView.getMozgasButton().addActionListener(e -> {
-                if (gameEngine.getKivalasztottRovar() != null && gameEngine.getKivalasztottCelTekton() != null) {
+                if (engine.getKivalasztottRovar() != null && engine.getKivalasztottCelTekton() != null) {
                     MozgasController mozgasController = new MozgasController();
-                    mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
-                    korView.csakKorVegeMarad(); // vagy más UI frissítés
+                    mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
+                    korView.csakKorVegeMarad();
                 } else {
-
                     JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");
                 }
             });
-
-            jatekTer.gomb.addActionListener(e -> {
-                if (kijeloltObjektum != null) {
-                    gameEngine.setKivalasztottCelTekton((Tekton)kijeloltObjektum);
-                    System.out.println("Kijelölt objektum: " + kijeloltObjektum);
-                }
-            });
-
-
-
         });
     }
 
-
-
+    // ==== INFOPANEL: ÚJ segédfüggvény ====
+    private void updateInfoPanel(JPanel panel, Object o) {
+        panel.removeAll();
+        if (o == null) {
+            panel.add(new JLabel("Nincs kijelölt objektum"));
+        } else if (o instanceof Gomba g) {
+            panel.add(new JLabel("Típus: Gomba"));
+            panel.add(new JLabel("Fajta: " + g.getFajta().toString()));
+            panel.add(new JLabel("Pozíció: (" + g.getX() + ", " + g.getY() + ")"));
+            panel.add(new JLabel("Termelt spórák: " + g.getTermeltSporakSzama()));
+        } else if (o instanceof Tekton t) {
+            panel.add(new JLabel("Típus: Tekton"));
+            panel.add(new JLabel("Azonosító: " + t.getId()));
+            panel.add(new JLabel("Pozíció: (" + t.getX() + ", " + t.getY() + ")"));
+            panel.add(new JLabel("Spórák: " + (t.getSporak() != null ? t.getSporak().size() : "N/A")));
+        } else if (o instanceof Rovar r) {
+            panel.add(new JLabel("Típus: Rovar"));
+            panel.add(new JLabel("Fajta: " + r.getFajta().toString()));
+            panel.add(new JLabel("Pozíció: (" + r.getX() + ", " + r.getY() + ")"));
+            panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
+            // Egyéb rovar adatok is kiírhatók, pl. állapot
+        }
+        panel.revalidate();
+        panel.repaint();
+        repaint();
+    }
 }
 

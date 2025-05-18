@@ -137,6 +137,7 @@ public class Gomba {
         termeltSporak.add(ujSpora);
         sporaSzamlalo++;
         System.out.println("Gomba.sporaTermel() - sporak szama: " + sporaSzamlalo);
+        firePropertyChange("termeltSporakSzama", sporaSzamlalo - 1, sporaSzamlalo);
     }
 
     /**

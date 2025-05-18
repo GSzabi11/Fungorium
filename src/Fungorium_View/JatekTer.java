@@ -6,11 +6,9 @@ import Fungorium_Controller.GameEngine;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 import java.util.*;
 
 public class JatekTer extends JPanel implements PropertyChangeListener {
@@ -24,7 +22,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
     private final Map<Object, JButton> objektumGombok = new HashMap<>();
     private Object kijeloltObjektum = null;
-    private Graphics2D g2;
 
     public JatekTer(Vilag vilag, RajzoloTar rajzoloTar, KorView korView, GameEngine gameEngine) {
         this.vilag = vilag;
@@ -63,9 +60,15 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         return kijeloltObjektum;
     }
 
+    public void setKijeloltObjektum(Object o) {
+        this.kijeloltObjektum = o;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
-        g2 = (Graphics2D) g;
+        firePropertyChange("selectedObject", null, this.kijeloltObjektum);
+
+        Graphics2D g2 = (Graphics2D) g;
 
         if (backgroundImage != null)
             g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
@@ -104,10 +107,14 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             }
         }
 
-        // Gombatestek
-        for (Gomba k : vilag.getGombak()) {
-            rajzoloTar.rajzol(g2, k);
-        }
+//        // Gombatestek
+//        for (Gomba k : vilag.getGombak()) {
+//            rajzoloTar.rajzol(g2, k);
+//        }
+//        // Gombatestek
+//        for (Gomba k : vilag.getGombak()) {
+//            objektumGombok.get(k).repaint();
+//        }
 
         // Rovarok
         for (Rovar r : vilag.getRovarok()) {
@@ -119,92 +126,72 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     private void hozzaadGombaGombkent(Gomba gomba) {
-//        GombaView view = new GombaView(gomba.getX(), gomba.getY(), 50, 50);
-//        view.drawEntity(g2, gomba);
-//        JButton gomb = new JButton();
-//        gomb.setBounds(gomba.getX(), gomba.getY(), view.getWidth(), view.getHeight());
-//        gomb.setIcon(new ImageIcon(view.getImage()));
-//        gomb.setBorderPainted(false);
-//        gomb.setContentAreaFilled(false);
-//        gomb.addActionListener(e -> {
-//            kijeloltObjektum = gomba;
-//            System.out.println("Gomba kijelölve+++++++++++++++++++++++++++++++++++++++++++++++++++: " + gomba);
-//        });
-//        objektumGombok.put(gomba, gomb);
-//        add(gomb);
-//        setComponentZOrder(gomb, 0);
-//        revalidate();
-//        repaint();
 
-        // 1) Dinamikusan betöltöm a hozzá tartozó sprite-ot
-        Gombafaj fajta = gomba.getFajta();
-        String spriteFile;
-        switch (fajta) {
-            case KEK:
-                spriteFile = "/gomba_kek.png";
-                break;
-            case SARGA:
-                spriteFile = "/gomba_sarga.png";
-                break;
-            case PIROS:
-                spriteFile = "/gomba_piros.png";
-                break;
-            default:
-                spriteFile = "/gomba_zold.png";
+        // —————————————————————————————
+        // 1) Dinamikusan betöltjük a Gomba sprite-ot
+        String spritePath;
+        switch (gomba.getFajta()) {
+            case KEK:   spritePath = "/gomba_kek.png";   break;
+            case SARGA: spritePath = "/gomba_sarga.png"; break;
+            case PIROS: spritePath = "/gomba_piros.png"; break;
+            default:    spritePath = "/gomba_zold.png";  break;
         }
-        // 2) Beolvassuk a BufferedImage-et
         BufferedImage gImg;
         try {
-            gImg = ImageIO.read(getClass().getResourceAsStream(spriteFile));
+            gImg = ImageIO.read(getClass().getResourceAsStream(spritePath));
         } catch (Exception e) {
-            // ne omoljunk be, vegyük a view‐fallbacket
+            // fallback
             gImg = (BufferedImage)new GombaView(0,0,0,0).getImage();
         }
         int gw = gImg.getWidth(), gh = gImg.getHeight();
 
-        // 2) Pontosan ugyanaz a scale és offsetX, amit a GombaView-ben használsz
-        double gScale  = 2.25;
-        int    offsetX = 80;
+        // 2) A GombaView-ben használt scale
+        double gScale = 2.25;
 
-        // 3) A tőle jobbra levő GombaView az alábbiak szerint számolná a középpontot:
-        //    cx = gomba.getX() + tektonCenterOffsetX
-        //    cy = gomba.getY() + tektonCenterOffsetY
-        //
-        //  Mi most viszont vegyük a *tekton* közepét:
-        Tekton parent = gomba.getTekton();
-        //   (feltételezzük, hogy a tekton sprite eredeti mérete pl. 32×32, scale=1.5)
+        // —————————————————————————————
+        // 3) Betöltjük a Tekton sprite-ot és scale-eljük ugyanúgy, mint TektonView
         BufferedImage tImg;
         try {
-            tImg = ImageIO.read(getClass().getResourceAsStream("/Images/tekton.png"));
+            tImg = ImageIO.read(getClass().getResourceAsStream("/tekton.png"));
         } catch (Exception e) {
             tImg = new BufferedImage(32,32,BufferedImage.TYPE_INT_ARGB);
         }
-        double tScale = 1.5;
+        double tScale = 3.0;  // ez van a TektonView-ban
         int tw = (int)(tImg.getWidth()  * tScale);
         int th = (int)(tImg.getHeight() * tScale);
 
-        //  Tekton bal‐felső koordináta a paneleken:
-        int tX = parent.getX();
-        int tY = parent.getY();
-        //  Ez a tekton *képernyőn* megjelenő középpontja:
-        int centerX = tX + tw/2  - offsetX;
-        int centerY = tY + th/2;
+        // 4) A Tekton modell X/Y a bal-felső sarka. Ebből a képernyőn a középpont:
+        Tekton parent = gomba.getTekton();
+        // (ha JatekTer.paintComponent-ben van eltolás, pl. g2.translate(-offsetX,0),
+        // azt nem itt kell figyelembe venni, mert a Swing-gomb abszolút pozícióban van)
+        int centerX = parent.getX() + tw/2;
+        int centerY = parent.getY() + th/2;
 
-        // 4) A gomb tényleges mérete és bal‐felső pozíciója:
-        int bW = (int)Math.round(gw * gScale);
-        int bH = (int)Math.round(gh * gScale);
-        int bX = centerX - bW/2;
-        int bY = centerY - bH/2;
+        // —————————————————————————————
+        // 5) Kiszámoljuk a JButton végső méretét és pozícióját:
+        int btnW = (int)Math.round(gw * gScale);
+        int btnH = (int)Math.round(gh * gScale);
+        int btnX = centerX - btnW/2;
+        int btnY = centerY - btnH/2;
 
-        // 5) Gomb létrehozása és ikonozása
-        JButton btn = new JButton(new ImageIcon(gImg));
-        btn.setBorderPainted(false);
-        btn.setContentAreaFilled(false);
-        btn.setBounds(bX, bY, bW, bH);
+        // 6) Gomb létrehozása, ikon és bounds beállítása
+        JButton gomb = new JButton(new ImageIcon(gImg.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        gomb.setBorderPainted(false);
+        gomb.setContentAreaFilled(false);
+        gomb.setBounds(btnX, btnY, btnW, btnH);
 
-        // 4) Végül a panelra tesszük
-        add(btn);
+        // 7) ActionListener, rögzítés a térképre
+        gomb.addActionListener(e -> {
+            this.kijeloltObjektum = gomba;
+            System.out.println("Gomba kijelölve: ++++++++++" + gomba);
+        });
+        add(gomb);
+        setComponentZOrder(gomb, 0);
+        revalidate();
         repaint();
+
+        // 8) Ha tárolod a gombokat
+        objektumGombok.put(gomba, gomb);
     }
 
     public void hozzaadTektonGombkent(Tekton tekton) {
@@ -228,7 +215,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-                switch (evt.getPropertyName()) {
+        switch (evt.getPropertyName()) {
             case "tekton" -> {
                 Tekton uj = (Tekton) evt.getNewValue();
                 hozzaadTektonGombkent(uj);

@@ -125,6 +125,4 @@ public class GameEngine {
         return kivalasztottCelTekton;
     }
 
-
-
 }
