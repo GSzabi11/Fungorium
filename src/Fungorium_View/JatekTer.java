@@ -2,16 +2,10 @@ package Fungorium_View;
 
 import Fugorium_Model.*;
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
-
-import static Fugorium_Model.Gombafaj.*;
-import static Fugorium_Model.Rovarfaj.BARNA;
 
 public class JatekTer extends JPanel implements PropertyChangeListener {
 
@@ -44,19 +38,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         javax.swing.Timer repaintTimer = new javax.swing.Timer(1000 / 30, e -> repaint());
         repaintTimer.start();
 
-//        // Hardcoded 10 Tekton
-//        for (int i = 0; i < 10; i++) {
-//            int x = 100 + (i % 5) * 120;
-//            int y = 100 + (i / 5) * 120;
-//            Tekton t = new Tekton(i, x, y);
-//            vilag.addTekton(t);
-//        }
-//
-//        // Hardcoded 2 Gomba (különböző fajták)
-//        Tekton t0 = vilag.getMezok().get(0);
-//        Tekton t1 = vilag.getMezok().get(1);
-//        vilag.lerakGombat(KEK, t0, t0.getX(), t0.getY());
-//        vilag.lerakGombat(PIROS, t1, t1.getX(), t1.getY());
     }
 
     public void setKorTulajdonos(String korTulajdonos) {
@@ -128,7 +109,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     private void hozzaadGombaGombkent(Gomba gomba) {
-        GombaView view = new GombaView(gomba.getX(), gomba.getY(), 50, 50, gomba.getFajta());
+        GombaView view = new GombaView(gomba.getX(), gomba.getY(), 50, 50);
         JButton gomb = new JButton();
         gomb.setBounds(gomba.getX(), gomba.getY(), view.getWidth(), view.getHeight());
         gomb.setIcon(new ImageIcon(view.getImage()));

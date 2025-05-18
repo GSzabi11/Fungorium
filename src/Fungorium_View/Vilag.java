@@ -1,15 +1,13 @@
 package Fungorium_View;
 
 import Fugorium_Model.*;
-import Fungorium_Controller.Menu;
 import Fungorium_Controller.Player;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.*;
 
-import static Fugorium_Model.Gombafaj.KEK;
-import static Fugorium_Model.Rovarfaj.BARNA;
+import static Fugorium_Model.Rovarfaj.*;
 
 public class Vilag {
 
@@ -86,9 +84,6 @@ public class Vilag {
         for (Rovar r : new ArrayList<>(rovarok)) {
             r.csokkentAllapotIdotartam();
         }
-        for (Gomba g : new ArrayList<>(gombak)) {
-            g.sporaTermel();
-        }
     }
 
     public void initEntities() {
@@ -111,7 +106,7 @@ public class Vilag {
         // 3) Tektonok létrehozása (3 tekton/játékos), körbeosztással
         int tektonCount = totalPlayers * 3;
         int centerX = 512, centerY = 384;       // például a panel közepe
-        int radius = 200;                     // tetszőleges sugarú kör
+        int radius = 250;                     // tetszőleges sugarú kör
         for (int i = 0; i < tektonCount; i++) {
             double angle = 2 * Math.PI * i / tektonCount;
             int x = (int) (centerX + radius * Math.cos(angle));
@@ -121,11 +116,21 @@ public class Vilag {
 
         // 4) Gombák elhelyezése: gombászok száma = gombák száma
         //    Véletlenszerűen szétosztjuk őket a tektonok között
+        List<Gombafaj> tempGFaj = new ArrayList<>();
+        tempGFaj.add(Gombafaj.KEK);
+        tempGFaj.add(Gombafaj.ZOLD);
+        tempGFaj.add(Gombafaj.PIROS);
+        tempGFaj.add(Gombafaj.SARGA);
+        Random rand = new Random();
+        int j = Math.abs(rand.nextInt() % 4);
         List<Tekton> shuffled = new ArrayList<>(mezok);
         Collections.shuffle(shuffled);
         for (int i = 0; i < gombaszCount; i++) {
             Tekton t = shuffled.get(i % shuffled.size());
-            gombak.add(new Gomba(KEK, t, t.getX(), t.getY()));
+            j = j % 4;
+            gombak.add(new Gomba(tempGFaj.get(j), t, t.getX(), t.getY()));
+            //lerakGombat(tempGFaj.get(j), t, t.getX(), t.getY());
+            j += 1;
         }
 
         for (Gomba g : gombak) {
@@ -133,9 +138,18 @@ public class Vilag {
         }
 
         // 5) Rovarok elhelyezése: rovarászok száma = rovarok száma
+        List<Rovarfaj> tempRFaj = new ArrayList<>();
+        tempRFaj.add(LILA);
+        tempRFaj.add(BARNA);
+        tempRFaj.add(NARANCS);
+        tempRFaj.add(CIAN);
+
+        Tekton t = shuffled.get((int) ((2 + gombaszCount) % shuffled.size()));
         for (int i = 0; i < rovaraszCount; i++) {
-            Tekton t = shuffled.get((int) ((i + gombaszCount) % shuffled.size()));
-            rovarok.add(new Rovar(BARNA, t, t.getX(), t.getY()));
+            //Tekton t = shuffled.get((int) ((i + gombaszCount) % shuffled.size()));
+            j = j % 4;
+            rovarok.add(new Rovar(tempRFaj.get(j), t, t.getX(), t.getY()));
+            j += 1;
         }
 
         // 6) Gombafonalak – egyszerű gyűrű: minden tekton összekötése a következővel

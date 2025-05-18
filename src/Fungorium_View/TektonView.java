@@ -26,7 +26,7 @@ public class TektonView extends AbstractEntityView {
         int y = t.getY();
 
         // 1) Méretnövelő faktor
-        double scale = 2;  // 200%–os méret
+        double scale = 3;  // 350%–os méret
         // 2) Transzformáció összeállítása
         AffineTransform at = new AffineTransform();
         at.translate(x, y);

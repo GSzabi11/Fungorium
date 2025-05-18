@@ -1,5 +1,6 @@
 package Fungorium_Controller;
 
+import Fugorium_Model.Gomba;
 import Fugorium_Model.Rovar;
 import Fugorium_Model.Tekton;
 import Fungorium_View.JatekTer;
@@ -75,6 +76,10 @@ public class GameEngine {
     public void kovetkezoKor() {
         korIndex = (korIndex + 1) % jatekosok.size();
         updateKorTulajdonosFelirat();
+
+        for (Gomba g : vilag.getGombak()) {
+            g.sporaTermel();
+        }
 
         Player p = players.get(currentPlayerIndex);
 
