@@ -25,6 +25,7 @@ public class GameEngine {
     private int korIndex = 0;
     private Rovar kivalasztottRovar;
     private Tekton kivalasztottCelTekton;
+    private Gomba kivalasztottGomba;
 
     //private boolean rovaraszKor = true; // true = rovarász, false = gombász
 
@@ -123,6 +124,14 @@ public class GameEngine {
 
     public Tekton getKivalasztottCelTekton() {
         return kivalasztottCelTekton;
+    }
+
+    public Gomba getKivalasztottGomba() {
+        return kivalasztottGomba;
+    }
+
+    public void setKivalasztottGomba(Gomba gomba) {
+        this.kivalasztottGomba = gomba;
     }
 
 

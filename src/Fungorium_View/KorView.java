@@ -63,9 +63,7 @@ public class KorView extends JPanel {
         return gombatestNoveszt;
     }
 
-    public JButton getSporazButton() {
-        return sporaz;
-    }
+    public JButton getSporazButton() { return sporaz;}
 
     public JButton getFonalNovesztButton() {
         return fonalNoveszt;
