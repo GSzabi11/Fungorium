@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             Vilag vilag = new Vilag();
             this.korView = new KorView();
+            vilag.setJatekosok(playerList);
 
             RajzoloTar rajzoloTar = new RajzoloTar();
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
@@ -25,7 +26,7 @@ public class MainFrame extends JFrame {
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1024, 768);
+            frame.setSize(1366, 768);
             frame.setLocationRelativeTo(null);
 
             // elrendezés: játék + korView bal oldalt

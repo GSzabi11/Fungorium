@@ -252,4 +252,11 @@ public class Gombafonal {
     public void setY(int y) {
         this.y = y;
     }
+
+    /**
+     * Visszaadja a fonalat létrehozó gombát,
+     */
+    public Gomba getKiindulasiGomba() {
+        return kiindulasiGomba;
+    }
 }

@@ -70,7 +70,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     @Override
     protected void paintComponent(Graphics g)
     {
-        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
         g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
@@ -92,16 +91,15 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         // A játék többi eleme alatta, kicsit lejjebb rajzolva, hogy ne takarja a sávot
         g2.translate(0, sávMagasság);
 
-        // Először a Tektonokat
-        for (Tekton t : vilag.getMezok()) {
-            rajzoloTar.rajzol(g2, t);
-        }
-
-        // Gombafonalakat
+        // Először a Gombafonalakat
         for (Tekton t : vilag.getMezok()) {
             for (Gombafonal gf : vilag.getFonalak(t)) {
                 rajzoloTar.rajzol(g2, gf);
             }
+        }
+        // Tektonokat
+        for (Tekton t : vilag.getMezok()) {
+            rajzoloTar.rajzol(g2, t);
         }
 
         // Spórák
@@ -123,7 +121,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
         // Visszaállítjuk az eredeti koordinátarendszert
         g2.translate(0, -sávMagasság);
-
 
     }
 

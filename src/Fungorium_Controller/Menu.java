@@ -8,18 +8,18 @@ import javax.swing.*;
 
 public class Menu {
 
-    static class Player {
-        String name;
-        String role;
-        int score;
+    public static class Player {
+        public String name;
+        public String role;
+        public int score;
 
-        Player(String name, String role) {
+        public Player(String name, String role) {
             this.name = name;
             this.role = role;
             this.score = 0;
         }
 
-        void AddScore(int a) {
+        public void AddScore(int a) {
             this.score += a;
         }
 
@@ -31,7 +31,7 @@ public class Menu {
 
     public static ArrayList<Player> playersarraylist = new ArrayList<Player>();
     public static void menu() {
-        int boardWidth = 1024;
+        int boardWidth = 1366;
         int boardHeight = 768;
 
         JFrame frame = new JFrame("Menu");
