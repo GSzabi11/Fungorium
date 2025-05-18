@@ -14,9 +14,9 @@ public class MainFrame extends JFrame {
     public void jatekMenu(List<Player> playerList) {
         SwingUtilities.invokeLater(() -> {
             Vilag vilag = new Vilag(jatekTer);
+            vilag.setJatekosok(playerList);
             GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
             this.korView = new KorView();
-            vilag.setJatekosok(playerList);
 
             RajzoloTar rajzoloTar = new RajzoloTar();
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));

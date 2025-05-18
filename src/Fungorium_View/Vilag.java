@@ -21,7 +21,6 @@ public class Vilag {
 
     public Vilag(JatekTer jatekTer) {
         this.jatekTer = jatekTer;
-        initEntities();
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
@@ -135,7 +134,7 @@ public class Vilag {
             Tekton t = shuffled.get(i % shuffled.size());
             j = j % 4;
             gombak.add(new Gomba(tempGFaj.get(j), t, t.getX(), t.getY()));
-            //lerakGombat(tempGFaj.get(j), t, t.getX(), t.getY());
+            lerakGombat(tempGFaj.get(j), t, t.getX(), t.getY());
             j += 1;
         }
 
@@ -169,11 +168,10 @@ public class Vilag {
             int midY = (t1.getY() + t2.getY()) / 2;
             fonalak.add(new Gombafonal(source, t2, midX, midY));
         }
-
     }
+
     public void lerakGombat (Gombafaj fajta, Tekton cel, int x, int y){
         Gomba g = new Gomba(fajta, cel, x, y);
-        gombak.add(g);
         firePropertyChange("gomba", null, g);
     }
 }
