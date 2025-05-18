@@ -16,7 +16,6 @@ public class Vilag {
     private final List<Gombafonal> fonalak = new ArrayList<>();
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-    // === OBSZERVER KEZELÉS ===
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -25,30 +24,14 @@ public class Vilag {
         pcs.removePropertyChangeListener(l);
     }
 
+    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        pcs.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
     private void fireChange(String prop, Object oldVal, Object newVal) {
         pcs.firePropertyChange(prop, oldVal, newVal);
     }
 
-    // === MEZŐK, ROVAROK, GOMBÁK HOZZÁADÁSA ===
-    public void addTekton(Tekton t) {
-        mezok.add(t);
-        fireChange("tekton", null, t);
-    }
-
-    public void removeTekton(Tekton t) {
-        mezok.remove(t);
-        fireChange("tekton", t, null);
-    }
-
-    public void addRovar(Rovar r) {
-        rovarok.add(r);
-        fireChange("rovar", null, r);
-    }
-
-    public void addGomba(Gomba g) {
-        gombak.add(g);
-        fireChange("gomba", null, g);
-    }
 
     public List<Tekton> getMezok() {
         return Collections.unmodifiableList(mezok);
@@ -70,44 +53,24 @@ public class Vilag {
         return Collections.unmodifiableList(t.getGombafonalak());
     }
 
-    // === LÉPTETÉS ===
     public void leptet() {
-        // Rovarok mozognak
         for (Rovar r : new ArrayList<>(rovarok)) {
-            r.csokkentAllapotIdotartam();  // pl. bénultság, gyorsítás lejár
-            // Mozgatás lehet AI, véletlen vagy játékosvezérelt -> külön controller dönt róla
+            r.csokkentAllapotIdotartam();
         }
-
-        // Gombák termelnek
         for (Gomba g : new ArrayList<>(gombak)) {
             g.sporaTermel();
         }
     }
 
-    public void initEntities() {
-        // 2. Tektonok statikus elhelyezése
-        mezok.add(new Tekton(0, 200, 54));
-        mezok.add(new Tekton(1, 550, 65));
 
-
-        // 1. Gombák statikus elhelyezése
-        gombak.add(new Gomba(KEK,mezok.get(0) ,100, 200));
-        gombak.add(new Gomba(KEK,mezok.get(1),150, 240));
-
-
-        // 3. Rovarok statikus elhelyezése
-        rovarok.add(new Rovar(BARNA,mezok.get(0),300, 400));
-        rovarok.add(new Rovar(BARNA,mezok.get(1),500, 350));
-
-        fonalak.add(new Gombafonal(gombak.getFirst(), mezok.get(0), 201, 155));
-
+    public void addTekton(Tekton t) {
+        mezok.add(t);
+        firePropertyChange("tekton", null, t);
     }
 
-    // Fonalak növekednek és elhalnak ha kell
-//        for(Tekton t : mezok) {
-//            for (Gombafonal gf : t.getGombafonalak()) {
-//                //gf.scheduleDestruction(); // fonaltípus alapján időzített elhalás
-//                //gf.eatParalyzedRovarok(); // ha van ilyen rovar
-//            }
-//        }
+    public void lerakGombat(Gombafaj fajta, Tekton cel, int x, int y) {
+        Gomba g = new Gomba(fajta, cel, x, y);
+        gombak.add(g);
+        firePropertyChange("gomba", null, g);
+    }
 }
