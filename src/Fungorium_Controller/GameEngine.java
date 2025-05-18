@@ -38,7 +38,7 @@ public class GameEngine {
         this.timer = new Timer(1000 / 30, e -> {
             vilag.leptet();
             jatekTer.repaint();
-            vilag.initEntities();
+            //vilag.initEntities();
         });
     }
 
