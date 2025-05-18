@@ -131,13 +131,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     @Override
-<<<<<<< HEAD
-    public void propertyChange(PropertyChangeEvent evt)
-    {
-        repaint();
-=======
     public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()) {
+                switch (evt.getPropertyName()) {
             case "tekton" -> {
                 Tekton uj = (Tekton) evt.getNewValue();
                 hozzaadTektonGombkent(uj);
@@ -148,6 +143,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             }
 
         }
->>>>>>> de6aba569946b509c578b127ab95afe58a4be071
+        repaint();
     }
+
+
 }

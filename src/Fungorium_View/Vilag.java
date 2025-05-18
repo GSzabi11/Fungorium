@@ -62,7 +62,6 @@ public class Vilag {
         }
     }
 
-<<<<<<< HEAD
     public void initEntities() {
         // 2. Tektonok statikus elhelyezése
         mezok.add(new Tekton(0, 200, 54));
@@ -70,22 +69,16 @@ public class Vilag {
 
 
         // 1. Gombák statikus elhelyezése
-        gombak.add(new Gomba(KEK,mezok.get(0) ,100, 200));
-        gombak.add(new Gomba(KEK,mezok.get(1),150, 240));
+        gombak.add(new Gomba(KEK, mezok.get(0), 100, 200));
+        gombak.add(new Gomba(KEK, mezok.get(1), 150, 240));
 
 
         // 3. Rovarok statikus elhelyezése
-        rovarok.add(new Rovar(BARNA,mezok.get(0),300, 400));
-        rovarok.add(new Rovar(BARNA,mezok.get(1),500, 350));
+        rovarok.add(new Rovar(BARNA, mezok.get(0), 300, 400));
+        rovarok.add(new Rovar(BARNA, mezok.get(1), 500, 350));
 
         fonalak.add(new Gombafonal(gombak.getFirst(), mezok.get(0), 201, 155));
         fonalak.add(new Gombafonal(gombak.get(1), mezok.get(1), 202, 155));
-=======
->>>>>>> de6aba569946b509c578b127ab95afe58a4be071
-
-    public void addTekton(Tekton t) {
-        mezok.add(t);
-        firePropertyChange("tekton", null, t);
     }
 
     public void lerakGombat(Gombafaj fajta, Tekton cel, int x, int y) {
@@ -93,4 +86,11 @@ public class Vilag {
         gombak.add(g);
         firePropertyChange("gomba", null, g);
     }
+
+
+    public void addTekton(Tekton t) {
+        mezok.add(t);
+        firePropertyChange("tekton", null, t);
+    }
+
 }
