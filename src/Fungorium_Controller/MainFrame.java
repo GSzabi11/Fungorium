@@ -75,15 +75,51 @@ public class MainFrame extends JFrame {
                 korView.csakRovarasznak();
             }
 
-            korView.getFonalVagasButton().addActionListener(e -> korView.csakKorVegeMarad());
-            korView.getGombatestNovesztButton().addActionListener(e -> korView.csakKorVegeMarad());
-            korView.getSporazButton().addActionListener(e -> korView.csakKorVegeMarad());
-            korView.getFonalNovesztButton().addActionListener(e -> korView.csakKorVegeMarad());
+            korView.getFonalVagasButton().addActionListener(e -> {
+                // Itt jönne a fonalvágás konkrétan, pl. egy controller meghívása (most még nincs)
+                korView.csakKorVegeMarad();
+            });
 
+            // Gombatest növesztés
+            korView.getGombatestNovesztButton().addActionListener(e -> {
+                Gomba g = gameEngine.getKivalasztottGomba();
+                if (g != null && gameEngine.getKivalasztottCelTekton().isNohetGomba()) {
+                    //gombatestet kell valahogy noveszteni
+                    korView.csakKorVegeMarad();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Válassz ki egy gombát először!");
+                }
+            });
+
+            // Spórázás
+            korView.getSporazButton().addActionListener(e -> {
+                Gomba g = gameEngine.getKivalasztottGomba();
+                if (g != null) {
+                    g.sporaz(); // ide még kell grafika hozzá
+                    korView.csakKorVegeMarad();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Válassz ki egy gombát a spórázáshoz!");
+                }
+            });
+
+
+            // Fonal növesztés
+            korView.getFonalNovesztButton().addActionListener(e -> {
+                Gomba g = gameEngine.getKivalasztottGomba();
+                if (g != null && gameEngine.getKivalasztottCelTekton() != null) {
+                    g.novesztUjFonal(gameEngine.getKivalasztottCelTekton()); // GRAFIKA :)
+                    korView.csakKorVegeMarad();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Válassz ki egy gombát és cél tekton mezőt!");
+                }
+            });
+
+            // Rovar mozgás
             korView.getMozgasButton().addActionListener(e -> {
                 if (engine.getKivalasztottRovar() != null && engine.getKivalasztottCelTekton() != null) {
                     MozgasController mozgasController = new MozgasController();
-                    mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
+                    mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
+                    gameEngine.getKivalasztottRovar().mozog(gameEngine.getKivalasztottCelTekton());
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");
@@ -119,4 +155,3 @@ public class MainFrame extends JFrame {
         repaint();
     }
 }
-
