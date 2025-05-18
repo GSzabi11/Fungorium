@@ -15,6 +15,12 @@ public class Vilag {
     private final List<Gomba> gombak = new ArrayList<>();
     private final List<Gombafonal> fonalak = new ArrayList<>();
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    JatekTer jatekTer;
+
+    public Vilag(JatekTer jatekTer) {
+        this.jatekTer = jatekTer;
+        initEntities();
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);

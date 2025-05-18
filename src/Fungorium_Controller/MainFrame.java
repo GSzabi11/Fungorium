@@ -9,11 +9,12 @@ import java.util.List;
 public class MainFrame extends JFrame {
     private KorView korView;
     private Object kijeloltObjektum = null;
+    private JatekTer jatekTer;
 
     public void jatekMenu(List<Player> playerList) {
         SwingUtilities.invokeLater(() -> {
-            Vilag vilag = new Vilag();
-            GameEngine gameEngine = new GameEngine(vilag, null, playerList);
+            Vilag vilag = new Vilag(jatekTer);
+            GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
             this.korView = new KorView();
 
             RajzoloTar rajzoloTar = new RajzoloTar();
@@ -23,7 +24,7 @@ public class MainFrame extends JFrame {
             //rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
             rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
-            JatekTer jatekTer = new JatekTer(vilag, rajzoloTar, korView);
+            JatekTer jatekTer = new JatekTer(vilag, rajzoloTar, korView, gameEngine);
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,9 +89,18 @@ public class MainFrame extends JFrame {
                     mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
                     korView.csakKorVegeMarad(); // vagy más UI frissítés
                 } else {
+
                     JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");
                 }
             });
+
+            jatekTer.gomb.addActionListener(e -> {
+                if (kijeloltObjektum != null) {
+                    gameEngine.setKivalasztottCelTekton((Tekton)kijeloltObjektum);
+                    System.out.println("Kijelölt objektum: " + kijeloltObjektum);
+                }
+            });
+
 
 
         });

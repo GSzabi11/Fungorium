@@ -1,6 +1,8 @@
 package Fungorium_View;
 
 import Fugorium_Model.*;
+import Fungorium_Controller.GameEngine;
+
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
@@ -19,13 +21,16 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     private final RajzoloTar rajzoloTar;
     private Image backgroundImage;
     private String korTulajdonos = "";
+    private GameEngine gameEngine;
+    public JButton gomb = new JButton();
 
     private final Map<Object, JButton> objektumGombok = new HashMap<>();
     private Object kijeloltObjektum = null;
 
-    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar, KorView korView) {
+    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar, KorView korView, GameEngine gameEngine) {
         this.vilag = vilag;
         this.rajzoloTar = rajzoloTar;
+        this.gameEngine = gameEngine;
 
         setLayout(null);
         setBackground(Color.BLACK);
@@ -50,6 +55,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             int y = 100 + (i / 5) * 120;
             Tekton t = new Tekton(i, x, y);
             vilag.addTekton(t);
+            hozzaadTektonGombkent(t);
         }
 
         // Hardcoded 2 Gomba (különböző fajták)
@@ -112,15 +118,16 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
-    private void hozzaadTektonGombkent(Tekton tekton) {
+    public void hozzaadTektonGombkent(Tekton tekton) {
         TektonView view = (TektonView) rajzoloTar.getRajzolo(tekton);
-        JButton gomb = new JButton();
+
         gomb.setBounds(tekton.getX(), tekton.getY(), view.getWidth() + 10, view.getHeight() + 10);
         gomb.setIcon(new ImageIcon(view.getImage()));
         gomb.setBorderPainted(false);
         gomb.setContentAreaFilled(false);
         gomb.addActionListener(e -> {
             kijeloltObjektum = tekton;
+            gameEngine.setKivalasztottCelTekton(tekton);
             System.out.println("Tekton kijelölve-----------------------------------------------: " + tekton);
         });
         objektumGombok.put(tekton, gomb);
