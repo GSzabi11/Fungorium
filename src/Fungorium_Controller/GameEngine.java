@@ -27,14 +27,16 @@ public class GameEngine {
     private Rovar kivalasztottRovar;
     private Tekton kivalasztottCelTekton;
     private Gomba kivalasztottGomba;
+    private KorView korView;
 
     //private boolean rovaraszKor = true; // true = rovarász, false = gombász
 
-    public GameEngine(Vilag vilag, JatekTer jatekTer, List<Player> jatekosok) {
+    public GameEngine(Vilag vilag, JatekTer jatekTer, List<Player> jatekosok, KorView korView) {
         this.vilag = vilag;
         this.jatekTer = jatekTer;
         this.jatekosok = jatekosok;
         this.korIndex = 0;
+        this.korView = korView;
 
 
         // Timer csak a repainthez és léptetéshez, de nem vált köröket
@@ -76,8 +78,10 @@ public class GameEngine {
      * Ezt a metódust kell meghívni, amikor a játékos befejezi a lépését.
      */
     public void kovetkezoKor() {
-        korIndex = (korIndex + 1) % jatekosok.size();
+        korIndex = (korIndex+1) % jatekosok.size();
         updateKorTulajdonosFelirat();
+
+        updatePlayerButtons();
 
         for (Gomba g : vilag.getGombak()) {
             g.sporaTermel();
@@ -133,5 +137,16 @@ public class GameEngine {
 
     public void setKivalasztottGomba(Gomba gomba) {
         this.kivalasztottGomba = gomba;
+    }
+
+    private void updatePlayerButtons() {
+        Player aktualis = jatekosok.get(korIndex);
+
+        // Példa: ha van gombod a rovarász és gombász számára
+        if (aktualis.role.equals("rovarász")) {
+            korView.csakGombasznak();
+        } else {
+            korView.csakGombasznak();
+        }
     }
 }
