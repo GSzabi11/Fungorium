@@ -193,7 +193,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             System.out.println("Gomba kijelölve: ++++++++++" + gomba);
         });
         add(gomb);
-        setComponentZOrder(gomb, 1);
+        setComponentZOrder(gomb, 0);
         revalidate();
         repaint();
 
