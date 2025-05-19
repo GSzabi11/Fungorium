@@ -31,8 +31,7 @@ public class MainFrame extends JFrame {
             JPanel infoPanel = new JPanel();
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
             infoPanel.setBackground(Color.LIGHT_GRAY);
-            infoPanel.setMaximumSize(new Dimension(400, 768));
-            infoPanel.setPreferredSize(new Dimension(400, 768));
+            infoPanel.setPreferredSize(new Dimension(600, 768));
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
             // Main layout
@@ -53,7 +52,6 @@ public class MainFrame extends JFrame {
 
             // Infopanel - property change
             jatekTer.addPropertyChangeListener("selectedObject", evt -> {
-                infoPanel.setPreferredSize(new Dimension(400, 768));
                 updateInfoPanel(infoPanel, jatekTer.getKijeloltObjektum());
             });
 
@@ -155,7 +153,7 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
             // Egyéb rovar adatok is kiírhatók, pl. állapot
         }
-        panel.setPreferredSize(new Dimension(400, 768));
+
         panel.revalidate();
         panel.repaint();
         repaint();
