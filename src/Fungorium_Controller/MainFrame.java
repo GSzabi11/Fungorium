@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
             rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
             rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
-            JatekTer jatekTer = new JatekTer(vilag, rajzoloTar, korView, gameEngine);
+            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView, gameEngine);
 
             // 4. Infopanel, property change logic
             JPanel infoPanel = new JPanel();
@@ -119,7 +119,7 @@ public class MainFrame extends JFrame {
 
             // Rovar mozgás
             korView.getMozgasButton().addActionListener(e -> {
-                if (engine.getKivalasztottRovar() != null && engine.getKivalasztottCelTekton() != null) {
+                if (gameEngine.getKivalasztottRovar() != null && gameEngine.getKivalasztottCelTekton() != null) {
                     MozgasController mozgasController = new MozgasController();
                     mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
                     gameEngine.getKivalasztottRovar().mozog(gameEngine.getKivalasztottCelTekton());
