@@ -29,9 +29,9 @@ public class MainFrame extends JFrame {
 
             // 4. Infopanel, property change logic
             JPanel infoPanel = new JPanel();
-            infoPanel.setPreferredSize(new Dimension(80, 768));
-            infoPanel.setMaximumSize(new Dimension(80, 768));
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.LIGHT_GRAY);
+            infoPanel.setPreferredSize(new Dimension(600, 768));
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
             // Main layout
@@ -40,6 +40,7 @@ public class MainFrame extends JFrame {
 
             JSplitPane fullSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mainSplit, infoPanel);
             fullSplit.setDividerLocation(900);
+            fullSplit.setResizeWeight(1.0);
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

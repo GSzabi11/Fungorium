@@ -176,8 +176,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
         //
         //
-        gomba.setX(centerX - btnW/2 - 2);
-        gomba.setY(centerY - btnH/2 + 17);
+        //gomba.setX(centerX - btnW/2 - 2);
+        //gomba.setY(centerY - btnH/2 + 17);
         //
         //
 
@@ -223,7 +223,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
         //
         //
-        tekton.setY(tekton.getY() + 39);
+        //tekton.setY(tekton.getY() + 39);
         //
         //
 
@@ -287,8 +287,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
             //
             //
-            rovar.setX(rovar.getX() + 10);
-            rovar.setY(rovar.getY() + 40);
+            //rovar.setX(rovar.getX() + 10);
+            //rovar.setY(rovar.getY() + 40);
             //
             //
         }
@@ -299,8 +299,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
             //
             //
-            rovar.setX(rovar.getX() + 10);
-            rovar.setY(rovar.getY() + 56);
+            //rovar.setX(rovar.getX() + 10);
+            //rovar.setY(rovar.getY() + 56);
             //
             //
         }
@@ -311,8 +311,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
             //
             //
-            rovar.setX(rovar.getX() + 12);
-            rovar.setY(rovar.getY() + 72);
+            //rovar.setX(rovar.getX() + 12);
+            //rovar.setY(rovar.getY() + 72);
             //
             //
         }
@@ -323,8 +323,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
             //
             //
-            rovar.setX(rovar.getX() + 18);
-            rovar.setY(rovar.getY() + 88);
+            //rovar.setX(rovar.getX() + 18);
+            //rovar.setY(rovar.getY() + 88);
             //
             //
         }
