@@ -153,8 +153,10 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
             // Egyéb rovar adatok is kiírhatók, pl. állapot
         }
+
         panel.revalidate();
         panel.repaint();
         repaint();
+
     }
 }
