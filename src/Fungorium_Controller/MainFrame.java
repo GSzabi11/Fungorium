@@ -131,7 +131,7 @@ public class MainFrame extends JFrame {
                 if (gameEngine.getKivalasztottRovar() != null && gameEngine.getKivalasztottCelTekton() != null) {
                     MozgasController mozgasController = new MozgasController();
                     mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
-                    gameEngine.getKivalasztottRovar().mozog(gameEngine.getKivalasztottCelTekton());
+                    jatekTer.hozzaadRovarGombkent(gameEngine.getKivalasztottRovar());
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");

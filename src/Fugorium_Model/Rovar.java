@@ -95,6 +95,8 @@ public class Rovar {
         }
     
         this.helyzet = celtekton;
+        setX(helyzet.getX());
+        setY(helyzet.getY());
         System.out.println("Rovar mozog: uj hely: T" + celtekton.getId() + ", sebesseg: " + sebesseg);
         System.out.println("Rovar.mozog()");
     }
