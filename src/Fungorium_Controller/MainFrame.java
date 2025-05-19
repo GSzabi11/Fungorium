@@ -29,9 +29,10 @@ public class MainFrame extends JFrame {
 
             // 4. Infopanel, property change logic
             JPanel infoPanel = new JPanel();
-            infoPanel.setPreferredSize(new Dimension(80, 768));
-            infoPanel.setMaximumSize(new Dimension(80, 768));
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+            infoPanel.setBackground(Color.LIGHT_GRAY);
+            infoPanel.setMaximumSize(new Dimension(400, 768));
+            infoPanel.setPreferredSize(new Dimension(400, 768));
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
             // Main layout
@@ -40,6 +41,7 @@ public class MainFrame extends JFrame {
 
             JSplitPane fullSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mainSplit, infoPanel);
             fullSplit.setDividerLocation(900);
+            fullSplit.setResizeWeight(1.0);
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +53,7 @@ public class MainFrame extends JFrame {
 
             // Infopanel - property change
             jatekTer.addPropertyChangeListener("selectedObject", evt -> {
+                infoPanel.setPreferredSize(new Dimension(400, 768));
                 updateInfoPanel(infoPanel, jatekTer.getKijeloltObjektum());
             });
 
@@ -152,8 +155,10 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
             // Egyéb rovar adatok is kiírhatók, pl. állapot
         }
+        panel.setPreferredSize(new Dimension(400, 768));
         panel.revalidate();
         panel.repaint();
         repaint();
+
     }
 }
