@@ -54,6 +54,11 @@ public class Vilag {
         fireChange("tekton", t, null);
     }
 
+    public void removeRovar(Rovar r) {
+        rovarok.remove(r);
+        fireChange("rovar", r, null);
+    }
+
     public void addRovar(Rovar r) {
         rovarok.add(r);
         fireChange("rovar", null, r);

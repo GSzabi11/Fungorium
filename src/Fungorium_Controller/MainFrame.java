@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             Vilag vilag = new Vilag(jatekTer);
             vilag.setJatekosok(playerList);
-            GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
+            //GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
             this.korView = new KorView();
 
             RajzoloTar rajzoloTar = new RajzoloTar();
@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
             rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
             rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
-            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView, gameEngine);
+            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView);
 
             // 4. Infopanel, property change logic
             JPanel infoPanel = new JPanel();
@@ -57,6 +57,7 @@ public class MainFrame extends JFrame {
 
             // 5. GameEngine
             GameEngine engine = new GameEngine(vilag, jatekTer, playerList); // <-- megfelelő paraméterezés
+            jatekTer.setGameEngine(engine);
 
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
@@ -85,7 +86,7 @@ public class MainFrame extends JFrame {
 
             // A Gombatest növesztés gomb eseménykezelője
             korView.getGombatestNovesztButton().addActionListener(e -> {
-                Tekton celTekton = gameEngine.getKivalasztottCelTekton(); // Kijelölt tekton lekérése
+                Tekton celTekton = engine.getKivalasztottCelTekton(); // Kijelölt tekton lekérése
                 if (celTekton != null) {
                     // Ellenőrizd, hogy a tektonon lehet-e gombát növeszteni
                     if (celTekton.isNohetGomba()) {
@@ -104,7 +105,7 @@ public class MainFrame extends JFrame {
 
             // Spórázás
             korView.getSporazButton().addActionListener(e -> {
-                Gomba g = gameEngine.getKivalasztottGomba();
+                Gomba g = engine.getKivalasztottGomba();
                 if (g != null) {
                     g.sporaz(); // ide még kell grafika hozzá
 
@@ -117,9 +118,9 @@ public class MainFrame extends JFrame {
 
             // Fonal növesztés
             korView.getFonalNovesztButton().addActionListener(e -> {
-                Gomba g = gameEngine.getKivalasztottGomba();
-                if (g != null && gameEngine.getKivalasztottCelTekton() != null) {
-                    g.novesztUjFonal(gameEngine.getKivalasztottCelTekton()); // GRAFIKA :)
+                Gomba g = engine.getKivalasztottGomba();
+                if (g != null && engine.getKivalasztottCelTekton() != null) {
+                    g.novesztUjFonal(engine.getKivalasztottCelTekton()); // GRAFIKA :)
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Válassz ki egy gombát és cél tekton mezőt!");
@@ -128,11 +129,14 @@ public class MainFrame extends JFrame {
 
             // Rovar mozgás
             korView.getMozgasButton().addActionListener(e -> {
-                if (gameEngine.getKivalasztottRovar() != null && gameEngine.getKivalasztottCelTekton() != null) {
+                if (engine.getKivalasztottRovar() != null && engine.getKivalasztottCelTekton() != null) {
+                    Tekton old = engine.getKivalasztottRovar().getHelyzet();
                     MozgasController mozgasController = new MozgasController();
-                    mozgasController.move(gameEngine.getKivalasztottRovar(), gameEngine.getKivalasztottCelTekton());
-                    jatekTer.hozzaadRovarGombkent(gameEngine.getKivalasztottRovar());
-                    korView.csakKorVegeMarad();
+                    mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
+                    jatekTer.hozzaadRovarGombkent(engine.getKivalasztottRovar());
+                    if (old != engine.getKivalasztottRovar().getHelyzet()){
+                        korView.csakKorVegeMarad();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");
                 }

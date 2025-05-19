@@ -4,6 +4,7 @@ import Fugorium_Model.Gomba;
 import Fugorium_Model.Rovar;
 import Fugorium_Model.Tekton;
 import Fungorium_View.JatekTer;
+import Fungorium_View.KorView;
 import Fungorium_View.Vilag;
 
 import javax.swing.Timer;

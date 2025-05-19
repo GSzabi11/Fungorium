@@ -14,7 +14,7 @@ import java.util.*;
 
 public class JatekTer extends JPanel implements PropertyChangeListener {
 
-    private final Vilag vilag;
+    public final Vilag vilag;
     private final RajzoloTar rajzoloTar;
     private Image backgroundImage;
     private String korTulajdonos = "";
@@ -24,10 +24,9 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     private final Map<Object, JButton> objektumGombok = new HashMap<>();
     private Object kijeloltObjektum = null;
 
-    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar, KorView korView, GameEngine gameEngine) {
+    public JatekTer(Vilag vilag, RajzoloTar rajzoloTar, KorView korView) {
         this.vilag = vilag;
         this.rajzoloTar = rajzoloTar;
-        this.gameEngine = gameEngine;
 
         setLayout(null);
         setBackground(Color.BLACK);
@@ -45,7 +44,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
         javax.swing.Timer repaintTimer = new javax.swing.Timer(1000 / 30, e -> repaint());
         repaintTimer.start();
-
     }
 
     public void setKorTulajdonos(String korTulajdonos) {
@@ -63,6 +61,10 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
     public void setKijeloltObjektum(Object o) {
         this.kijeloltObjektum = o;
+    }
+
+    public void setGameEngine (GameEngine ge){
+        this.gameEngine = ge;
     }
 
     @Override
@@ -248,6 +250,13 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     public void hozzaadRovarGombkent(Rovar rovar){
+
+        // If a button already exists for this rovar, remove it first
+        JButton oldButton = objektumGombok.get(rovar);
+        if (oldButton != null) {
+            remove(oldButton);
+            objektumGombok.remove(rovar);
+        }
 
         // Determine sprite path based on Rovarfaj
         String spritePath;
