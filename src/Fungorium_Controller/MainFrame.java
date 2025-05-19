@@ -31,7 +31,10 @@ public class MainFrame extends JFrame {
             JPanel infoPanel = new JPanel();
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
             infoPanel.setBackground(Color.LIGHT_GRAY);
-            infoPanel.setPreferredSize(new Dimension(600, 768));
+            infoPanel.setPreferredSize(new Dimension(200, 600)); // Fix szélesség
+            infoPanel.setMinimumSize(new Dimension(200, 600)); // Minimum méret
+            infoPanel.setMaximumSize(new Dimension(200, 600)); // Maximum méret
+
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
             // Main layout
@@ -52,6 +55,7 @@ public class MainFrame extends JFrame {
 
             // Infopanel - property change
             jatekTer.addPropertyChangeListener("selectedObject", evt -> {
+                infoPanel.setPreferredSize(new Dimension(300, 768));
                 updateInfoPanel(infoPanel, jatekTer.getKijeloltObjektum());
             });
 
@@ -83,6 +87,7 @@ public class MainFrame extends JFrame {
                 korView.csakKorVegeMarad();
             });
 
+            //KÉSZ VAN
             // A Gombatest növesztés gomb eseménykezelője
             korView.getGombatestNovesztButton().addActionListener(e -> {
                 Tekton celTekton = gameEngine.getKivalasztottCelTekton(); // Kijelölt tekton lekérése
@@ -94,10 +99,16 @@ public class MainFrame extends JFrame {
                         vilag.addGomba(ujGomba); // Gomba hozzáadása a világhoz
                         System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
                     } else {
-                       // System.out.println("[DEBUG] Nem lehet gombát növeszteni ezen a tektonon.");
+                        JOptionPane.showMessageDialog(korView,
+                                "Nem lehet gombát növeszteni ezen a tektonon.",
+                                "Hiba",
+                                JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                    System.out.println("[DEBUG] Nincs kijelölt tekton.");
+                    JOptionPane.showMessageDialog(korView,
+                            "Nincs kijelölt tekton.",
+                            "Hiba",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             });
 
@@ -163,9 +174,9 @@ public class MainFrame extends JFrame {
             // Egyéb rovar adatok is kiírhatók, pl. állapot
         }
 
+        panel.setPreferredSize(new Dimension(200, 768));
         panel.revalidate();
         panel.repaint();
-        repaint();
 
     }
 }
