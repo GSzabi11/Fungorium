@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import javax.swing.*;
 
 public class Menu {
@@ -74,7 +75,7 @@ public class Menu {
                     break;
                 }
 
-                String[] options = {"rovarász", "gombász"};
+                String[] options = {"rovarasz", "gombasz"};
                 String role = (String) JOptionPane.showInputDialog(
                         frame,
                         "Choose role for " + name + ":",
@@ -95,8 +96,8 @@ public class Menu {
 
             }
 
-            boolean hasRovarasz = playerList.stream().anyMatch(p -> p.role.equals("rovarász"));
-            boolean hasGombasz = playerList.stream().anyMatch(p -> p.role.equals("gombász"));
+            boolean hasRovarasz = playerList.stream().anyMatch(p -> p.role.equals("rovarasz"));
+            boolean hasGombasz = playerList.stream().anyMatch(p -> p.role.equals("gombasz"));
 
             if (!hasRovarasz || !hasGombasz) {
                 JOptionPane.showMessageDialog(frame, "There must be at least one 'rovarász' and one 'gombász'. Please restart setup.");
@@ -111,7 +112,7 @@ public class Menu {
         frame.setVisible(true);
     }
 
-    public static void victory(ArrayList<Player> players) {
+    public static void victory(List<Player> players) {
         JFrame victoryFrame = new JFrame("Results");
         victoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         victoryFrame.setSize(800, 600);
@@ -138,9 +139,9 @@ public class Menu {
         ArrayList<Player> gombaszList = new ArrayList<>();
 
         for (Player p : players) {
-            if (p.role.equals("rovarász")) {
+            if (p.role.equals("rovarasz")) {
                 rovaraszList.add(p);
-            } else if (p.role.equals("gombász")) {
+            } else if (p.role.equals("gombasz")) {
                 gombaszList.add(p);
             }
         }

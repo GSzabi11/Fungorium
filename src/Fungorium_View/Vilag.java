@@ -106,10 +106,10 @@ public class Vilag {
         // 2) Játékos- és szerepszámok
         int totalPlayers = jatekosok.size();
         long rovaraszCount = jatekosok.stream()
-                .filter(p -> p.getRole().equalsIgnoreCase("rovarász"))
+                .filter(p -> p.getRole().equalsIgnoreCase("rovarasz"))
                 .count();
         long gombaszCount = jatekosok.stream()
-                .filter(p -> p.getRole().equalsIgnoreCase("gombász"))
+                .filter(p -> p.getRole().equalsIgnoreCase("gombasz"))
                 .count();
 
         // 3) Tektonok létrehozása (3 tekton/játékos), körbeosztással

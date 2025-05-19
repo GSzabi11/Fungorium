@@ -19,7 +19,7 @@ public class GameEngine {
     private final JatekTer jatekTer;
     private final Timer timer;
     //private final List<String> szerepek;
-    private final ArrayList<Player> players = new ArrayList<>();
+    //private final ArrayList<Player> players = new ArrayList<>();
     private final int winningScore=200;
     private int currentPlayerIndex = 0;
     private final List<Player> jatekosok;
@@ -87,7 +87,7 @@ public class GameEngine {
             g.sporaTermel();
         }
 
-        Player p = players.get(currentPlayerIndex);
+        Player p = jatekosok.get(currentPlayerIndex);
 
         // Meghívjuk a szerepkörhöz tartozó lépéslogikát:
         if (p.getRole() == "gombasz") {
@@ -104,12 +104,12 @@ public class GameEngine {
 
         // Ellenőrizzük a győzelmet
         if (p.getScore() >= winningScore) {
-            Menu.victory(players);
+            Menu.victory(jatekosok);
             return;
         }
 
         // Következő játékos jön
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentPlayerIndex = (currentPlayerIndex + 1) % jatekosok.size();
 
 
     }

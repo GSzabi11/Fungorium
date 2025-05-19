@@ -10,6 +10,8 @@ public class MainFrame extends JFrame {
     private KorView korView;
     private Object kijeloltObjektum = null;
     private JatekTer jatekTer;
+    private RajzoloTar rajzoloTar;
+    private GameEngine engine;
 
     public void jatekMenu(List<Player> playerList) {
         SwingUtilities.invokeLater(() -> {
@@ -17,15 +19,20 @@ public class MainFrame extends JFrame {
             vilag.setJatekosok(playerList);
             //GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
             this.korView = new KorView();
+            this.rajzoloTar = new RajzoloTar();
+            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView);
 
-            RajzoloTar rajzoloTar = new RajzoloTar();
+            engine = new GameEngine(vilag, jatekTer, playerList, korView); // <-- megfelelő paraméterezés
+            jatekTer.setGameEngine(engine);
+
+
+
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
             rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
             rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145, 76, 50, 56));
             rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
             rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
-            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView);
 
             // 4. Infopanel, property change logic
             JPanel infoPanel = new JPanel();
@@ -50,7 +57,6 @@ public class MainFrame extends JFrame {
             frame.setSize(1920, 1080);
             frame.setLocationRelativeTo(null);
             frame.setContentPane(fullSplit);
-
             frame.setVisible(true);
 
             // Infopanel - property change
@@ -60,21 +66,13 @@ public class MainFrame extends JFrame {
             });
 
             // 5. GameEngine
-            GameEngine engine = new GameEngine(vilag, jatekTer, playerList, korView); // <-- megfelelő paraméterezés
-            jatekTer.setGameEngine(engine);
-
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
-                Player aktualis = playerList.get(engine.getKorIndex());
-                if (aktualis.role.equalsIgnoreCase("gombász")) {
-                    korView.csakGombasznak();
-                } else {
-                    korView.csakRovarasznak();
-                }
-                korView.resetAllButtons();
+                updateButtonsForCurrentPlayer(engine, korView, playerList);
             });
 
             engine.startGame();
+            updateButtonsForCurrentPlayer(engine, korView, playerList);
 
             Player aktualis = playerList.get(engine.getKorIndex()%playerList.size());
             if (aktualis.role.equalsIgnoreCase("gombasz")) {
@@ -183,4 +181,17 @@ public class MainFrame extends JFrame {
         panel.repaint();
 
     }
+
+    private void updateButtonsForCurrentPlayer(GameEngine eng, KorView kv, List<Player> pl) {
+        Player akt = pl.get(eng.getKorIndex());
+        if (akt.getRole().equalsIgnoreCase("gombasz")) {
+            kv.csakGombasznak();
+        } else {
+            kv.csakRovarasznak();
+        }
+        kv.resetAllButtons();      // újra engedélyezzük azokat a gombokat
+        kv.revalidate();
+        kv.repaint();
+    }
+
 }
