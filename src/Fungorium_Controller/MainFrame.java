@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
             });
 
             // 5. GameEngine
-            GameEngine engine = new GameEngine(vilag, jatekTer, playerList); // <-- megfelelő paraméterezés
+            GameEngine engine = new GameEngine(vilag, jatekTer, playerList, korView); // <-- megfelelő paraméterezés
             jatekTer.setGameEngine(engine);
 
             korView.korVege.addActionListener(e -> {
