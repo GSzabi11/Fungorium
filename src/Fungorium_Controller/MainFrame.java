@@ -44,7 +44,7 @@ public class MainFrame extends JFrame {
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1024, 768);
+            frame.setSize(1920, 1080);
             frame.setLocationRelativeTo(null);
             frame.setContentPane(fullSplit);
 
