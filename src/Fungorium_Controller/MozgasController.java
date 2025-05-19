@@ -41,5 +41,27 @@ public class MozgasController {
         }
 
     }
+
+    public static boolean novezhetGomba(Tekton celTekton, Gomba gomba) {
+
+        Tekton forras = gomba.getTekton();
+        if (forras == null) {
+            System.err.println("Gomba helyzete ismeretlen.");
+            return false;
+        }
+
+        // 2) Végigmegyünk az összes fonalon, ami a forráson elindul
+        for (Gombafonal gf : forras.getGombafonalak()) {
+            // a Gombafonal ezen a két ponton köt össze mezőket
+            List<Tekton> pontok = gf.kapcsolodasiPontok;
+            if (pontok.contains(forras) && pontok.contains(celTekton)) {
+                // ha a fonal rajta van mindkét mezőn, visszatérünk true-val
+                return true;
+            }
+        }
+
+        // ha egyik fonal sem kötötte össze a két mezőt
+        return false;
+    }
 }
 

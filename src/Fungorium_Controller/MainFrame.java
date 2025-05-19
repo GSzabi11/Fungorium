@@ -26,7 +26,6 @@ public class MainFrame extends JFrame {
             jatekTer.setGameEngine(engine);
 
 
-
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
             rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
             rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145, 76, 50, 56));
@@ -90,12 +89,12 @@ public class MainFrame extends JFrame {
             // A Gombatest növesztés gomb eseménykezelője
             korView.getGombatestNovesztButton().addActionListener(e -> {
                 Tekton celTekton = engine.getKivalasztottCelTekton(); // Kijelölt tekton lekérése
-                if (celTekton != null) {
-                    // Ellenőrizd, hogy a tektonon lehet-e gombát növeszteni
-                    if (celTekton.isNohetGomba()) {
-                        Gombafaj fajta = Gombafaj.KEK; // Válaszd ki a gomba fajtáját (pl. KEK)
+                Gomba kivalasztottGomba = engine.getKivalasztottGomba(); // Kijelölt gomba lekérése
+                if (celTekton != null && kivalasztottGomba != null) {
+                    if (celTekton.isNohetGomba() && MozgasController.novezhetGomba(celTekton, kivalasztottGomba)) {
+                        Gombafaj fajta = kivalasztottGomba.getFajta();
                         Gomba ujGomba = new Gomba(fajta, celTekton, celTekton.getX(), celTekton.getY());
-                        vilag.addGomba(ujGomba); // Gomba hozzáadása a világhoz
+                        vilag.addGomba(ujGomba);
                         System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
                     } else {
                         JOptionPane.showMessageDialog(korView,
@@ -105,7 +104,7 @@ public class MainFrame extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(korView,
-                            "Nincs kijelölt tekton.",
+                            "Nincs kijelölt tekton vagy gomba.",
                             "Hiba",
                             JOptionPane.ERROR_MESSAGE);
                 }

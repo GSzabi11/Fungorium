@@ -27,8 +27,6 @@ public class Tekton {
      * Létrehoz egy új Tekton példányt a megadott paraméterekkel.
      *
      * @param id A tekton egyedi azonosítója
-     * @param tipus A tekton típusa
-     * @param gomba A tektonhoz tartozó gomba objektum
      */
     public Tekton(int id, int x, int y) {
         this.id = id;
@@ -71,7 +69,8 @@ public class Tekton {
         return id;
     }
 
-    public void setNohetGomba(boolean tf){
+    public void setNohetGomba(boolean tf)
+    {
         this.nohetGomba = tf;
     }
 
