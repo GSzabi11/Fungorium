@@ -191,6 +191,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         gomb.addActionListener(e -> {
             this.kijeloltObjektum = gomba;
             System.out.println("Gomba kijelölve: ++++++++++" + gomba);
+            gameEngine.setKivalasztottGomba(gomba);
         });
         add(gomb);
         setComponentZOrder(gomb, 0);
@@ -338,6 +339,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         // Add action listener to update selected object
         gomb.addActionListener(e -> {
             this.kijeloltObjektum = rovar;
+            gameEngine.setKivalasztottRovar(rovar);
             System.out.println("Rovar kijelölve: +++++++++++++++++++" + rovar);
         });
 
