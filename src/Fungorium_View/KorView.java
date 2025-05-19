@@ -1,5 +1,7 @@
 package Fungorium_View;
 
+import Fungorium_Controller.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -81,4 +83,6 @@ public class KorView extends JPanel {
         fonalVagas.setEnabled(true);
         korVege.setEnabled(true);
     }
+
+
 }

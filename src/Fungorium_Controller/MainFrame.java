@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             Vilag vilag = new Vilag(jatekTer);
             vilag.setJatekosok(playerList);
-            GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
+            GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList,korView);
             this.korView = new KorView();
 
             RajzoloTar rajzoloTar = new RajzoloTar();
@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
             });
 
             // 5. GameEngine
-            GameEngine engine = new GameEngine(vilag, jatekTer, playerList); // <-- megfelelő paraméterezés
+            GameEngine engine = new GameEngine(vilag, jatekTer, playerList,korView); // <-- megfelelő paraméterezés
 
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
@@ -75,8 +75,8 @@ public class MainFrame extends JFrame {
 
             engine.startGame();
 
-            Player aktualis = playerList.get(0);
-            if (aktualis.role.equalsIgnoreCase("gombász")) {
+            Player aktualis = playerList.get(engine.getKorIndex()%playerList.size());
+            if (aktualis.role.equalsIgnoreCase("gombasz")) {
                 korView.csakGombasznak();
             } else {
                 korView.csakRovarasznak();

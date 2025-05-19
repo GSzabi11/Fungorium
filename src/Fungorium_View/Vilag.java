@@ -167,4 +167,6 @@ public class Vilag {
             fonalak.add(new Gombafonal(source, t2, midX, midY));
         }
     }
+
+
 }
