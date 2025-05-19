@@ -83,22 +83,31 @@ public class MainFrame extends JFrame {
                 korView.csakKorVegeMarad();
             });
 
-            // Gombatest növesztés
+            // A Gombatest növesztés gomb eseménykezelője
             korView.getGombatestNovesztButton().addActionListener(e -> {
-                Gomba g = gameEngine.getKivalasztottGomba();
-                if (g != null && gameEngine.getKivalasztottCelTekton().isNohetGomba()) {
-                    //gombatestet kell valahogy noveszteni
-                    korView.csakKorVegeMarad();
+                Tekton celTekton = gameEngine.getKivalasztottCelTekton(); // Kijelölt tekton lekérése
+                if (celTekton != null) {
+                    // Ellenőrizd, hogy a tektonon lehet-e gombát növeszteni
+                    if (celTekton.isNohetGomba()) {
+                        Gombafaj fajta = Gombafaj.KEK; // Válaszd ki a gomba fajtáját (pl. KEK)
+                        Gomba ujGomba = new Gomba(fajta, celTekton, celTekton.getX(), celTekton.getY());
+                        vilag.addGomba(ujGomba); // Gomba hozzáadása a világhoz
+                        System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
+                    } else {
+                       // System.out.println("[DEBUG] Nem lehet gombát növeszteni ezen a tektonon.");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Válassz ki egy gombát először!");
+                    System.out.println("[DEBUG] Nincs kijelölt tekton.");
                 }
             });
+
 
             // Spórázás
             korView.getSporazButton().addActionListener(e -> {
                 Gomba g = gameEngine.getKivalasztottGomba();
                 if (g != null) {
                     g.sporaz(); // ide még kell grafika hozzá
+
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Válassz ki egy gombát a spórázáshoz!");
