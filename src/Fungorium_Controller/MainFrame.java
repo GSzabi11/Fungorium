@@ -21,14 +21,16 @@ public class MainFrame extends JFrame {
             RajzoloTar rajzoloTar = new RajzoloTar();
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
             rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
-            rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
             rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145, 76, 50, 56));
+            rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
             rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
             JatekTer jatekTer = new JatekTer(vilag, rajzoloTar, korView, gameEngine);
 
             // 4. Infopanel, property change logic
             JPanel infoPanel = new JPanel();
+            infoPanel.setPreferredSize(new Dimension(80, 768));
+            infoPanel.setMaximumSize(new Dimension(80, 768));
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
