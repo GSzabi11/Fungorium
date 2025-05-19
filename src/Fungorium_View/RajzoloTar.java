@@ -48,6 +48,7 @@ public class RajzoloTar {
         throw new IllegalArgumentException("Nincs regisztrált rajzoló ehhez: " + clazz.getName());
     }
 
+
     /**
      * Kirajzolja a modell objektumot a megfelelő rajzolóval.
      *

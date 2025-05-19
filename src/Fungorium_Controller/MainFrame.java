@@ -10,92 +10,88 @@ public class MainFrame extends JFrame {
     private KorView korView;
     private Object kijeloltObjektum = null;
     private JatekTer jatekTer;
-    private RajzoloTar rajzoloTar;
-    private GameEngine engine;
 
     public void jatekMenu(List<Player> playerList) {
         SwingUtilities.invokeLater(() -> {
+            // --- Vilag példány létrehozása
             Vilag vilag = new Vilag(jatekTer);
             vilag.setJatekosok(playerList);
-            //GameEngine gameEngine = new GameEngine(vilag, jatekTer, playerList);
+
             this.korView = new KorView();
-            this.rajzoloTar = new RajzoloTar();
-            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView);
 
-            engine = new GameEngine(vilag, jatekTer, playerList, korView); // <-- megfelelő paraméterezés
-            jatekTer.setGameEngine(engine);
-
-
-
+            RajzoloTar rajzoloTar = new RajzoloTar();
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
             rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
             rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145, 76, 50, 56));
             rajzoloTar.regisztral(Rovar.class, new RovarView(21, 24, 50, 50));
             rajzoloTar.regisztral(Spora.class, new SporaView(35, 46, 50, 50));
 
+            this.jatekTer = new JatekTer(vilag, rajzoloTar, korView);
 
-            // 4. Infopanel, property change logic
+            // --- INFO PANEL: KISEBB SZÉLESSÉG (fix: 200px)
             JPanel infoPanel = new JPanel();
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
             infoPanel.setBackground(Color.LIGHT_GRAY);
-            infoPanel.setPreferredSize(new Dimension(200, 600)); // Fix szélesség
-            infoPanel.setMinimumSize(new Dimension(200, 600)); // Minimum méret
-            infoPanel.setMaximumSize(new Dimension(200, 600)); // Maximum méret
-
+            infoPanel.setPreferredSize(new Dimension(140, 768)); // << kisebb sáv
+            infoPanel.setMinimumSize(new Dimension(140, 768));
+            infoPanel.setMaximumSize(new Dimension(140, 768));
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
-            // Main layout
+            // --- Fő elrendezés
             JSplitPane mainSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, korView, jatekTer);
             mainSplit.setDividerLocation(200);
 
             JSplitPane fullSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mainSplit, infoPanel);
-            fullSplit.setDividerLocation(900);
-            fullSplit.setResizeWeight(1.0);
+            fullSplit.setDividerLocation(1260); // kb. a játéktérnél válassza szét
+            fullSplit.setResizeWeight(1.0); // főleg a középső panel nőljön
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(1920, 1080);
+            frame.setSize(1420, 800); // Ésszerű ablakméret, szélesvászon
             frame.setLocationRelativeTo(null);
             frame.setContentPane(fullSplit);
+
             frame.setVisible(true);
 
-            // Infopanel - property change
+            // InfoPanel frissítés (propertyChangeListener)
             jatekTer.addPropertyChangeListener("selectedObject", evt -> {
-                infoPanel.setPreferredSize(new Dimension(300, 768));
                 updateInfoPanel(infoPanel, jatekTer.getKijeloltObjektum());
             });
 
-            // 5. GameEngine
+            // --- GameEngine
+            GameEngine engine = new GameEngine(vilag, jatekTer, playerList, korView);
+            jatekTer.setGameEngine(engine);
+
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
-                updateButtonsForCurrentPlayer(engine, korView, playerList);
+                Player aktualis = playerList.get(engine.getKorIndex());
+                if (aktualis.role.equalsIgnoreCase("gombász")) {
+                    korView.csakGombasznak();
+                } else {
+                    korView.csakRovarasznak();
+                }
+                korView.resetAllButtons();
             });
 
             engine.startGame();
-            updateButtonsForCurrentPlayer(engine, korView, playerList);
 
             Player aktualis = playerList.get(engine.getKorIndex()%playerList.size());
-            if (aktualis.role.equalsIgnoreCase("gombasz")) {
+            if (aktualis.role.equalsIgnoreCase("gombász")) {
                 korView.csakGombasznak();
             } else {
                 korView.csakRovarasznak();
             }
 
-            korView.getFonalVagasButton().addActionListener(e -> {
-                // Itt jönne a fonalvágás konkrétan, pl. egy controller meghívása (most még nincs)
-                korView.csakKorVegeMarad();
-            });
+            korView.getFonalVagasButton().addActionListener(e -> korView.csakKorVegeMarad());
 
-            //KÉSZ VAN
-            // A Gombatest növesztés gomb eseménykezelője
+            // Gombatest növesztés gomb
             korView.getGombatestNovesztButton().addActionListener(e -> {
-                Tekton celTekton = engine.getKivalasztottCelTekton(); // Kijelölt tekton lekérése
+                Tekton celTekton = engine.getKivalasztottCelTekton();
                 if (celTekton != null) {
-                    // Ellenőrizd, hogy a tektonon lehet-e gombát növeszteni
                     if (celTekton.isNohetGomba()) {
-                        Gombafaj fajta = Gombafaj.KEK; // Válaszd ki a gomba fajtáját (pl. KEK)
+                        Gombafaj fajta = Gombafaj.KEK;
                         Gomba ujGomba = new Gomba(fajta, celTekton, celTekton.getX(), celTekton.getY());
-                        vilag.addGomba(ujGomba); // Gomba hozzáadása a világhoz
+                        vilag.addGomba(ujGomba);
                         System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
                     } else {
                         JOptionPane.showMessageDialog(korView,
@@ -111,25 +107,22 @@ public class MainFrame extends JFrame {
                 }
             });
 
-
             // Spórázás
             korView.getSporazButton().addActionListener(e -> {
                 Gomba g = engine.getKivalasztottGomba();
                 if (g != null) {
-                    g.sporaz(); // ide még kell grafika hozzá
-
+                    g.sporaz();
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Válassz ki egy gombát a spórázáshoz!");
                 }
             });
 
-
             // Fonal növesztés
             korView.getFonalNovesztButton().addActionListener(e -> {
                 Gomba g = engine.getKivalasztottGomba();
                 if (g != null && engine.getKivalasztottCelTekton() != null) {
-                    g.novesztUjFonal(engine.getKivalasztottCelTekton()); // GRAFIKA :)
+                    g.novesztUjFonal(engine.getKivalasztottCelTekton());
                     korView.csakKorVegeMarad();
                 } else {
                     JOptionPane.showMessageDialog(null, "Válassz ki egy gombát és cél tekton mezőt!");
@@ -143,7 +136,7 @@ public class MainFrame extends JFrame {
                     MozgasController mozgasController = new MozgasController();
                     mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
                     jatekTer.hozzaadRovarGombkent(engine.getKivalasztottRovar());
-                    if (old != engine.getKivalasztottRovar().getHelyzet()){
+                    if (old != engine.getKivalasztottRovar().getHelyzet()) {
                         korView.csakKorVegeMarad();
                     }
                 } else {
@@ -153,7 +146,7 @@ public class MainFrame extends JFrame {
         });
     }
 
-    // ==== INFOPANEL: ÚJ segédfüggvény ====
+    // ==== INFOPANEL: SEGÉDFÜGGVÉNY ====
     private void updateInfoPanel(JPanel panel, Object o) {
         panel.removeAll();
         if (o == null) {
@@ -173,25 +166,9 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Fajta: " + r.getFajta().toString()));
             panel.add(new JLabel("Pozíció: (" + r.getX() + ", " + r.getY() + ")"));
             panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
-            // Egyéb rovar adatok is kiírhatók, pl. állapot
         }
-
-        panel.setPreferredSize(new Dimension(200, 768));
+        panel.setPreferredSize(new Dimension(140, 768)); // << INFO: végig fix méret!
         panel.revalidate();
         panel.repaint();
-
     }
-
-    private void updateButtonsForCurrentPlayer(GameEngine eng, KorView kv, List<Player> pl) {
-        Player akt = pl.get(eng.getKorIndex());
-        if (akt.getRole().equalsIgnoreCase("gombasz")) {
-            kv.csakGombasznak();
-        } else {
-            kv.csakRovarasznak();
-        }
-        kv.resetAllButtons();      // újra engedélyezzük azokat a gombokat
-        kv.revalidate();
-        kv.repaint();
-    }
-
 }

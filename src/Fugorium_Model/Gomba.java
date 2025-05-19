@@ -194,4 +194,8 @@ public class Gomba {
     public void setY(int y) {
         this.y = y;
     }
+
+    public int getEletido() {
+        return eletido;
+    }
 }
