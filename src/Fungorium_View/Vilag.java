@@ -151,7 +151,7 @@ public class Vilag {
         for (int i = 0; i < rovaraszCount; i++) {
             //Tekton t = shuffled.get((int) ((i + gombaszCount) % shuffled.size()));
             j = j % 4;
-            rovarok.add(new Rovar(tempRFaj.get(j), t, t.getX(), t.getY()));
+            addRovar(new Rovar(tempRFaj.get(j), t, t.getX(), t.getY()));
             j += 1;
         }
 
