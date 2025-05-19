@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
             jatekTer.setGameEngine(engine);
 
 
+
             rajzoloTar.regisztral(Tekton.class, new TektonView(20, 12, 40, 40));
             rajzoloTar.regisztral(Gomba.class, new GombaView(28, 15, 50, 50));
             rajzoloTar.regisztral(Gombafonal.class, new GombafonalView(145, 76, 50, 56));
@@ -37,10 +38,9 @@ public class MainFrame extends JFrame {
             JPanel infoPanel = new JPanel();
             infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
             infoPanel.setBackground(Color.LIGHT_GRAY);
-            infoPanel.setPreferredSize(new Dimension(200, 600)); // Fix szélesség
-            infoPanel.setMinimumSize(new Dimension(200, 600)); // Minimum méret
-            infoPanel.setMaximumSize(new Dimension(200, 600)); // Maximum méret
-
+            infoPanel.setPreferredSize(new Dimension(140, 768)); // << kisebb sáv
+            infoPanel.setMinimumSize(new Dimension(140, 768));
+            infoPanel.setMaximumSize(new Dimension(140, 768));
             infoPanel.add(new JLabel("Nincs kijelölt objektum"));
 
             // Main layout
@@ -48,8 +48,8 @@ public class MainFrame extends JFrame {
             mainSplit.setDividerLocation(200);
 
             JSplitPane fullSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, mainSplit, infoPanel);
-            fullSplit.setDividerLocation(900);
-            fullSplit.setResizeWeight(1.0);
+            fullSplit.setDividerLocation(1260); // kb. a játéktérnél válassza szét
+            fullSplit.setResizeWeight(1.0); // főleg a középső panel nőljön
 
             JFrame frame = new JFrame("Fungorium");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,15 +172,12 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Fajta: " + r.getFajta().toString()));
             panel.add(new JLabel("Pozíció: (" + r.getX() + ", " + r.getY() + ")"));
             panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
-            // Egyéb rovar adatok is kiírhatók, pl. állapot
         }
-
-        panel.setPreferredSize(new Dimension(200, 768));
+        panel.setPreferredSize(new Dimension(140, 768));
         panel.revalidate();
         panel.repaint();
-
+        panel.setPreferredSize(new Dimension(140, 768));
     }
-
     private void updateButtonsForCurrentPlayer(GameEngine eng, KorView kv, List<Player> pl) {
         Player akt = pl.get(eng.getKorIndex());
         if (akt.getRole().equalsIgnoreCase("gombasz")) {
@@ -192,5 +189,4 @@ public class MainFrame extends JFrame {
         kv.revalidate();
         kv.repaint();
     }
-
 }
