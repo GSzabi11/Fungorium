@@ -99,7 +99,8 @@ public class MainFrame extends JFrame {
                         Gomba ujGomba = new Gomba(fajta, celTekton, celTekton.getX(), celTekton.getY());
                         vilag.addGomba(ujGomba);
                         korView.csakKorVegeMarad();
-                        engine.getKivalasztottCelTekton().clearSporak(engine.getKivalasztottCelTekton());
+                        //engine.getKivalasztottCelTekton().clearSporak(engine.getKivalasztottCelTekton());
+                        vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak());
                         System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
                     } else {
                         JOptionPane.showMessageDialog(korView,
