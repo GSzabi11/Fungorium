@@ -288,66 +288,68 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         int w = img.getWidth();
         int h = img.getHeight();
 
-        // Use the rovar's x and y as button position (no scaling)
+
         int btnX = 0;
         int btnY = 0;
 
-        if (rovar.getFajta() == Rovarfaj.LILA)
-        {
-
-            btnX = rovar.getX() + 10;
-            btnY = rovar.getY() + 40;
-
-            //
-            //
-            //rovar.setX(rovar.getX() + 10);
-            //rovar.setY(rovar.getY() + 40);
-            //
-            //
-        }
-        if (rovar.getFajta() == Rovarfaj.BARNA)
-        {
-            btnX = rovar.getX() + 10;
-            btnY = rovar.getY() + 56;
-
-            //
-            //
-            //rovar.setX(rovar.getX() + 10);
-            //rovar.setY(rovar.getY() + 56);
-            //
-            //
-        }
-        if (rovar.getFajta() == Rovarfaj.NARANCS)
-        {
-            btnX = rovar.getX() + 12;
-            btnY = rovar.getY() + 72;
-
-            //
-            //
-            //rovar.setX(rovar.getX() + 12);
-            //rovar.setY(rovar.getY() + 72);
-            //
-            //
-        }
-        if (rovar.getFajta() == Rovarfaj.CIAN)
-        {
-            btnX = rovar.getX() + 18;
-            btnY = rovar.getY() + 88;
-
-            //
-            //
-            //rovar.setX(rovar.getX() + 18);
-            //rovar.setY(rovar.getY() + 88);
-            //
-            //
-        }
-
+        boolean szabadclonehely = false;
         for (Rovar r : vilag.getRovarok()) {
             if (rovar.getHelyzet().equals(r.getHelyzet())
                 && rovar.getFajta().equals(r.getFajta())
-                && !(rovar.equals(r))){
-                btnX = rovar.getX() + 45;
-                btnY = rovar.getY() + 82;
+                && !(rovar.equals(r))) {
+                if (objektumGombok.get(r).getX() != rovar.getX() + 42){
+                    btnX = rovar.getX() + 42;
+                    btnY = rovar.getY() + 82;
+                    szabadclonehely = true;
+                }
+                break;
+            }
+        }
+        if (!szabadclonehely){
+            if (rovar.getFajta() == Rovarfaj.LILA) {
+
+                btnX = rovar.getX() + 10;
+                btnY = rovar.getY() + 40;
+
+                //
+                //
+                //rovar.setX(rovar.getX() + 10);
+                //rovar.setY(rovar.getY() + 40);
+                //
+                //
+            }
+            if (rovar.getFajta() == Rovarfaj.BARNA) {
+                btnX = rovar.getX() + 10;
+                btnY = rovar.getY() + 56;
+
+                //
+                //
+                //rovar.setX(rovar.getX() + 10);
+                //rovar.setY(rovar.getY() + 56);
+                //
+                //
+            }
+            if (rovar.getFajta() == Rovarfaj.NARANCS) {
+                btnX = rovar.getX() + 12;
+                btnY = rovar.getY() + 72;
+
+                //
+                //
+                //rovar.setX(rovar.getX() + 12);
+                //rovar.setY(rovar.getY() + 72);
+                //
+                //
+            }
+            if (rovar.getFajta() == Rovarfaj.CIAN) {
+                btnX = rovar.getX() + 18;
+                btnY = rovar.getY() + 88;
+
+                //
+                //
+                //rovar.setX(rovar.getX() + 18);
+                //rovar.setY(rovar.getY() + 88);
+                //
+                //
             }
         }
 

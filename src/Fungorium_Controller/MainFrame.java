@@ -199,7 +199,7 @@ public class MainFrame extends JFrame {
                                 int x = rovar.getX(), y = rovar.getY();
                                 Rovar klon = new Rovar(fajta, cel, x, y);
                                 vilag.addRovar(klon);
-                                jatekTer.hozzaadRovarGombkent(klon);
+                                //jatekTer.hozzaadRovarGombkent(klon);
                                 System.out.println("Új rovar klónozva a T" + cel.getId() + " mezőre.");
                             }
 
