@@ -169,6 +169,8 @@ public class MainFrame extends JFrame {
                     mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
                     jatekTer.hozzaadRovarGombkent(engine.getKivalasztottRovar());
                     if (old != engine.getKivalasztottRovar().getHelyzet()){
+                        engine.getKivalasztottRovar().fogyaszt(engine.getKivalasztottCelTekton().getSporak().getFirst());
+                        vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak().getFirst());
                         korView.csakKorVegeMarad();
                     }
                 } else {
