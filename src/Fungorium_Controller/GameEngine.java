@@ -23,7 +23,7 @@ public class GameEngine {
     private final Timer timer;
     //private final List<String> szerepek;
     //private final ArrayList<Player> players = new ArrayList<>();
-    private final int winningScore=200;
+    private final int winningScore = 100;
     private int currentPlayerIndex = 0;
     private final List<Player> jatekosok;
     private int korIndex = 0;
