@@ -88,6 +88,7 @@ public class GameEngine {
 
         for (Gomba g : vilag.getGombak()) {
             g.sporaTermel();
+            g.fejlodik();
         }
         for (Tekton t : vilag.getMezok()){
             if(t.getSporakSzama() >= 3){

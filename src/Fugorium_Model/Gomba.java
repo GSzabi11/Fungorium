@@ -149,6 +149,8 @@ public class Gomba {
         firePropertyChange("termeltSporakSzama", sporaSzamlalo - 1, sporaSzamlalo);
     }
 
+
+
     /**
      * Kiírja a gomba által termelt spórák számát.
      */
