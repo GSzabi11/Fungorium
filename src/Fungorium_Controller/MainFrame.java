@@ -70,6 +70,7 @@ public class MainFrame extends JFrame {
             // 5. GameEngine
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
+
                 updateButtonsForCurrentPlayer(engine, korView, playerList);
             });
 

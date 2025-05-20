@@ -7,7 +7,8 @@ import Fungorium_View.JatekTer;
 import Fungorium_View.KorView;
 import Fungorium_View.Vilag;
 
-import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -100,6 +101,7 @@ public class GameEngine {
                 t.setNohetGomba(true);
             }
         }
+        deadGomba();
 
         Player p = jatekosok.get(currentPlayerIndex);
 
@@ -162,5 +164,45 @@ public class GameEngine {
         } else {
             korView.csakGombasznak();
         }
+    }
+
+    public void deadGomba() {
+        List<Gomba> gombak = vilag.getGombak();
+        List<Gomba> halottgombak = new ArrayList<>();
+        for (Gomba g : gombak) {
+            if (g.getSzint() >= 10) {
+                halottgombak.add(g);
+            }
+        }
+
+
+        JFrame frame = new JFrame("Halott gombák");
+        StringBuilder sb = new StringBuilder();
+        if (halottgombak.isEmpty()) {
+            return;
+        } else {
+
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(300, 300);
+            frame.setLocationRelativeTo(null);
+            sb.append("Halott gombák:\n");
+            for (Gomba g : halottgombak) {
+                sb.append("- ID: ").append(g.getFajta()).append("\n");
+            }
+        }
+
+        JTextArea textArea = new JTextArea(sb.toString());
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> frame.dispose());
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(okButton, BorderLayout.SOUTH);
+
+        frame.setContentPane(panel);
+        frame.setVisible(true);
     }
 }
