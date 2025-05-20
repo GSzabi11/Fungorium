@@ -172,8 +172,10 @@ public class MainFrame extends JFrame {
                     mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
                     jatekTer.hozzaadRovarGombkent(engine.getKivalasztottRovar());
                     if (old != engine.getKivalasztottRovar().getHelyzet()){
-                        engine.getKivalasztottRovar().fogyaszt(engine.getKivalasztottCelTekton().getSporak().getFirst());
-                        vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak().getFirst());
+                        for (int i = 0; i < engine.getKivalasztottCelTekton().getSporakSzama(); i++){
+                            engine.getKivalasztottRovar().fogyaszt(engine.getKivalasztottCelTekton().getSporak().getFirst());
+                        }
+                        vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak());
                         korView.csakKorVegeMarad();
                     }
                 } else {
@@ -198,7 +200,23 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Típus: Tekton"));
             panel.add(new JLabel("Azonosító: " + t.getId()));
             panel.add(new JLabel("Pozíció: (" + t.getX() + ", " + t.getY() + ")"));
-            panel.add(new JLabel("Spórák: " + (t.getSporak() != null ? t.getSporak().size() : "N/A")));
+            int sporaSzam = t.getSporak() != null ? t.getSporak().size() : 0;
+            panel.add(new JLabel("Spórák száma: " + sporaSzam));
+
+            panel.add(Box.createVerticalStrut(8));
+            panel.add(new JLabel("Spórák listája:"));
+            for (Spora s : t.getSporak()) {
+                String nev;
+                if (s instanceof BenitoSporaElement)         nev = "Bénító spóra";
+                else if (s instanceof GyorsitoSporaElement)   nev = "Gyorsító spóra";
+                else if (s instanceof LassitoSporaElement)    nev = "Lassító spóra";
+                else if (s instanceof VagastGatloSporaElement)nev = "Vágásgátló spóra";
+                else if (s instanceof RovarOsztodoSporaElement)nev = "Osztódó spóra";
+                else                                          nev = s.getClass().getSimpleName();
+
+                panel.add(new JLabel("  • " + nev));
+            }
+
         } else if (o instanceof Rovar r) {
             panel.add(new JLabel("Típus: Rovar"));
             panel.add(new JLabel("Fajta: " + r.getFajta().toString()));

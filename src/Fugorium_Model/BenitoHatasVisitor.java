@@ -1,5 +1,7 @@
 package Fugorium_Model;
 
+import java.util.Random;
+
 public class BenitoHatasVisitor implements RovarVisitor{
 
     /**
@@ -14,8 +16,8 @@ public class BenitoHatasVisitor implements RovarVisitor{
      */
     public void visit(Rovar rovar){
         if (rovar.getAllapotMap().get(RovarAllapot.BENITO) <= 0) {
-            rovar.setAllapot(RovarAllapot.BENITO, 3);
-            System.out.println("BenitoHatasVisitor: BENITO hatás alkalmazva a rovarra 3 körre.");
+            rovar.setAllapot(RovarAllapot.BENITO, (rand.nextInt(3) + 1));
+            System.out.println("BenitoHatasVisitor: BENITO hatás alkalmazva a rovarra.");
         } else {
             System.out.println("BenitoHatasVisitor: A rovar már BENITO hatás alatt van.");
         } 

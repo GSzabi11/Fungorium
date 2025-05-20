@@ -15,10 +15,10 @@ public abstract class GyorsitoHatasVisitor implements RovarVisitor{
     @Override
     public void visit(Rovar rovar){
         if (rovar.getAllapotMap().get(RovarAllapot.GYORSITO) <= 0) {
-            rovar.setAllapot(RovarAllapot.GYORSITO, 3);
-            System.out.println("BenitoHatasVisitor: BENITO hatás alkalmazva a rovarra 3 körre.");
+            rovar.setAllapot(RovarAllapot.GYORSITO, (rand.nextInt(3) + 1));
+            System.out.println("BenitoHatasVisitor: Gyorsító hatás alkalmazva a rovarra.");
         } else {
-            System.out.println("BenitoHatasVisitor: A rovar már BENITO hatás alatt van.");
+            System.out.println("BenitoHatasVisitor: A rovar már Gyorsító hatás alatt van.");
         } 
     }
 }

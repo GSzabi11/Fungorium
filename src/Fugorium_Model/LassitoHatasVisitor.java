@@ -14,6 +14,11 @@ public abstract class LassitoHatasVisitor implements RovarVisitor{
      */
     @Override
     public void visit(Rovar rovar){
-        System.out.println("LassitoHatasVisitor.visit()");
+        if (rovar.getAllapotMap().get(RovarAllapot.LASSITO) <= 0) {
+            rovar.setAllapot(RovarAllapot.LASSITO, (rand.nextInt(3) + 1));
+            System.out.println("LassítóHatasVisitor: Lasssitó hatás alkalmazva a rovarra.");
+        } else {
+            System.out.println("LassítóHatasVisitor: A rovar már Lassító hatás alatt van.");
+        }
     }
 }

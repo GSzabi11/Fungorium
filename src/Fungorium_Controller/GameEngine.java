@@ -28,6 +28,7 @@ public class GameEngine {
     private Tekton kivalasztottCelTekton;
     private Gomba kivalasztottGomba;
     private KorView korView;
+    private int k;
 
     //private boolean rovaraszKor = true; // true = rovarász, false = gombász
 
@@ -78,8 +79,12 @@ public class GameEngine {
      * Ezt a metódust kell meghívni, amikor a játékos befejezi a lépését.
      */
     public void kovetkezoKor() {
+        k++;
         for (Rovar temp : vilag.getRovarok()){
-            temp.csokkentAllapotIdotartam();
+            if (k % jatekosok.size() == 0)
+            {
+                temp.csokkentAllapotIdotartam();
+            }
         }
         korIndex = (korIndex+1) % jatekosok.size();
         updateKorTulajdonosFelirat();

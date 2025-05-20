@@ -114,15 +114,15 @@ public class Rovar {
         spora.accept(visitor);
 
         //Spora eltavolitasa a tektonrol
-        List<Spora> sporak = helyzet.getSporak();
-        sporak.remove(spora);
+        //List<Spora> sporak = helyzet.getSporak();
+        //sporak.remove(spora);
 
         //Ha az elfogyasztott spora volt az utolso a tektonon, akkor kikapcsoljuk a gyorsitast a fonalon
-        if (sporak.isEmpty()) {
-            for (Gombafonal fonal : helyzet.getGombafonalak()) {
-                fonal.setGyorsitottNovekedes(false);
-            }
-        }
+//        if (sporak.isEmpty()) {
+//            for (Gombafonal fonal : helyzet.getGombafonalak()) {
+//                fonal.setGyorsitottNovekedes(false);
+//            }
+//        }
     }
 
     public int getTapanyag() {

@@ -75,9 +75,12 @@ public class Vilag {
         fireChange("spora", null, s);
     }
 
-    public void removeSpora(Tekton t, Spora s) {
-        t.getSporak().remove(s);
-        fireChange("spora", s, null);
+    public void removeSpora(Tekton t, List<Spora> s) {
+        for (Spora sp : s)
+        {
+            fireChange("spora", sp, null);
+        }
+        t.getSporak().removeAll(s);
     }
 
     public List<Tekton> getMezok() {

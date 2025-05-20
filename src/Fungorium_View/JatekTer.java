@@ -451,7 +451,24 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             }
             case "spora" -> {
                 Spora uj = (Spora) evt.getNewValue();
-                hozzaadSporaGombkent(uj);
+                Spora regi = (Spora) evt.getOldValue();
+
+                if (uj != null) {
+                    // spora added
+                    hozzaadSporaGombkent(uj);
+                }
+                else if (regi != null) {
+                    JButton oldButton = objektumGombok.get(regi);
+                    if (oldButton != null) {
+                        System.out.println("Removing spora button for spora: " + regi);
+                        remove(oldButton);
+                        objektumGombok.remove(regi);
+                        revalidate();
+                        repaint();
+                    } else {
+                        System.out.println("No button found for spora to remove: " + regi);
+                    }
+                }
             }
         }
         repaint();
