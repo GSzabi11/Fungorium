@@ -169,7 +169,8 @@ public class Tekton {
     /**
      * Eltávolítja a tektonon található összes spórát.
      */
-    public void clearSporak() {
+    public void clearSporak(Tekton t) {
+        t.getSporak().clear();
         System.out.println("Tekton.clearSporak() called");
     }
 

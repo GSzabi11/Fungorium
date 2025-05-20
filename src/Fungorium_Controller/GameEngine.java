@@ -86,6 +86,11 @@ public class GameEngine {
         for (Gomba g : vilag.getGombak()) {
             g.sporaTermel();
         }
+        for (Tekton t : vilag.getMezok()){
+            if(t.getSporakSzama() >= 3){
+                t.setNohetGomba(true);
+            }
+        }
 
         Player p = jatekosok.get(currentPlayerIndex);
 
