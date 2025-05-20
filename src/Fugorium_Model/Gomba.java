@@ -110,7 +110,10 @@ public class Gomba {
         for (Spora sp : termeltSporak) {
             Tekton cel = celList.get(idx % celList.size());
             sp.setTekton(cel);
-            eredmeny.computeIfAbsent(cel, k -> new ArrayList<>()).add(sp);
+            List<Spora> sporaLista = eredmeny.computeIfAbsent(cel, k -> new ArrayList<>());
+            if (sporaLista.size() < 7) {
+                sporaLista.add(sp);
+            }
             idx++;
         }
 

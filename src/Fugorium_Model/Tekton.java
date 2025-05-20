@@ -164,6 +164,7 @@ public class Tekton {
     public int getSporakSzama() {
         System.out.println("Tekton.getSporakSzama() called");
         return sporak.size();
+        //return sporak.size() > 7 ? 7 : sporak.size();
     }
 
     /**

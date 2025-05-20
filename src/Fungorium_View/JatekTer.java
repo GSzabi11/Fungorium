@@ -104,12 +104,12 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 //            rajzoloTar.rajzol(g2, t);
 //        }
 
-        // Spórák
-        for (Tekton t : vilag.getMezok()) {
-            for (Spora s : vilag.getSporak(t)) {
-                rajzoloTar.rajzol(g2, s);
-            }
-        }
+//        // Spórák
+//        for (Tekton t : vilag.getMezok()) {
+//            for (Spora s : vilag.getSporak(t)) {
+//                rajzoloTar.rajzol(g2, s);
+//            }
+//        }
 
 //        // Gombatestek
 //        for (Gomba k : vilag.getGombak()) {
@@ -169,7 +169,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         int centerX = parent.getX() + tw/2;
         int centerY = parent.getY() + th/2;
 
-        // —————————————————————————————
+
         // 5) Kiszámoljuk a JButton végső méretét és pozícióját:
         int btnW = (int)Math.round(gw * gScale);
         int btnH = (int)Math.round(gh * gScale);
@@ -360,7 +360,77 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
-    @Override
+    private void hozzaadSporaGombkent(Spora spora) {
+        // Remove old button if exists
+        JButton oldButton = objektumGombok.get(spora);
+        if (oldButton != null) {
+            remove(oldButton);
+            objektumGombok.remove(spora);
+        }
+
+        // Load spora image (original size)
+        String spritePath = "/spora.png"; // or choose dynamically if you want different sprites per spora type
+        BufferedImage img;
+        try {
+            img = ImageIO.read(getClass().getResourceAsStream(spritePath));
+        } catch (IOException | NullPointerException e) {
+            img = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
+        }
+
+        int w = img.getWidth();
+        int h = img.getHeight();
+
+        // Position the button near the Tekton the spora belongs to
+        Tekton parent = spora.getTekton();
+        int btnX = 0;
+        int btnY = 0;
+        if (parent.getSporak().size() == 1){
+            btnX = parent.getX() + 80;
+            btnY = parent.getY() + 42;
+        }
+        if (parent.getSporak().size() == 2){
+            btnX = parent.getX() + 85;
+            btnY = parent.getY() + 57;
+        }
+        if (parent.getSporak().size() == 3){
+            btnX = parent.getX() + 90;
+            btnY = parent.getY() + 72;
+        }
+        if (parent.getSporak().size() == 4){
+            btnX = parent.getX() + 95;
+            btnY = parent.getY() + 87;
+        }
+        if (parent.getSporak().size() == 5){
+            btnX = parent.getX() + 82;
+            btnY = parent.getY() + 87;
+        }
+        if (parent.getSporak().size() == 6){
+            btnX = parent.getX() + 77;
+            btnY = parent.getY() + 72;
+        }
+        if (parent.getSporak().size() == 7){
+            btnX = parent.getX() + 72;
+            btnY = parent.getY() + 57;
+        }
+
+        JButton gomb = new JButton(new ImageIcon(img));
+        gomb.setBorderPainted(false);
+        gomb.setContentAreaFilled(false);
+        gomb.setBounds(btnX, btnY, w, h);
+
+        gomb.addActionListener(e -> {
+            this.kijeloltObjektum = spora;
+            System.out.println("Spora kijelölve: +++++++++++" + spora);
+        });
+
+        objektumGombok.put(spora, gomb);
+        add(gomb);
+        setComponentZOrder(gomb, 0);
+        revalidate();
+        repaint();
+    }
+
+        @Override
     public void propertyChange(PropertyChangeEvent evt)
     {
         switch (evt.getPropertyName()) {
@@ -376,6 +446,10 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             case "rovar" -> {
                 Rovar uj = (Rovar) evt.getNewValue();
                 hozzaadRovarGombkent(uj);
+            }
+            case "spora" -> {
+                Spora uj = (Spora) evt.getNewValue();
+                hozzaadSporaGombkent(uj);
             }
         }
         repaint();
