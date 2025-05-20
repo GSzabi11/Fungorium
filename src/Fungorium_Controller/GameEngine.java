@@ -11,6 +11,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameEngine {
@@ -80,6 +81,35 @@ public class GameEngine {
      */
     public void kovetkezoKor() {
         k++;
+
+        if (k % 5 == 0) {
+            // másolatot készítünk arról, hol tartunk most
+            List<Tekton> eredeti = new ArrayList<>(vilag.getMezok());
+            Collections.shuffle(eredeti);
+            // végigmegyünk minden negyedik tektonon
+            for (int i = 0; i < eredeti.size(); i += 4) {
+                Tekton t = eredeti.get(i);
+
+                // generálunk egy új, egyedi ID-t
+                int maxId = vilag.getMezok().stream()
+                        .mapToInt(Tekton::getId)
+                        .max().orElse(0);
+                int ujId = maxId + 1;
+
+                // az új tekton ugyanoda kerül, egy kis eltolással, hogy látható legyen
+                Tekton uj = new Tekton(ujId, t.getX() + 20, t.getY() + 20);
+
+                // modellben kettéhasítjuk:
+                t.kettetor(uj);
+
+                // és felvesszük a világba, így a JatekTer automatikusan
+                // létrehozza hozzá a gombot/nézetet is
+                vilag.addTekton(uj);
+                System.out.println("[KOR " + k + "] Tekton T" + t.getId()
+                        + " kettétörve → T" + uj.getId());
+            }
+        }
+
         for (Rovar temp : vilag.getRovarok()){
             if (k % jatekosok.size() == 0)
             {
