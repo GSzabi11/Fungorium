@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class GameEngine {
 
@@ -83,32 +84,47 @@ public class GameEngine {
     public void kovetkezoKor() {
         k++;
 
-        if (k % 5 == 0) {
-            // másolatot készítünk arról, hol tartunk most
-            List<Tekton> eredeti = new ArrayList<>(vilag.getMezok());
-            Collections.shuffle(eredeti);
-            // végigmegyünk minden negyedik tektonon
-            for (int i = 0; i < eredeti.size(); i += 4) {
-                Tekton t = eredeti.get(i);
+        if (k % 7 == 0) {
+            List<Tekton> mezok = new ArrayList<>(vilag.getMezok());
+            Collections.shuffle(mezok);
+            int darabszam = 1;
 
-                // generálunk egy új, egyedi ID-t
+            Random rnd = new Random();
+            for (int i = 0; i < darabszam; i++) {
+                Tekton t = mezok.get(i);
+
+                // új id
                 int maxId = vilag.getMezok().stream()
-                        .mapToInt(Tekton::getId)
-                        .max().orElse(0);
-                int ujId = maxId + 1;
+                        .mapToInt(Tekton::getId).max().orElse(0);
+                // kiszorítási távolság
+                int offset = 160;
 
-                // az új tekton ugyanoda kerül, egy kis eltolással, hogy látható legyen
-                Tekton uj = new Tekton(ujId, t.getX() + 20, t.getY() + 20);
+                // véletlenszerű irány
+                double angle = rnd.nextDouble() * 2 * Math.PI;
+                int dx = (int)(offset * Math.cos(angle));
+                int dy = (int)(offset * Math.sin(angle));
 
-                // modellben kettéhasítjuk:
+                // létrehozzuk az új tekton-t OFFSETEKKEL
+                Tekton uj = new Tekton(maxId + 1,
+                        t.getX() + dx,
+                        t.getY() + dy);
+
+                // modellbeli törés
                 t.kettetor(uj);
 
-                // és felvesszük a világba, így a JatekTer automatikusan
-                // létrehozza hozzá a gombot/nézetet is
+                // világba + GUI
                 vilag.addTekton(uj);
-                System.out.println("[KOR " + k + "] Tekton T" + t.getId()
-                        + " kettétörve → T" + uj.getId());
+                System.out.println("[KOR " + k + "] Törve: T"
+                        + t.getId() + " → T" + uj.getId()
+                        + " (@ " + uj.getX() + "," + uj.getY() + ")");
             }
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Földrengés! Véletlenszerűen megtörtek néhány tekton-t.",
+                    "Földrengés",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
         }
 
         for (Rovar temp : vilag.getRovarok()){
