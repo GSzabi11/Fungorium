@@ -101,9 +101,9 @@ public class Vilag {
     }
 
     public void leptet() {
-        for (Rovar r : new ArrayList<>(rovarok)) {
+        /*for (Rovar r : new ArrayList<>(rovarok)) {
             r.csokkentAllapotIdotartam();
-        }
+        }*/
     }
 
     public void initEntities() {
