@@ -129,28 +129,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
 
-    public void removeGombaIfLevel10(Gomba gomba) {
-        if (gomba.getSzint() >= 10) {
-            // Eltávolítjuk a gombát a világból
-            gameEngine.deadGomba(gomba);
-
-            // Eltávolítjuk a gombot a panelról
-            JButton oldButton = objektumGombok.get(gomba);
-            if (oldButton != null) {
-                remove(oldButton);
-                objektumGombok.remove(gomba);
-                revalidate();
-                repaint();
-                System.out.println("Gomba eltávolítva: " + gomba);
-            } else {
-                System.out.println("Nincs gomb a gombához, amit eltávolíthatnánk: " + gomba);
-            }
-            vilag.removeGomba(gomba); // Feltételezve, hogy van egy removeGomba metódus a Vilag osztályban
-            gomba.elpusztul();
-        }
-    }
-
-
 
 
     private void hozzaadGombaGombkent(Gomba gomba) {
@@ -471,7 +449,24 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             }
             case "gomba" -> {
                 Gomba uj = (Gomba) evt.getNewValue();
-                hozzaadGombaGombkent(uj);
+                Gomba regi = (Gomba) evt.getOldValue();
+                if (uj != null) {
+                    // spora added
+                    hozzaadGombaGombkent(uj);
+                }
+                else if (regi != null) {
+                    JButton oldButton = objektumGombok.get(regi);
+                    if (oldButton != null) {
+                        System.out.println("Removing spora button for spora: " + regi);
+                        remove(oldButton);
+                        objektumGombok.remove(regi);
+                        revalidate();
+                        repaint();
+                    } else {
+                        System.out.println("No button found for spora to remove: " + regi);
+                    }
+                }
+
             }
 
             case "rovar" -> {
