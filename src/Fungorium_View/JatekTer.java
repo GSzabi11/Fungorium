@@ -294,6 +294,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
         if (rovar.getFajta() == Rovarfaj.LILA)
         {
+
             btnX = rovar.getX() + 10;
             btnY = rovar.getY() + 40;
 
@@ -339,6 +340,15 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             //rovar.setY(rovar.getY() + 88);
             //
             //
+        }
+
+        for (Rovar r : vilag.getRovarok()) {
+            if (rovar.getHelyzet().equals(r.getHelyzet())
+                && rovar.getFajta().equals(r.getFajta())
+                && !(rovar.equals(r))){
+                btnX = rovar.getX() + 45;
+                btnY = rovar.getY() + 82;
+            }
         }
 
         // Create JButton with the image icon (original size)
