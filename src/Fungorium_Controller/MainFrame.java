@@ -276,6 +276,7 @@ public class MainFrame extends JFrame {
         panel.repaint();
         panel.setPreferredSize(new Dimension(140, 768));
     }
+
     private void updateButtonsForCurrentPlayer(GameEngine eng, KorView kv, List<Player> pl) {
         Player akt = pl.get(eng.getKorIndex());
         if (akt.getRole().equalsIgnoreCase("gombasz")) {
@@ -287,4 +288,5 @@ public class MainFrame extends JFrame {
         kv.revalidate();
         kv.repaint();
     }
+
 }

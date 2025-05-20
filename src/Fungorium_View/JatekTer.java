@@ -130,6 +130,9 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         g2.translate(0, -sávMagasság);
     }
 
+
+
+
     private void hozzaadGombaGombkent(Gomba gomba) {
 
         // 1) Dinamikusan betöltjük a Gomba sprite-ot
@@ -538,7 +541,24 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             }
             case "gomba" -> {
                 Gomba uj = (Gomba) evt.getNewValue();
-                hozzaadGombaGombkent(uj);
+                Gomba regi = (Gomba) evt.getOldValue();
+                if (uj != null) {
+                    // spora added
+                    hozzaadGombaGombkent(uj);
+                }
+                else if (regi != null) {
+                    JButton oldButton = objektumGombok.get(regi);
+                    if (oldButton != null) {
+                        System.out.println("Removing spora button for spora: " + regi);
+                        remove(oldButton);
+                        objektumGombok.remove(regi);
+                        revalidate();
+                        repaint();
+                    } else {
+                        System.out.println("No button found for spora to remove: " + regi);
+                    }
+                }
+
             }
 
             case "rovar" -> {
