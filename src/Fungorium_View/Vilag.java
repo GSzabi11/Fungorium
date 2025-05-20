@@ -82,6 +82,10 @@ public class Vilag {
         }
         t.getSporak().removeAll(s);
     }
+    public void addGombafonal(Gombafonal gf) {
+        fonalak.add(gf);
+        fireChange("gombafonal", null, gf);
+    }
 
     public List<Tekton> getMezok() {
         return Collections.unmodifiableList(mezok);
@@ -137,13 +141,13 @@ public class Vilag {
             addTekton(new Tekton(i, x, y));
         }
 
-        for (Tekton t1 : mezok) {
-            for (Tekton t2 : mezok) {
-                if (t1 != t2) {
-                    t1.hozzaadSzomszed(t2);
-                }
-            }
-        }
+//        for (Tekton t1 : mezok) {
+//            for (Tekton t2 : mezok) {
+//                if (t1 != t2) {
+//                t1.hozzaadSzomszed(t2);
+//                }
+//            }
+//        }
 
         // 4) Gombák elhelyezése: gombászok száma = gombák száma
         //    Véletlenszerűen szétosztjuk őket a tektonok között
@@ -191,7 +195,9 @@ public class Vilag {
             // a fonal középpontja legyen a két pont fele
             int midX = (t1.getX() + t2.getX()) / 2;
             int midY = (t1.getY() + t2.getY()) / 2;
-            fonalak.add(new Gombafonal(source, t2, midX, midY));
+            Gombafonal temp = new Gombafonal(source, t2, midX, midY);
+            //fonalak.add(temp);
+            addGombafonal(temp);
         }
     }
 

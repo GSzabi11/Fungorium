@@ -6,11 +6,13 @@ import Fungorium_Controller.GameEngine;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class JatekTer extends JPanel implements PropertyChangeListener {
 
@@ -190,6 +192,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         gomb.setBorderPainted(false);
         gomb.setContentAreaFilled(false);
         gomb.setBounds(btnX, btnY, btnW, btnH);
+        //gomb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // 7) ActionListener, rögzítés a térképre
         gomb.addActionListener(e -> {
@@ -236,6 +239,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         gomb.setBorderPainted(false);
         gomb.setContentAreaFilled(false);
         gomb.setBounds(btnX, btnY, btnW, btnH);
+        //gomb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         gomb.addActionListener(e -> {
             //Object old = this.kijeloltObjektum;
@@ -358,6 +362,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         gomb.setBorderPainted(false);
         gomb.setContentAreaFilled(false);
         gomb.setBounds(btnX, btnY, w, h);
+        //gomb.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Add action listener to update selected object
         gomb.addActionListener(e -> {
@@ -438,6 +443,91 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         repaint();
     }
 
+    private void hozzaadGombafonalGombkent(Gombafonal gf){
+        // --- 1) Loading és paraméterek ---
+        Gomba source = gf.getKiindulasiGomba();
+        Gombafaj fajta = source.getFajta();
+        String spriteFile;
+        switch (fajta) {
+            case KEK:
+                spriteFile = "/gombafonal_lila.png";   // kék gombából lila
+                break;
+            case SARGA:
+                spriteFile = "/gombafonal_pink.png";   // sárga gombából pink
+                break;
+            case PIROS:
+                spriteFile = "/gombafonal_piros.png";   // piros gombából piros
+                break;
+            default:
+                spriteFile = "/gombafonal_zold.png";
+        }
+        BufferedImage fImg;
+        try {
+            fImg = ImageIO.read(getClass().getResourceAsStream(spriteFile));
+        } catch (IOException e) {
+            return; // nem tudjuk kirajzolni, kilépünk
+        }
+        int imgW = fImg.getWidth(), imgH = fImg.getHeight();
+        double thinFactor = 0.5;  // GombafonalView thinFactor-ja
+//        double tileFactor = 1.0;  // vízszintes csempeszélesség skálázója (ha használsz)
+//
+//        // --- 2) A két végpont kiszámolása panel-koordinátában ---
+        // TektonView scale & offset:
+//        double tScale = 3;
+//
+//        BufferedImage tImg;
+//        try {
+//            tImg = ImageIO.read(getClass().getResourceAsStream("/tekton.png"));
+//        } catch (IOException e) {
+//            return; // nem tudjuk kirajzolni, kilépünk
+//        }
+//        int tw = (int)(tImg.getWidth()  * tScale);
+//        int th = (int)(tImg.getHeight() * tScale);
+
+
+        List<Tekton> pts = gf.getKapcsolodasiPontok();
+        Tekton t1 = pts.get(0), t2 = pts.get(1);
+
+
+//        int x1 = t1.getX() + (int)(tw * tScale / 2);
+//        int y1 = t1.getY() + (int)(th * tScale / 2);
+//        int x2 = t2.getX() + (int)(tw * tScale / 2);
+//        int y2 = t2.getY() + (int)(th * tScale / 2);
+
+        int x1 = t1.getX() + 38;
+        int y1 = t1.getY() + 40;
+        int x2 = t2.getX() + 38; //38
+        int y2 = t2.getY() + 40; //24
+
+        Point p1 = new Point(x1, y1);
+        Point p2 = new Point(x2, y2);
+
+        // --- 3) A gomb „vastagsága” (a csempézett sprite magassága * thinFactor) ---
+        double thickness = imgH * thinFactor;
+
+        // --- 4) Bounding‐box (kicsit túlnyúlva a vastagságon) ---
+        int minX = (int)Math.floor(Math.min(x1, x2) - thickness/2);
+        int minY = (int)Math.floor(Math.min(y1, y2) - thickness/2);
+        int width  = (int)Math.ceil(Math.abs(x2 - x1) + thickness);
+        int height = (int)Math.ceil(Math.abs(y2 - y1) + thickness);
+
+        // --- 5) FonalButton létrehozása és pozícionálása ---
+        FonalButton btn = new FonalButton(p1, p2, thickness);
+        btn.setBounds(minX, minY, width, height);
+
+        btn.addActionListener(e -> {
+            Object old = this.kijeloltObjektum;
+            this.kijeloltObjektum = gf;
+            firePropertyChange("selectedObject", old, gf);
+        });
+
+        add(btn);
+        setComponentZOrder(btn, 0);
+        revalidate();
+        repaint();
+        objektumGombok.put(gf, btn);
+    }
+
         @Override
     public void propertyChange(PropertyChangeEvent evt)
     {
@@ -475,6 +565,13 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
                         System.out.println("No button found for spora to remove: " + regi);
                     }
                 }
+            }
+            case "gombafonal" -> {
+                Gombafonal uj = (Gombafonal) evt.getNewValue();
+                if (uj != null) {
+                    hozzaadGombafonalGombkent(uj);
+                }
+                // You can also handle removal if needed
             }
         }
         revalidate();
