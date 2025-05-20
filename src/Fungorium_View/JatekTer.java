@@ -132,8 +132,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     public void removeGombaIfLevel10(Gomba gomba) {
         if (gomba.getSzint() >= 10) {
             // Eltávolítjuk a gombát a világból
-            vilag.removeGomba(gomba); // Feltételezve, hogy van egy removeGomba metódus a Vilag osztályban
-            gomba.elpusztul(); // Eltávolítjuk a gombát a tektonról
+            gameEngine.deadGomba(gomba);
 
             // Eltávolítjuk a gombot a panelról
             JButton oldButton = objektumGombok.get(gomba);
@@ -146,6 +145,8 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
             } else {
                 System.out.println("Nincs gomb a gombához, amit eltávolíthatnánk: " + gomba);
             }
+            vilag.removeGomba(gomba); // Feltételezve, hogy van egy removeGomba metódus a Vilag osztályban
+            gomba.elpusztul();
         }
     }
 

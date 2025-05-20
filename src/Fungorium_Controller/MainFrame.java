@@ -70,6 +70,7 @@ public class MainFrame extends JFrame {
             // 5. GameEngine
             korView.korVege.addActionListener(e -> {
                 engine.kovetkezoKor();
+
                 updateButtonsForCurrentPlayer(engine, korView, playerList);
             });
 
@@ -170,38 +171,45 @@ public class MainFrame extends JFrame {
                 Rovar rovar = engine.getKivalasztottRovar();
                 Tekton cel = engine.getKivalasztottCelTekton();
                 if (rovar != null && cel != null) {
+                    // 0) Ha bénító állapot alatt van, rögtön jelezzük, és kilépünk:
+                    int benitoDuration = rovar.getAllapotMap().getOrDefault(RovarAllapot.BENITO, 0);
+                    if (benitoDuration > 0) {
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "A rovar még " + benitoDuration + " körig bénítva van, nem tud mozogni!",
+                                "Mozgás sikertelen",
+                                JOptionPane.WARNING_MESSAGE
+                        );
+                        return;
+                    }
+
+                    // 1) Még nincs bénítva, próbáljuk elmozdítani
                     Tekton old = rovar.getHelyzet();
                     new MozgasController().move(rovar, cel);
                     jatekTer.hozzaadRovarGombkent(rovar);
 
-                    // csak akkor lépjünk tovább, ha valóban mozdult:
+                    // 2) Ha sikerült mozogni, felszedjük a spórákat és esetleg klónozunk:
                     if (old != rovar.getHelyzet()) {
-                        // vegyük ki egyenként a spórákat, és fogyasszuk el őket:
                         List<Spora> sporak = new ArrayList<>(cel.getSporak());
                         for (Spora s : sporak) {
                             rovar.fogyaszt(s);
 
-
-                            // ha osztódó spóra, klónozzunk:
                             if (s instanceof RovarOsztodoSporaElement) {
-                                // modellben is készítünk egy klónt
                                 Rovarfaj fajta = rovar.getFajta();
                                 int x = rovar.getX(), y = rovar.getY();
                                 Rovar klon = new Rovar(fajta, cel, x, y);
-
-                                // és hozzáadjuk a világhoz + a gui-hoz
                                 vilag.addRovar(klon);
                                 jatekTer.hozzaadRovarGombkent(klon);
                                 System.out.println("Új rovar klónozva a T" + cel.getId() + " mezőre.");
                             }
+
                             vilag.removeSpora(cel, sporak);
                         }
-
                         korView.csakKorVegeMarad();
                     }
                 } else {
                     JOptionPane.showMessageDialog(
-                            null,
+                            this,
                             "Kérlek válassz ki egy rovart és egy cél tekton mezőt!",
                             "Figyelem",
                             JOptionPane.WARNING_MESSAGE
@@ -240,7 +248,7 @@ public class MainFrame extends JFrame {
                 else if (s instanceof RovarOsztodoSporaElement)nev = "Osztódó spóra";
                 else                                          nev = s.getClass().getSimpleName();
 
-                panel.add(new JLabel("  • " + nev));
+                panel.add(new JLabel(String.format("  • %s (tápanyag: %d)", nev, s.getTapanyagtartalom())));
             }
 
         } else if (o instanceof Rovar r) {

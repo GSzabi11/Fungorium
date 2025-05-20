@@ -1,6 +1,7 @@
 package Fungorium_View;
 
 import Fugorium_Model.*;
+import Fungorium_Controller.GameEngine;
 import Fungorium_Controller.Player;
 
 import javax.imageio.ImageIO;

@@ -7,10 +7,12 @@ import Fungorium_View.JatekTer;
 import Fungorium_View.KorView;
 import Fungorium_View.Vilag;
 
-import javax.swing.Timer;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GameEngine {
@@ -79,6 +81,35 @@ public class GameEngine {
      */
     public void kovetkezoKor() {
         k++;
+
+        if (k % 5 == 0) {
+            // másolatot készítünk arról, hol tartunk most
+            List<Tekton> eredeti = new ArrayList<>(vilag.getMezok());
+            Collections.shuffle(eredeti);
+            // végigmegyünk minden negyedik tektonon
+            for (int i = 0; i < eredeti.size(); i += 4) {
+                Tekton t = eredeti.get(i);
+
+                // generálunk egy új, egyedi ID-t
+                int maxId = vilag.getMezok().stream()
+                        .mapToInt(Tekton::getId)
+                        .max().orElse(0);
+                int ujId = maxId + 1;
+
+                // az új tekton ugyanoda kerül, egy kis eltolással, hogy látható legyen
+                Tekton uj = new Tekton(ujId, t.getX() + 20, t.getY() + 20);
+
+                // modellben kettéhasítjuk:
+                t.kettetor(uj);
+
+                // és felvesszük a világba, így a JatekTer automatikusan
+                // létrehozza hozzá a gombot/nézetet is
+                vilag.addTekton(uj);
+                System.out.println("[KOR " + k + "] Tekton T" + t.getId()
+                        + " kettétörve → T" + uj.getId());
+            }
+        }
+
         for (Rovar temp : vilag.getRovarok()){
             if (k % jatekosok.size() == 0)
             {
@@ -93,6 +124,7 @@ public class GameEngine {
         for (Gomba g : vilag.getGombak()) {
             g.sporaTermel();
             g.fejlodik();
+            jatekTer.removeGombaIfLevel10(g);
         }
 
         for (Tekton t : vilag.getMezok()){
@@ -114,8 +146,6 @@ public class GameEngine {
             p.addScore(5);
         }
 
-
-
         // Ellenőrizzük a győzelmet
         if (p.getScore() >= winningScore) {
             Menu.victory(jatekosok);
@@ -124,10 +154,6 @@ public class GameEngine {
 
         // Következő játékos jön
         currentPlayerIndex = (currentPlayerIndex + 1) % jatekosok.size();
-
-        for (Gomba gomba : vilag.getGombak()) {
-            jatekTer.removeGombaIfLevel10(gomba);
-        }
 
 
     }
@@ -166,5 +192,38 @@ public class GameEngine {
         } else {
             korView.csakGombasznak();
         }
+    }
+
+    public void deadGomba(Gomba gomba) {
+        List<Gomba> halottgombak = new ArrayList<>();
+
+        JFrame frame = new JFrame("Halott gombák");
+        StringBuilder sb = new StringBuilder();
+        if (halottgombak.isEmpty()) {
+            return;
+        } else {
+
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setSize(300, 300);
+            frame.setLocationRelativeTo(null);
+            sb.append("Halott gombák:\n");
+            for (Gomba g : halottgombak) {
+                sb.append("- ID: ").append(g.getFajta()).append("\n");
+            }
+        }
+
+        JTextArea textArea = new JTextArea(sb.toString());
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> frame.dispose());
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(okButton, BorderLayout.SOUTH);
+
+        frame.setContentPane(panel);
+        frame.setVisible(true);
     }
 }
