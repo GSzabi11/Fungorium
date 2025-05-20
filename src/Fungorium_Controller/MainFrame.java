@@ -69,6 +69,7 @@ public class MainFrame extends JFrame {
 
             // 5. GameEngine
             korView.korVege.addActionListener(e -> {
+                Player aktualis = playerList.get(engine.getKorIndex()%playerList.size());
                 engine.kovetkezoKor();
 
                 updateButtonsForCurrentPlayer(engine, korView, playerList);
@@ -103,6 +104,9 @@ public class MainFrame extends JFrame {
                         //engine.getKivalasztottCelTekton().clearSporak(engine.getKivalasztottCelTekton());
                         vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak());
                         System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
+                        //adok 20 pontot annak a playernek aki csinálta
+                        aktualis.score += 20;
+
                     } else {
                         JOptionPane.showMessageDialog(korView,
                                 "Nem lehet gombát növeszteni ezen a tektonon.",
@@ -193,13 +197,14 @@ public class MainFrame extends JFrame {
                         List<Spora> sporak = new ArrayList<>(cel.getSporak());
                         for (Spora s : sporak) {
                             rovar.fogyaszt(s);
+                            aktualis.score += s.getTapanyagtartalom();
 
                             if (s instanceof RovarOsztodoSporaElement) {
                                 Rovarfaj fajta = rovar.getFajta();
                                 int x = rovar.getX(), y = rovar.getY();
                                 Rovar klon = new Rovar(fajta, cel, x, y);
                                 vilag.addRovar(klon);
-                                jatekTer.hozzaadRovarGombkent(klon);
+                                //jatekTer.hozzaadRovarGombkent(klon);
                                 System.out.println("Új rovar klónozva a T" + cel.getId() + " mezőre.");
                             }
 
