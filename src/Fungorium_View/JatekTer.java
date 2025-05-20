@@ -363,12 +363,6 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
     }
 
     private void hozzaadSporaGombkent(Spora spora) {
-        // Remove old button if exists
-        JButton oldButton = objektumGombok.get(spora);
-        if (oldButton != null) {
-            remove(oldButton);
-            objektumGombok.remove(spora);
-        }
 
         // Load spora image (original size)
         String spritePath = "/spora.png"; // or choose dynamically if you want different sprites per spora type
@@ -471,6 +465,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
                 }
             }
         }
+        revalidate();
         repaint();
     }
 }
