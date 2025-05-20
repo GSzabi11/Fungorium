@@ -78,6 +78,9 @@ public class GameEngine {
      * Ezt a metódust kell meghívni, amikor a játékos befejezi a lépését.
      */
     public void kovetkezoKor() {
+        for (Rovar temp : vilag.getRovarok()){
+            temp.csokkentAllapotIdotartam();
+        }
         korIndex = (korIndex+1) % jatekosok.size();
         updateKorTulajdonosFelirat();
 
