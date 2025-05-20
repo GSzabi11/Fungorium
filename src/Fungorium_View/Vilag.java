@@ -103,12 +103,6 @@ public class Vilag {
         return Collections.unmodifiableList(t.getGombafonalak());
     }
 
-    public void leptet() {
-        /*for (Rovar r : new ArrayList<>(rovarok)) {
-            r.csokkentAllapotIdotartam();
-        }*/
-    }
-
     public void initEntities() {
 
         // 1) Tisztítás, ha újra hívjuk
@@ -195,5 +189,13 @@ public class Vilag {
         }
     }
 
+    public void removeGomba(Gomba gomba) {
+        if (gombak.remove(gomba)) {
+            fireChange("gomba", gomba, null);
+            System.out.println("Gomba eltávolítva: " + gomba);
+        } else {
+            System.out.println("Gomba nem található: " + gomba);
+        }
+    }
 
 }

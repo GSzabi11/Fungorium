@@ -42,7 +42,6 @@ public class GameEngine {
 
         // Timer csak a repainthez és léptetéshez, de nem vált köröket
         this.timer = new Timer(1000 / 30, e -> {
-            vilag.leptet();
             jatekTer.repaint();
         });
     }
@@ -95,6 +94,7 @@ public class GameEngine {
             g.sporaTermel();
             g.fejlodik();
         }
+
         for (Tekton t : vilag.getMezok()){
             if(t.getSporakSzama() >= 3){
                 t.setNohetGomba(true);
@@ -124,6 +124,10 @@ public class GameEngine {
 
         // Következő játékos jön
         currentPlayerIndex = (currentPlayerIndex + 1) % jatekosok.size();
+
+        for (Gomba gomba : vilag.getGombak()) {
+            jatekTer.removeGombaIfLevel10(gomba);
+        }
 
 
     }

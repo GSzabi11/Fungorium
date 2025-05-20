@@ -128,6 +128,30 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         g2.translate(0, -sávMagasság);
     }
 
+
+    public void removeGombaIfLevel10(Gomba gomba) {
+        if (gomba.getSzint() >= 10) {
+            // Eltávolítjuk a gombát a világból
+            vilag.removeGomba(gomba); // Feltételezve, hogy van egy removeGomba metódus a Vilag osztályban
+            gomba.elpusztul(); // Eltávolítjuk a gombát a tektonról
+
+            // Eltávolítjuk a gombot a panelról
+            JButton oldButton = objektumGombok.get(gomba);
+            if (oldButton != null) {
+                remove(oldButton);
+                objektumGombok.remove(gomba);
+                revalidate();
+                repaint();
+                System.out.println("Gomba eltávolítva: " + gomba);
+            } else {
+                System.out.println("Nincs gomb a gombához, amit eltávolíthatnánk: " + gomba);
+            }
+        }
+    }
+
+
+
+
     private void hozzaadGombaGombkent(Gomba gomba) {
 
         // 1) Dinamikusan betöltjük a Gomba sprite-ot
