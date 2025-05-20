@@ -10,6 +10,15 @@ public abstract class Spora {
     private int tapanyagtartalom;
     int x;
     int y;
+    private Tekton tekton;
+
+    public Tekton getTekton() {
+        return tekton;
+    }
+
+    public void setTekton(Tekton tekton) {
+        this.tekton = tekton;
+    }
 
     /*
      * Spora parameter nelkuli konstruktora

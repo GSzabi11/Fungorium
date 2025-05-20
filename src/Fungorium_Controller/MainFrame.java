@@ -4,7 +4,9 @@ import Fugorium_Model.*;
 import Fungorium_View.*;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainFrame extends JFrame {
     private KorView korView;
@@ -114,14 +116,38 @@ public class MainFrame extends JFrame {
             // Spórázás
             korView.getSporazButton().addActionListener(e -> {
                 Gomba g = engine.getKivalasztottGomba();
-                if (g != null) {
-                    g.sporaz(); // ide még kell grafika hozzá
-
-                    korView.csakKorVegeMarad();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Válassz ki egy gombát a spórázáshoz!");
+                System.out.println("Gomba megvan");
+                if (g == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "Válassz ki egy gombát a spórázáshoz!",
+                            "Hiba",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
                 }
+
+                // --- ide jön a térképen végigiterálás ---
+
+                /*Tekton t1 = g.getTekton();
+                System.out.println("Tekton megvan");
+                if (t1 == null) {System.out.println("Szivas");}
+
+                List<Tekton> szomszik = new ArrayList<>();
+                szomszik = t1.getSzomszedok();
+                if (szomszik.size() == 0) {System.out.println("Nincs szomszed");}*/
+
+                Map<Tekton,List<Spora>> kiosztas = g.sporaz();
+                for (var es : kiosztas.entrySet()) {
+                    Tekton t = es.getKey();
+                    for (Spora s : es.getValue()) {
+                        vilag.addSpora(t, s);
+                    }
+                }
+                jatekTer.repaint();
+
+                // majd vissza a kör végét jelző állapotba
+                korView.csakKorVegeMarad();
             });
+
 
 
             // Fonal növesztés

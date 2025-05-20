@@ -69,6 +69,17 @@ public class Vilag {
         fireChange("gomba", null, g);
     }
 
+    public void addSpora(Tekton t, Spora s) {
+        System.out.println("addSpora hivva");
+        t.getSporak().add(s);
+        fireChange("spora", null, s);
+    }
+
+    public void removeSpora(Tekton t, Spora s) {
+        t.getSporak().remove(s);
+        fireChange("spora", s, null);
+    }
+
     public List<Tekton> getMezok() {
         return Collections.unmodifiableList(mezok);
     }
@@ -121,6 +132,14 @@ public class Vilag {
             int x = (int) (centerX + radius * Math.cos(angle));
             int y = (int) (centerY + radius * Math.sin(angle));
             addTekton(new Tekton(i, x, y));
+        }
+
+        for (Tekton t1 : mezok) {
+            for (Tekton t2 : mezok) {
+                if (t1 != t2) {
+                    t1.hozzaadSzomszed(t2);
+                }
+            }
         }
 
         // 4) Gombák elhelyezése: gombászok száma = gombák száma

@@ -51,7 +51,7 @@ public class Gomba {
     /**
      * A gomba spórákat szór szét a környezetébe.
      */
-    public void sporaz() {
+    /*public void sporaz() {
         System.out.println("Gomba.sporaz() called");
         if (termeltSporak.isEmpty()) {
             System.out.println("Nincs mit szorjon, a gombanak nincs termelt sporaja.");
@@ -86,7 +86,49 @@ public class Gomba {
 
         termeltSporak.clear();
         System.out.println("Gomba.sporaz(): minden spora elszorva, lista uritve.");
+    }*/
+
+    public Map<Tekton, List<Spora>> sporaz() {
+        if (termeltSporak.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        // === 1) Célpont-tektonok összegyűjtése ===
+        Set<Tekton> celpontok = new LinkedHashSet<>(tekton.getSzomszedok());
+        if (szint >= 2) {
+            for (Tekton szo : tekton.getSzomszedok()) {
+                celpontok.addAll(szo.getSzomszedok());
+            }
+        }
+        celpontok.remove(tekton);
+        if (celpontok.isEmpty()) return Collections.emptyMap();
+
+        // === 2) Spórák kiosztása körbe-körbe, és beállítjuk bennük a parent Tekton-t ===
+        List<Tekton> celList = new ArrayList<>(celpontok);
+        Map<Tekton, List<Spora>> eredmeny = new HashMap<>();
+        int idx = 0;
+        for (Spora sp : termeltSporak) {
+            Tekton cel = celList.get(idx % celList.size());
+            sp.setTekton(cel);
+            eredmeny.computeIfAbsent(cel, k -> new ArrayList<>()).add(sp);
+            idx++;
+        }
+
+        // === 3) Gombafonalak gyorsítása ===
+        for (Tekton cel : celpontok) {
+            for (Gombafonal fonal : cel.getGombafonalak()) {
+                fonal.setGyorsitottNovekedes(true);
+            }
+        }
+
+        // === 4) Takarítás és propertyChange ===
+        int régi = termeltSporak.size();
+        termeltSporak.clear();
+        firePropertyChange("termeltSporakSzama", régi, 0);
+
+        return eredmeny;
     }
+
 
     /**
      * A gomba egy uj gombafonalat noveszt.
