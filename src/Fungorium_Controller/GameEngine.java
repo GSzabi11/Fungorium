@@ -22,6 +22,7 @@ public class GameEngine {
     private final JatekTer jatekTer;
     private final Timer timer;
     private List<Gomba> halottgombak = new ArrayList<>();
+    private int halottGombaSzam = 0;
     private final int winningScore=200;
     private int currentPlayerIndex = 0;
     private final List<Player> jatekosok;
@@ -44,7 +45,6 @@ public class GameEngine {
 
         // Timer csak a repainthez és léptetéshez, de nem vált köröket
         this.timer = new Timer(1000 / 30, e -> {
-            vilag.leptet();
             jatekTer.repaint();
         });
     }
@@ -138,15 +138,31 @@ public class GameEngine {
         updatePlayerButtons();
 
         for (Gomba g : vilag.getGombak()) {
+            if (g.getSzint()==15){
+                halottgombak.add(g);
+            }
             g.sporaTermel();
             g.fejlodik();
         }
+
+        if(!halottgombak.isEmpty()) {
+            deadGomba();
+
+        }
+
+        for (Gomba g : halottgombak) {
+            vilag.removeGomba(g);
+        }
+
+        List<Gomba> tempHalottGombak = new ArrayList<>(halottgombak);
+        halottgombak.removeAll(tempHalottGombak);
+
+
         for (Tekton t : vilag.getMezok()){
             if(t.getSporakSzama() >= 3){
                 t.setNohetGomba(true);
             }
         }
-        deadGomba();
 
         Player p = jatekosok.get(currentPlayerIndex);
 
@@ -212,15 +228,6 @@ public class GameEngine {
     }
 
     public void deadGomba() {
-        List<Gomba> gombak = vilag.getGombak();
-        List<Gomba> halottgombak = new ArrayList<>();
-        for (Gomba g : gombak) {
-            if (g.getSzint() >= 10) {
-                halottgombak.add(g);
-            }
-        }
-
-
         JFrame frame = new JFrame("Halott gombák");
         StringBuilder sb = new StringBuilder();
         if (halottgombak.isEmpty()) {
@@ -232,7 +239,7 @@ public class GameEngine {
             frame.setLocationRelativeTo(null);
             sb.append("Halott gombák:\n");
             for (Gomba g : halottgombak) {
-                sb.append("- ID: ").append(g.getFajta()).append("\n");
+                sb.append("- SZIN: ").append(g.getFajta()).append("\n");
             }
         }
 
@@ -249,5 +256,6 @@ public class GameEngine {
 
         frame.setContentPane(panel);
         frame.setVisible(true);
+        frame.repaint();
     }
 }
