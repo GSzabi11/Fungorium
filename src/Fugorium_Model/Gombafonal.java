@@ -188,7 +188,7 @@ public class Gombafonal {
         int sporaCount = tekton.getSporakSzama();
         if (sporaCount >= spora_kuszob_gomba_novekedeshez) {
             Gomba ujGomba = new Gomba(kiindulasiGomba.getFajta(), tekton, 5,26);
-            tekton.clearSporak();
+            tekton.clearSporak(tekton);
             tekton.setNohetGomba(false);
             System.out.println(
                 "Gombafonal: Új gombatest növesztése sikeres a T" 

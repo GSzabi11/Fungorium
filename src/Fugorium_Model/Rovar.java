@@ -189,22 +189,33 @@ public class Rovar {
 
     /** Csökkenti a paraméterként kapott állapot időtartamát
      */
-    public void csokkentAllapotIdotartam(){
-        int duration = allapot.get(RovarAllapot.GYORSITO);
-        if(duration > 0) {
-            duration -= 1;
+    public void csokkentAllapotIdotartam() {
+        // gyorsító
+        int gyorsito = allapot.get(RovarAllapot.GYORSITO);
+        if (gyorsito > 0) {
+            gyorsito -= 1;
+            allapot.put(RovarAllapot.GYORSITO, gyorsito);
         }
-        int duration2 = allapot.get(RovarAllapot.LASSITO);
-        if(duration2 > 0) {
-            duration2 -= 1;
+
+        // lassító
+        int lassito = allapot.get(RovarAllapot.LASSITO);
+        if (lassito > 0) {
+            lassito -= 1;
+            allapot.put(RovarAllapot.LASSITO, lassito);
         }
-        int duration3 = allapot.get(RovarAllapot.BENITO);
-        if(duration3 > 0) {
-            duration3 -= 1;
+
+        // bénító
+        int benito = allapot.get(RovarAllapot.BENITO);
+        if (benito > 0) {
+            benito -= 1;
+            allapot.put(RovarAllapot.BENITO, benito);
         }
-        int duration4 = allapot.get(RovarAllapot.VAGASTGATLO);
-        if(duration4 > 0) {
-            duration4 -= 1;
+
+        // vágásgátló
+        int vagasgatlo = allapot.get(RovarAllapot.VAGASTGATLO);
+        if (vagasgatlo > 0) {
+            vagasgatlo -= 1;
+            allapot.put(RovarAllapot.VAGASTGATLO, vagasgatlo);
         }
     }
 

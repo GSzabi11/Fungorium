@@ -40,6 +40,8 @@ public class Gomba {
         return tekton;
     }
 
+    public int getSzint() {return szint;}
+
     public Gombafaj getFajta() {
         return fajta;
     }
@@ -51,42 +53,7 @@ public class Gomba {
     /**
      * A gomba spórákat szór szét a környezetébe.
      */
-    /*public void sporaz() {
-        System.out.println("Gomba.sporaz() called");
-        if (termeltSporak.isEmpty()) {
-            System.out.println("Nincs mit szorjon, a gombanak nincs termelt sporaja.");
-            return;
-        }
 
-        Set<Tekton> celpontok = new LinkedHashSet<>(tekton.getSzomszedok());
-
-        if(szint >=2)
-        {
-            for (Tekton sz : tekton.getSzomszedok()) {
-                celpontok.addAll(sz.getSzomszedok());
-            }
-            celpontok.remove(tekton); //sajat magat ne sporazza
-        }
-
-        List<Tekton> celpontLista = new ArrayList<>(celpontok);
-        int i = 0;
-        for (Spora spora : termeltSporak) {
-            Tekton cel = celpontLista.get(i % celpontLista.size());
-            cel.getSporak().add(spora);
-            System.out.println("Gomba sporaz: spora atkerult T" + cel.getId() + "-re.");
-            i++;
-        }
-
-        for (Tekton cel : celpontLista) {
-            for (Gombafonal fonal : cel.getGombafonalak()) {
-                fonal.setGyorsitottNovekedes(true);
-                System.out.println("Gombafonal gyorsitva a T" + cel.getId() + " tektonon.");
-            }
-        }
-
-        termeltSporak.clear();
-        System.out.println("Gomba.sporaz(): minden spora elszorva, lista uritve.");
-    }*/
 
     public Map<Tekton, List<Spora>> sporaz() {
         if (termeltSporak.isEmpty()) {
@@ -184,6 +151,8 @@ public class Gomba {
         System.out.println("Gomba.sporaTermel() - sporak szama: " + sporaSzamlalo);
         firePropertyChange("termeltSporakSzama", sporaSzamlalo - 1, sporaSzamlalo);
     }
+
+
 
     /**
      * Kiírja a gomba által termelt spórák számát.

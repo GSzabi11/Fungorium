@@ -148,7 +148,9 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         int gw = gImg.getWidth(), gh = gImg.getHeight();
 
         // 2) A GombaView-ben használt scale
-        double gScale = 2.25;
+        double gScale = 2.25; // * (Math.log(gomba.getSzint()) + 1);
+
+
 
         // 3) Betöltjük a Tekton sprite-ot és scale-eljük ugyanúgy, mint TektonView
         //EZ MIÉRT KELL IDE?
