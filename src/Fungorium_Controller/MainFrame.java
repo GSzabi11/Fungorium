@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import Fugorium_Model.RovarAllapot;
 
 public class MainFrame extends JFrame {
     private KorView korView;
@@ -190,6 +191,7 @@ public class MainFrame extends JFrame {
         } else if (o instanceof Gomba g) {
             panel.add(new JLabel("Típus: Gomba"));
             panel.add(new JLabel("Fajta: " + g.getFajta().toString()));
+            panel.add(new JLabel("Szint: " + g.getSzint()));
             panel.add(new JLabel("Pozíció: (" + g.getX() + ", " + g.getY() + ")"));
             panel.add(new JLabel("Termelt spórák: " + g.getTermeltSporakSzama()));
         } else if (o instanceof Tekton t) {
@@ -202,6 +204,15 @@ public class MainFrame extends JFrame {
             panel.add(new JLabel("Fajta: " + r.getFajta().toString()));
             panel.add(new JLabel("Pozíció: (" + r.getX() + ", " + r.getY() + ")"));
             panel.add(new JLabel("Tapanyag: " + r.getTapanyag()));
+
+            panel.add(Box.createVerticalStrut(8));       // kis térköz
+            panel.add(new JLabel("Állapotok:"));
+            for (var entry : r.getAllapotMap().entrySet()) {
+                RovarAllapot allapot = entry.getKey();
+                int hatralevo = entry.getValue();
+                panel.add(new JLabel("  • " + allapot + ": " + hatralevo + " kör"));
+            }
+
         }
         panel.setPreferredSize(new Dimension(140, 768));
         panel.revalidate();
