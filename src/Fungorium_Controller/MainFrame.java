@@ -99,7 +99,8 @@ public class MainFrame extends JFrame {
                         Gomba ujGomba = new Gomba(fajta, celTekton, celTekton.getX(), celTekton.getY());
                         vilag.addGomba(ujGomba);
                         korView.csakKorVegeMarad();
-                        engine.getKivalasztottCelTekton().clearSporak(engine.getKivalasztottCelTekton());
+                        //engine.getKivalasztottCelTekton().clearSporak(engine.getKivalasztottCelTekton());
+                        vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak());
                         System.out.println("[DEBUG] Új gomba növesztve a T" + celTekton.getId() + " tektonon.");
                     } else {
                         JOptionPane.showMessageDialog(korView,
@@ -166,20 +167,45 @@ public class MainFrame extends JFrame {
 
             // Rovar mozgás
             korView.getMozgasButton().addActionListener(e -> {
-                if (engine.getKivalasztottRovar() != null && engine.getKivalasztottCelTekton() != null) {
-                    Tekton old = engine.getKivalasztottRovar().getHelyzet();
-                    MozgasController mozgasController = new MozgasController();
-                    mozgasController.move(engine.getKivalasztottRovar(), engine.getKivalasztottCelTekton());
-                    jatekTer.hozzaadRovarGombkent(engine.getKivalasztottRovar());
-                    if (old != engine.getKivalasztottRovar().getHelyzet()){
-                        for (int i = 0; i < engine.getKivalasztottCelTekton().getSporakSzama(); i++){
-                            engine.getKivalasztottRovar().fogyaszt(engine.getKivalasztottCelTekton().getSporak().getFirst());
+                Rovar rovar = engine.getKivalasztottRovar();
+                Tekton cel = engine.getKivalasztottCelTekton();
+                if (rovar != null && cel != null) {
+                    Tekton old = rovar.getHelyzet();
+                    new MozgasController().move(rovar, cel);
+                    jatekTer.hozzaadRovarGombkent(rovar);
+
+                    // csak akkor lépjünk tovább, ha valóban mozdult:
+                    if (old != rovar.getHelyzet()) {
+                        // vegyük ki egyenként a spórákat, és fogyasszuk el őket:
+                        List<Spora> sporak = new ArrayList<>(cel.getSporak());
+                        for (Spora s : sporak) {
+                            rovar.fogyaszt(s);
+
+
+                            // ha osztódó spóra, klónozzunk:
+                            if (s instanceof RovarOsztodoSporaElement) {
+                                // modellben is készítünk egy klónt
+                                Rovarfaj fajta = rovar.getFajta();
+                                int x = rovar.getX(), y = rovar.getY();
+                                Rovar klon = new Rovar(fajta, cel, x, y);
+
+                                // és hozzáadjuk a világhoz + a gui-hoz
+                                vilag.addRovar(klon);
+                                jatekTer.hozzaadRovarGombkent(klon);
+                                System.out.println("Új rovar klónozva a T" + cel.getId() + " mezőre.");
+                            }
+                            vilag.removeSpora(cel, sporak);
                         }
-                        vilag.removeSpora(engine.getKivalasztottCelTekton(), engine.getKivalasztottCelTekton().getSporak());
+
                         korView.csakKorVegeMarad();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Kérlek válassz ki egy rovart és egy cél tekton mezőt!");
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Kérlek válassz ki egy rovart és egy cél tekton mezőt!",
+                            "Figyelem",
+                            JOptionPane.WARNING_MESSAGE
+                    );
                 }
             });
         });
