@@ -1,5 +1,8 @@
 package Fungorium_Controller;
 
+import Fungorium_View.JatekTer;
+import Fungorium_View.KorView;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -112,7 +115,9 @@ public class Menu {
         frame.setVisible(true);
     }
 
-    public static void victory(List<Player> players) {
+    public static void victory(List<Player> players, JatekTer jatekTer, KorView korView) {
+        korView.mindentLetilt();
+
         JFrame victoryFrame = new JFrame("Results");
         victoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         victoryFrame.setSize(800, 600);
@@ -171,8 +176,18 @@ public class Menu {
         JButton backToMenu = new JButton("Back to Main Menu");
         backToMenu.setFont(new Font("Arial", Font.BOLD, 24));
         backToMenu.addActionListener((ActionEvent e) -> {
-            victoryFrame.dispose();
             menu();
+            Window gameWindow = SwingUtilities.getWindowAncestor(jatekTer);
+            if (gameWindow != null) {
+                gameWindow.dispose();
+            }
+            victoryFrame.dispose();
+            for (Frame f : JFrame.getFrames()) {
+                if (f instanceof MainFrame) {
+                    f.dispose();
+                }
+            }
+
         });
 
         JPanel buttonPanel = new JPanel();

@@ -78,9 +78,9 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         if (backgroundImage != null)
             g2.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
-        int sávMagasság = 40;
+        int savMagassag = 40;
         g2.setColor(new Color(50, 50, 50));
-        g2.fillRect(0, 0, getWidth(), sávMagasság);
+        g2.fillRect(0, 0, getWidth(), savMagassag);
 
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Arial", Font.BOLD, 24));
@@ -88,11 +88,11 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
         FontMetrics fm = g2.getFontMetrics();
         int szovegSzelesseg = fm.stringWidth(szoveg);
         int x = (getWidth() - szovegSzelesseg) / 2;
-        int y = (sávMagasság + fm.getAscent()) / 2 - 4;
+        int y = (savMagassag + fm.getAscent()) / 2 - 4;
         g2.drawString(szoveg, x, y);
 
         // A játék többi eleme alatta, kicsit lejjebb rajzolva, hogy ne takarja a sávot
-        g2.translate(0, sávMagasság);
+        g2.translate(0, savMagassag);
 
         // Először a Gombafonalakat
         for (Tekton t : vilag.getMezok()) {
@@ -127,7 +127,7 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 //        }
 
         // Visszaállítjuk az eredeti koordinátarendszert
-        g2.translate(0, -sávMagasság);
+        g2.translate(0, -savMagassag);
     }
 
 
