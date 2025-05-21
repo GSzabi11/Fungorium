@@ -136,13 +136,13 @@ public class MainFrame extends JFrame {
 
                 // --- ide jön a térképen végigiterálás ---
 
-                /*Tekton t1 = g.getTekton();
-                System.out.println("Tekton megvan");
-                if (t1 == null) {System.out.println("Szivas");}
-
-                List<Tekton> szomszik = new ArrayList<>();
-                szomszik = t1.getSzomszedok();
-                if (szomszik.size() == 0) {System.out.println("Nincs szomszed");}*/
+//                Tekton t1 = g.getTekton();
+//                System.out.println("Tekton megvan");
+//                if (t1 == null) {System.out.println("Szivas");}
+//
+//                List<Tekton> szomszik = new ArrayList<>();
+//                szomszik = t1.getSzomszedok();
+//                if (szomszik.size() == 0) {System.out.println("Nincs szomszed");}
 
                 Map<Tekton,List<Spora>> kiosztas = g.sporaz();
                 for (var es : kiosztas.entrySet()) {

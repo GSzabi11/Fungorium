@@ -185,6 +185,8 @@ public class Vilag {
         for (int i = 0; i < tektonCount; i++) {
             Tekton t1 = mezok.get(i);
             Tekton t2 = mezok.get((i + 1) % tektonCount);
+            t1.hozzaadSzomszed(t2);
+            t2.hozzaadSzomszed(t1);
             // válasszunk ki hozzá egy kiinduló gombát (pl. az i. gombát mod gombaszCount)
             Gomba source = gombak.get((int) (i % gombak.size()));
             // a fonal középpontja legyen a két pont fele
