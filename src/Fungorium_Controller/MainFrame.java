@@ -195,21 +195,25 @@ public class MainFrame extends JFrame {
                     // 2) Ha sikerült mozogni, felszedjük a spórákat és esetleg klónozunk:
                     if (old != rovar.getHelyzet()) {
                         List<Spora> sporak = new ArrayList<>(cel.getSporak());
-                        for (Spora s : sporak) {
-                            rovar.fogyaszt(s);
-                            aktualis.score += s.getTapanyagtartalom();
+                        if (!sporak.isEmpty()){
+                            for (Spora s : sporak) {
+                                rovar.fogyaszt(s);
+                                aktualis.score += s.getTapanyagtartalom();
 
-                            if (s instanceof RovarOsztodoSporaElement) {
-                                Rovarfaj fajta = rovar.getFajta();
-                                int x = rovar.getX(), y = rovar.getY();
-                                Rovar klon = new Rovar(fajta, cel, x, y);
-                                vilag.addRovar(klon);
-                                //jatekTer.hozzaadRovarGombkent(klon);
-                                System.out.println("Új rovar klónozva a T" + cel.getId() + " mezőre.");
+                                if (s instanceof RovarOsztodoSporaElement) {
+                                    Rovarfaj fajta = rovar.getFajta();
+                                    int x = rovar.getX(), y = rovar.getY();
+                                    Rovar klon = new Rovar(fajta, cel, x, y);
+                                    vilag.addRovar(klon);
+                                    //jatekTer.hozzaadRovarGombkent(klon);
+                                    System.out.println("Új rovar klónozva a T" + cel.getId() + " mezőre.");
+                                }
+
+                                //vilag.removeSpora(cel, sporak);
                             }
-
                             vilag.removeSpora(cel, sporak);
                         }
+
                         korView.csakKorVegeMarad();
                     }
                 } else {

@@ -193,8 +193,8 @@ public class Vilag {
             int midX = (t1.getX() + t2.getX()) / 2;
             int midY = (t1.getY() + t2.getY()) / 2;
             Gombafonal temp = new Gombafonal(source, t2, midX, midY);
-            //fonalak.add(temp);
-            addGombafonal(temp);
+            fonalak.add(temp);
+            //addGombafonal(temp);
         }
     }
 
