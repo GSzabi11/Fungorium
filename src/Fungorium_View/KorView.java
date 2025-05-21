@@ -84,5 +84,14 @@ public class KorView extends JPanel {
         korVege.setEnabled(true);
     }
 
+    public void mindentLetilt() {
+        gombatestNoveszt.setEnabled(false);
+        sporaz.setEnabled(false);
+        fonalNoveszt.setEnabled(false);
+        mozgas.setEnabled(false);
+        fonalVagas.setEnabled(false);
+        korVege.setEnabled(false);
+    }
+
 
 }

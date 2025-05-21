@@ -23,10 +23,11 @@ public class GameEngine {
     private final Timer timer;
     private List<Gomba> halottgombak = new ArrayList<>();
     private int halottGombaSzam = 0;
-    private final int winningScore=200;
+    private final int winningScore=30;
     private int currentPlayerIndex = 0;
     private final List<Player> jatekosok;
     private int korIndex = 0;
+    private int korSzam = 0;
     private Rovar kivalasztottRovar;
     private Tekton kivalasztottCelTekton;
     private Gomba kivalasztottGomba;
@@ -166,29 +167,34 @@ public class GameEngine {
 
         Player p = jatekosok.get(currentPlayerIndex);
 
-        // Meghívjuk a szerepkörhöz tartozó lépéslogikát:
+        /**
+         * 1. Rovarász: MozgásController.move(kivalasztottRovar, kivalasztottCelTekton);
+         * 2. Gombász: SporaController.hatas();
+         */
         if (p.getRole() == "gombasz") {
-            // Gombász-lépést futtató controller
-//            SporaController.hatas( );
+
             p.addScore(5);
         } else {
-            // Rovarász‐lépést futtató controller
             MozgasController.move(kivalasztottRovar, kivalasztottCelTekton);
             p.addScore(5);
         }
 
 
 
-        // Ellenőrizzük a győzelmet
+        /**
+         * Kiírjúk a nyertesek listáját
+         */
         if (p.getScore() >= winningScore) {
-            Menu.victory(jatekosok);
+            korView.mindentLetilt();
+            Menu.victory(jatekosok, jatekTer, korView);
             return;
         }
 
         // Következő játékos jön
         currentPlayerIndex = (currentPlayerIndex + 1) % jatekosok.size();
 
-
+        // Ellenőrizzük a győzelmet
+        korSzam++;
     }
 
     //Ezt majd használni kell a kiválsztott elem lenyomásakor
