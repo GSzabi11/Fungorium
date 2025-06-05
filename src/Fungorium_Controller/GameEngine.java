@@ -1,6 +1,7 @@
 package Fungorium_Controller;
 
 import Fugorium_Model.Gomba;
+import Fugorium_Model.Gombafonal;
 import Fugorium_Model.Rovar;
 import Fugorium_Model.Tekton;
 import Fungorium_View.JatekTer;
@@ -33,6 +34,7 @@ public class GameEngine {
     private Gomba kivalasztottGomba;
     private KorView korView;
     private int k;
+    private boolean rovarEvesTortent = false;
 
     //private boolean rovaraszKor = true; // true = rovarász, false = gombász
 
@@ -83,6 +85,31 @@ public class GameEngine {
      */
     public void kovetkezoKor() {
         k++;
+
+        if (k >= 5 && !rovarEvesTortent) {
+            List<Gombafonal> fonalak = new ArrayList<>(vilag.getFonalak());
+            if (!fonalak.isEmpty()) {
+                Collections.shuffle(fonalak);
+                Gombafonal kivFonal = fonalak.get(0);
+                List<Rovar> jeloltRovarok = new ArrayList<>();
+                for (Rovar r : vilag.getRovarok()) {
+                    if (kivFonal.getKapcsolodasiPontok().contains(r.getHelyzet())) {
+                        jeloltRovarok.add(r);
+                    }
+                }
+                if (!jeloltRovarok.isEmpty()) {
+                    Collections.shuffle(jeloltRovarok);
+                    Rovar aldozat = jeloltRovarok.get(0);
+                    vilag.removeRovar(aldozat);
+                    kivFonal.gombatNovesztDoglottRovarbol(aldozat.getHelyzet());
+                    JOptionPane.showMessageDialog(null,
+                            "A T" + aldozat.getHelyzet().getId() + " mezőn egy rovart elfogyasztott egy fonal.",
+                            "Rovar elfogyasztva",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            rovarEvesTortent = true;
+        }
 
         if (k % 7 == 0) {
             List<Tekton> mezok = new ArrayList<>(vilag.getMezok());
