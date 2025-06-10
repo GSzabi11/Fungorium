@@ -108,6 +108,10 @@ public class Vilag {
         return Collections.unmodifiableList(t.getGombafonalak());
     }
 
+    public List<Gombafonal> getFonalak() {
+        return Collections.unmodifiableList(fonalak);
+    }
+
     public void initEntities() {
 
         // 1) Tisztítás, ha újra hívjuk

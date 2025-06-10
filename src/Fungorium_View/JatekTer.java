@@ -563,7 +563,18 @@ public class JatekTer extends JPanel implements PropertyChangeListener {
 
             case "rovar" -> {
                 Rovar uj = (Rovar) evt.getNewValue();
-                hozzaadRovarGombkent(uj);
+                Rovar regi = (Rovar) evt.getOldValue();
+                if (uj != null) {
+                    hozzaadRovarGombkent(uj);
+                } else if (regi != null) {
+                    JButton oldButton = objektumGombok.get(regi);
+                    if (oldButton != null) {
+                        remove(oldButton);
+                        objektumGombok.remove(regi);
+                        revalidate();
+                        repaint();
+                    }
+                }
             }
             case "spora" -> {
                 Spora uj = (Spora) evt.getNewValue();
